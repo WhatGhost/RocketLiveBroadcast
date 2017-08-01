@@ -5,9 +5,11 @@ import store from './store/store.js'
 
 /* eslint-disable no-new */
 const v = new Vue({
-  el: 'body',
-  store: store,
-  components: { App }
+    el: 'body',
+    store: store,
+    components: {
+        App
+    }
 })
 
 // This should be the only new line ***

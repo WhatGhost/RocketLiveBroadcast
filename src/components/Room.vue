@@ -1,10 +1,10 @@
 <<template>
-  <li>
-      {{room.text}}
-  </li>
+    <li>
+        {{room.text}}
+    </li>
 </template>
 <<script>
 export default {
-  props: ['room']
+    props: ['room']
 }
 </script>
