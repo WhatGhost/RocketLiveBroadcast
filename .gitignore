@@ -8,3 +8,6 @@ test/e2e/reports
 .vscode/
 db.sqlite3
 .venv/
+app/__pycache__/
+vuedj/__pycache__/
+app/migrations/__pycache__/
