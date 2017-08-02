@@ -1,15 +1,18 @@
-live video streaming
+# Live Video Boardcast
 
-##Install&Run##
+### To init the project
+After clone the project from git, use command below to init  your project:
 
-**1.Create a python virtual environment**
-python3 -m venv .venv
+```shell
+cd Group2
+. ./init.sh
+```
+Notice that **the first point** cannot be ignored.  
 
-**2.Run virtual environment**
-source .venv/bin/activate
+### To run the server
+Then you can use this:
 
-**3.Migrate models**
-python3 manage.py migrate
-
-**4.Run project**
-bash deploy.sh
+```shell
+. ./deploy.sh
+```
+Similarly you should use a point at first.
