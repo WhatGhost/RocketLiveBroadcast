@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+#coding=utf-8
+
+
+import sys, os, re
+from subprocess import check_output
+
+# 收集参数
+commit_msg_filepath = sys.argv[1]
+
+# 检测所在的分支
+branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip()
+string = open(commit_msg_filepath).read()
+
+#print(branch)
+#print(string)
+
+if b'master' in branch:
+    print('Must be commited on a branch except master')
+    sys.exit(1)
+else:
+    print("commit-msg: On branch '%s'" % branch)
+
+asc_ii_only = re.compile(r'^[\x00-\x7f]+$')
+start_with_uppercase = re.compile(r'^[A-Z]')
+bind_to_issue = re.compile(r'Ref #[0-9]+$')
+
+#print(re.findall(asc_ii_only,string))
+#print(re.findall(start_with_uppercase,string))
+#print(re.findall(bind_to_issue,string))
+
+if not re.search(asc_ii_only,string):
+    print('Do not use Chinese')
+    sys.exit(2)
+
+if not re.findall(start_with_uppercase,string):
+    print('First letter must be uppercase')
+    sys.exit(3)
+
+if not re.findall(bind_to_issue,string):
+    print('You must bind this commit to an issue. Add \" Ref #issue_num \" to the end of commit message ')
+    sys.exit(4)
+
+print('Pass all tests , commit successfully')
+sys.exit(0)
