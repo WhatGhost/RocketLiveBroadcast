@@ -1,4 +1,4 @@
-<<template>
+<template>
     <div class="main">
         <h1>注册</h1>
         <input type="text" placeholder="邮箱" class="email" v-model="email"></input>
