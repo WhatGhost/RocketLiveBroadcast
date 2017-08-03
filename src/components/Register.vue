@@ -43,6 +43,7 @@ export default {
             }
             if (this.nickname === '') {
                 window.alert('未填写昵称')
+                return
             }
             // todo: make sure password's format
             if (this.password !== this.confirmPassword) {
