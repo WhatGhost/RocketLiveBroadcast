@@ -6,6 +6,7 @@
         <button @click="currentView='Info'">info</button>
         <button @click="currentView='Content'">content</button>
         <button @click="currentView='LoginPage'">login</button>
+        <button @click="currentView='Register'" class="register-btn">注册</button>
         <component :is='currentView'></component>
     </div>
 </template>
@@ -14,7 +15,10 @@
 import NavHeader from './components/NavHeader'
 import Content from './components/Content'
 import Info from './components/Info'
+
 import LoginPage from './components/LoginPage'
+import Register from './components/Register'
+
 
 export default {
     components: {
@@ -22,8 +26,9 @@ export default {
         Content,
         Info,
         LoginPage,
+        Register
     },
-    data: function() {
+    data: function () {
         return {
             currentView: 'Content'
         }
