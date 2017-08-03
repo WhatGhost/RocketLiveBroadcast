@@ -3,7 +3,9 @@
         <div class="header">
             <nav-header></nav-header>
         </div>
-        <button @click="currentView='Info'">switch to info</button>
+        <button @click="currentView='Info'">info</button>
+        <button @click="currentView='Content'">content</button>
+        <button @click="currentView='LoginPage'">login</button>
         <component :is='currentView'></component>
     </div>
 </template>
@@ -12,12 +14,14 @@
 import NavHeader from './components/NavHeader'
 import Content from './components/Content'
 import Info from './components/Info'
+import LoginPage from './components/LoginPage'
 
 export default {
     components: {
         NavHeader,
         Content,
         Info,
+        LoginPage,
     },
     data: function() {
         return {
