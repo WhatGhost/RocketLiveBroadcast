@@ -12,34 +12,31 @@ commit_msg_filepath = sys.argv[1]
 branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip()
 string = open(commit_msg_filepath).read()
 
-#print(branch)
-#print(string)
-
+#不能再master分之commit
 if b'master' in branch:
-    print('Must be commited on a branch except master')
+    print('\033[1;31;40m Must be commited on a branch except master \033[0m')
     sys.exit(1)
 else:
     print("commit-msg: On branch '%s'" % branch)
 
 asc_ii_only = re.compile(r'^[\x00-\x7f]+$')
 start_with_uppercase = re.compile(r'^[A-Z]')
-bind_to_issue = re.compile(r'Ref #[0-9]+$')
-
-#print(re.findall(asc_ii_only,string))
-#print(re.findall(start_with_uppercase,string))
-#print(re.findall(bind_to_issue,string))
-
+bind_to_issue = re.compile(r'Ref #[0-9]+')
+#检测中文
 if not re.search(asc_ii_only,string):
-    print('Do not use Chinese')
+    print('\033[1;31;40m Do not use Chinese \033[0m')
     sys.exit(2)
-
+#检测首字母大写
 if not re.findall(start_with_uppercase,string):
-    print('First letter must be uppercase')
+    print('\033[1;31;40m First letter must be uppercase \033[0m')
     sys.exit(3)
-
+#检测绑定issue
 if not re.findall(bind_to_issue,string):
-    print('You must bind this commit to an issue. Add \" Ref #issue_num \" to the end of commit message ')
+    print('\033[1;31;40m You must bind this commit to an issue. Add \" Ref #issue_num \" to the  commit message \033[0m')
     sys.exit(4)
 
-print('Pass all tests , commit successfully')
+#测试通过
+print('\033[0;32m')
+print( 'Pass all tests , commit successfully!')
+print('\033[0m')
 sys.exit(0)
