@@ -1,11 +1,15 @@
 <template>
-    <div>navbar</div>
+    <div>
+        <label>welcome!</label>
+    </div>
 </template>
+
 <style scoped>
 div {
-    height: 100px;
-    width: 500px;
-    background-color: green;    
+    height: 50px;
+    border: 5px solid black;   
+    background-color: green;
+    color: white;
 }
 </style>
 
