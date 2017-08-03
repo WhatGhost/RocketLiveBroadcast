@@ -4,7 +4,7 @@ import App from './App'
 import store from './store/store.js'
 
 /* eslint-disable no-new */
-const v = new Vue({
+new Vue({
     el: 'body',
     store: store,
     components: {
@@ -12,5 +12,4 @@ const v = new Vue({
     }
 })
 
-// This should be the only new line ***
-v.$store.dispatch('getRooms')
+// v.$store.dispatch('getRooms')

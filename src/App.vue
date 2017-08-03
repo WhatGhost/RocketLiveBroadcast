@@ -1,22 +1,29 @@
 <template>
     <div id="app">
-        <user-input></user-input>
-        <room-list></room-list>
-        <p>
-            Welcome to your Django - Vue.js app!
-        </p>
+        <nav-header></nav-header>
+        <button @click="currentView='Info'"></button>
+        <component :is='currentView'></component>
     </div>
 </template>
 
 <script>
-import RoomList from './components/RoomList.vue'
-import UserInput from './components/UserInput.vue'
+// import RoomList from './components/RoomList.vue'
+// import UserInput from './components/UserInput.vue'
+import NavHeader from './components/NavHeader'
+import Content from './components/Content'
+import Info from './components/Info'
 
 export default {
     components: {
-        RoomList,
-        UserInput
+        NavHeader,
+        Content,
+        Info,
     },
+    data: function() {
+        return {
+            currentView: 'Content'
+        }
+    }
 }
 </script>
 
@@ -27,7 +34,6 @@ html {
 
 body {
     display: flex;
-    align-items: center;
     justify-content: center;
     height: 100%;
 }
