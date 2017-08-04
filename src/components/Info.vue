@@ -1,11 +1,12 @@
 <template>
     <div id='title1'>
         <div id='tag'>
-            <button id='pi' @click="conversion='PersonalInformation'">个人信息</button>
-            <button id='mp' @click="conversion='ChangePassword'">修改密码</button>
-            <button id='mn' @click="conversion='ChangeNickname'">修改昵称</button>
+
+            <button id="pi" @click="conversion='PersonalInformation'">个人信息</button>
+            <button id="mp" @click="conversion='ChangePassword'">修改密码</button>
+            <button id="mn" @click="conversion='ChangeNickname'">修改昵称</button>
         </div>
-        <div id='centerdiv'></div>
+        <div id="centerdiv"></div>
         <component :is='conversion'></component>
     </div>
 </template>
@@ -35,11 +36,10 @@ export default {
 
 #tag {
     position: absolute;
-    top: 40px;
+    top: 100px;
     padding-left: 20px;
     display: flex;
     flex-direction: column;
-
     width: 200px;
     height: 120px;
 }
@@ -64,7 +64,6 @@ export default {
     text-align: center;
     line-height: 40px;
 }
-
 
 #centerdiv {
     float: left;

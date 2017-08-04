@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div id='title2'>用户昵称</div>
-        <input name="key" type="text" id="key" value="Leto" size="30" onmouseover=this.focus(); this.select(); />
+        <div id="title2">用户昵称</div>
+        <input name="key" type="text" id="key" value="Leto" size="30" />
         <div>
-            <button id='change' onclick=window.alert("修改成功")>确认修改</button>
+            <button id="change" onclick=window.alert("修改成功")>确认修改</button>
         </div>
     </div>
 </template>
+
 <style scoped>
 #title2 {
     padding-top: 100px;
