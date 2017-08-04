@@ -17,7 +17,6 @@
     position: absolute;
     width: 250px;
     height: 30px;
-    margin-left: 320px;
 }
 
 #change {
