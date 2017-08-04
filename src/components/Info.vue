@@ -1,12 +1,12 @@
 <template>
-    <div id='title1'>
-        <div id='tag'>
 
+    <div id="title1">
+        <div id="tag">
             <button id="pi" @click="conversion='PersonalInformation'">个人信息</button>
             <button id="mp" @click="conversion='ChangePassword'">修改密码</button>
             <button id="mn" @click="conversion='ChangeNickname'">修改昵称</button>
         </div>
-        <div id="centerdiv"></div>
+        <div id="center-div"></div>
         <component :is='conversion'></component>
     </div>
 </template>
@@ -65,7 +65,7 @@ export default {
     line-height: 40px;
 }
 
-#centerdiv {
+#center-div {
     float: left;
     width: 250px;
     border-right: 1px dashed black;

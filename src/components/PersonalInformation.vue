@@ -1,12 +1,12 @@
 <template>
     <div id="content">
         <div id="nickname">
-            <label id="nicknamelabel">用户昵称</label>
-            <label id="nicknamevalue">leto</label>
+            <label id="nickname-label">用户昵称</label>
+            <label id="nickname-value">leto</label>
         </div>
         <div id="e-mail">
-            <label id="e-maillabel">用户邮箱</label>
-            <label id="e-mailvalue">123456789@qq.com</label>
+            <label id="e-mail-label">用户邮箱</label>
+            <label id="e-mail-value">123456789@qq.com</label>
         </div>
     </div>
 </template>
@@ -26,15 +26,15 @@
     flex-direction: row;
 }
 
-#nicknamelabel,
-#e-maillabel {
+#nickname-label,
+#e-mail-label {
     flex: 1 1 100px;
     text-align: left;
     line-height: 50px;
 }
 
-#nicknamevalue,
-#e-mailvalue {
+#nickname-value,
+#e-mail-value {
     flex: 3 3 300px;
     text-align: left;
     line-height: 50px;
