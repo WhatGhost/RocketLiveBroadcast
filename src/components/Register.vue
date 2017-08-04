@@ -1,12 +1,12 @@
 <template>
     <div class="main">
         <h1>注册</h1>
-        <input type="text" placeholder="邮箱" class="email" v-model="email"></input>
-        <input type="text" placeholder="昵称" class="name" v-model="nickname"></input>
-        <input type="text" placeholder="密码" class="password" v-model="password"></input>
-        <input type="text" placeholder="确认密码" class="sure-password" v-model="confirmPassword"></input>
+        <input type="text" placeholder="邮箱" class="email" v-model="email">
+        <input type="text" placeholder="昵称" class="name" v-model="nickname">
+        <input type="text" placeholder="密码" class="password" v-model="password">
+        <input type="text" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
         <div class="vertificate">
-            <input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode"></input>
+            <input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode">
             <a class="send-email-btn" href="http://www.baidu.com">发送邮件，获取验证码</a>
         </div>
         <button type="button" class="sure-btn" @click="registerBtnClick">确认</button>
