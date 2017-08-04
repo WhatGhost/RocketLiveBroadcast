@@ -1,5 +1,5 @@
 <template>
-     <div class="main">
+    <div class="main">
         <h1>找回密码</h1>
         <input type="text" placeholder="账号邮箱" v-model="account">
         <div class="vertificate">
