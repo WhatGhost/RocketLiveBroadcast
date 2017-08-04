@@ -65,7 +65,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .main {
     margin-left: auto;
     margin-right: auto;
