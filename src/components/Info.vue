@@ -5,6 +5,7 @@
             <button id='mp' @click="conversion='ChangePassword'">修改密码</button>
             <button id='mn' @click="conversion='ChangeNickname'">修改昵称</button>
         </div>
+        <div id='centerdiv'></div>
         <component :is='conversion'></component>
     </div>
 </template>
@@ -38,9 +39,11 @@ export default {
     padding-left: 20px;
     display: flex;
     flex-direction: column;
+
     width: 200px;
     height: 120px;
 }
+
 #pi {
     flex: 1 1 40px;
     border: 1px solid grey;
@@ -61,6 +64,7 @@ export default {
     text-align: center;
     line-height: 40px;
 }
+
 
 #centerdiv {
     float: left;

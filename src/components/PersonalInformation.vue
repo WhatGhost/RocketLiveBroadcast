@@ -13,7 +13,7 @@
 <style scoped>
 #content{
     position:absolute;
-    top:150px;
+    top:210px;
     padding-left:300px;
     width: 400px;
     display:flex;
