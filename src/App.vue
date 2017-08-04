@@ -7,7 +7,7 @@
         <button @click="currentView='Content'">content</button>
         <button @click="currentView='LoginPage'">login</button>
         <button @click="currentView='Register'" class="register-btn">注册</button>
-        <component :is='currentView'></component>
+        <component :is="currentView"></component>
     </div>
 </template>
 

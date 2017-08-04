@@ -7,7 +7,7 @@
             <button id="mn" @click="conversion='ChangeNickname'">修改昵称</button>
         </div>
         <div id="center-div"></div>
-        <component :is='conversion'></component>
+        <component :is="conversion"></component>
     </div>
 </template>
 <script>
