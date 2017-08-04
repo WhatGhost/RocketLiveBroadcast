@@ -2,9 +2,9 @@
 
     <div id="title1">
         <div id="tag">
-            <button id="pi" @click="conversion='PersonalInformation'">个人信息</button>
-            <button id="mp" @click="conversion='ChangePassword'">修改密码</button>
-            <button id="mn" @click="conversion='ChangeNickname'">修改昵称</button>
+            <button id="personal-information" @click="conversion='PersonalInformation'">个人信息</button>
+            <button id="change-password" @click="conversion='ChangePassword'">修改密码</button>
+            <button id="change-nickname" @click="conversion='ChangeNickname'">修改昵称</button>
         </div>
         <div id="center-div"></div>
         <component :is="conversion"></component>
@@ -44,21 +44,21 @@ export default {
     height: 120px;
 }
 
-#pi {
+#personal-information {
     flex: 1 1 40px;
     border: 1px solid grey;
     text-align: center;
     line-height: 40px;
 }
 
-#mp {
+#change-password {
     flex: 1 1 40px;
     border: 1px solid grey;
     text-align: center;
     line-height: 40px;
 }
 
-#mn {
+#change-nickname {
     flex: 1 1 40px;
     border: 1px solid grey;
     text-align: center;
