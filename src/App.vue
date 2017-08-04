@@ -7,6 +7,7 @@
         <button @click="currentView='Content'">content</button>
         <button @click="currentView='LoginPage'">login</button>
         <button @click="currentView='Register'" class="register-btn">注册</button>
+        <button @click="currentView='Forget'" class="forget-btn">找回密码</button>
         <component :is="currentView"></component>
     </div>
 </template>
@@ -15,10 +16,9 @@
 import NavHeader from './components/NavHeader'
 import Content from './components/Content'
 import Info from './components/Info'
-
 import LoginPage from './components/LoginPage'
 import Register from './components/Register'
-
+import Forget from './componenets/Forget'
 
 export default {
     components: {
@@ -26,7 +26,8 @@ export default {
         Content,
         Info,
         LoginPage,
-        Register
+        Register,
+        Forget
     },
     data: function () {
         return {
