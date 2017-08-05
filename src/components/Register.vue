@@ -3,8 +3,8 @@
         <h1>注册</h1>
         <input type="text" placeholder="电子邮箱或手机号码" class="account" v-model="account">
         <input type="text" placeholder="昵称" class="name" v-model="nickname">
-        <input type="text" placeholder="密码" class="password" v-model="password">
-        <input type="text" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
+        <input type="password" placeholder="密码" class="password" v-model="password">
+        <input type="password" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
         <div class="vertificate">
             <input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode">
             <a class="send-email-btn" href="http://www.baidu.com">发送邮件，获取验证码</a>
@@ -36,6 +36,10 @@ export default {
             let re = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
             return re.test(this.account)
         },
+        isPassword() {
+            let patrn = /^(\w){8,20}$/
+            return patrn.test(this.password)
+        },
         registerBtnClick() {
             if (this.email === '') {
                 window.alert('请填写电子邮箱或手机号码')
@@ -52,6 +56,10 @@ export default {
             // todo: make sure password's format
             if (this.password !== this.confirmPassword) {
                 window.alert('两次密码不一致')
+                return
+            }
+            if (!this.isPassword()) {
+                window.alert('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
                 return
             }
             if (this.vertificateCode === '') {

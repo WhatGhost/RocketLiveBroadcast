@@ -8,7 +8,7 @@
         </div>
         <input type="password" placeholder="密码" v-model="password">
         <input type="password" placeholder="确认密码" v-model="surePassword">
-        <button @click="checkVertification" class="sure-btn">确认</button>
+        <button @click="changePassword" class="sure-btn">确认</button>
     </div>
 </template>
 
@@ -26,10 +26,35 @@ export default {
         sendVertificateCode() {
 
         },
+        isPassword() {
+            let patrn = /^(\w){8,20}$/
+            return patrn.test(this.password)
+        },
+        changePassword() {
+            if (this.account === '') {
+                window.alert('未填写邮箱或手机号码')
+                return
+            }
+            if (this.vertificateCode === '') {
+                window.alert('未填写验证码')
+                return
+            }
+            if (!this.checkVertification()) {
+                window.alert('验证码错误')
+                return
+            }
+            if (!this.isPassword()) {
+                window.alert('密码格式错误，请使用8至16位的数字、字母和下划线的组合')
+                return
+            }
+            if (this.password !== this.surePassword) {
+                window.alert('两次密码不一致')
+                return
+            }
+        },
         checkVertification() {
             // check vertification code
-            if (true) {
-            }
+            return true
         }
     }
 }
