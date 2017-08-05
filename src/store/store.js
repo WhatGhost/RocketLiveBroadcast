@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api.js'
+import user from './user.js'
 
 Vue.use(Vuex)
 const apiRoot = 'http://localhost:8000' // This will change if you deploy later
@@ -26,6 +27,8 @@ const store = new Vuex.Store({
         // Note that we added one more for logging out errors.
         'API_FAIL': function (state, error) {
             console.error(error)
+        },
+        'API_SUCC': function (state) {
         }
     },
     actions: {
@@ -45,7 +48,22 @@ const store = new Vuex.Store({
             return api.delete(apiRoot + '/rooms/clear_rooms/')
                 .then((response) => store.commit('CLEAR_ROOMS'))
                 .catch((error) => store.commit('API_FAIL', error))
-        }
+        },
+        loginUser(store, userinfo) {
+            return user.get(apiRoot + '/users/', userinfo)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
+        registerUser(store, userinfo) {
+            return user.post(apiRoot + '/users/', userinfo)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
+        changeNick(store, nickname) {
+            return user.patch(apiRoot + '/users/', nickname)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
     }
 })
 

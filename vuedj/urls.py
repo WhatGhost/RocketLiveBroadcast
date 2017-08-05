@@ -19,10 +19,13 @@ from rest_framework import routers
 from app import views
 
 router = routers.SimpleRouter()
+router1 = routers.SimpleRouter()
 router.register(r'rooms', views.RoomViewSet)
+router1.register(r'users',views.UserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='home'),
     url(r'^', include(router.urls)),
+    url(r'^', include(router1.urls)),
 ]
