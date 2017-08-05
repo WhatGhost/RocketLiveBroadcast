@@ -40,7 +40,7 @@ export default {
             let patrn = /^(\w){8,20}$/
             return patrn.test(this.password)
         },
-        registerBtnClick() {
+        registerBtnClick: function () {
             if (this.email === '') {
                 window.alert('请填写电子邮箱或手机号码')
                 return
@@ -64,9 +64,13 @@ export default {
             }
             if (this.vertificateCode === '') {
                 window.alert('请填写验证码')
-                return
             }
-            window.alert(this.email + '\n' + this.password + '\n' + this.vertificateCode)
+            this.$store.dispatch('registerUser', {
+                account: this.account,
+                nickname: this.nickname,
+                is_student: true,
+                password: this.password
+            })
         },
         sendVertificateCode() {
             // not sure how we'll do this

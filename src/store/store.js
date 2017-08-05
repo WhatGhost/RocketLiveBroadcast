@@ -26,9 +26,11 @@ const store = new Vuex.Store({
         },
         // Note that we added one more for logging out errors.
         'API_FAIL': function (state, error) {
+            window.alert('失败')
             console.error(error)
         },
         'API_SUCC': function (state) {
+            window.alert('成功！')
         }
     },
     actions: {
