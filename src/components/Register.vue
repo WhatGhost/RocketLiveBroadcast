@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <h1>注册</h1>
-        <input type="text" placeholder="邮箱" class="email" v-model="email">
+        <input type="text" placeholder="电子邮箱或手机号码" class="account" v-model="account">
         <input type="text" placeholder="昵称" class="name" v-model="nickname">
         <input type="text" placeholder="密码" class="password" v-model="password">
         <input type="text" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
@@ -17,7 +17,7 @@
 export default {
     data: function () {
         return {
-            email: '',
+            account: '',
             nickname: '',
             password: '',
             confirmPassword: '',
@@ -28,17 +28,21 @@ export default {
 
     },
     methods: {
+        isRightPhoneNum() {
+            let phone = this.account
+            return /^1[3|4|5|7|8]\d{9}$/.test(phone)
+        },
         isRightEmail() {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return re.test(this.email)
+            let re = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+            return re.test(this.account)
         },
         registerBtnClick() {
             if (this.email === '') {
-                window.alert('请填写邮箱')
+                window.alert('请填写电子邮箱或手机号码')
                 return
             }
-            if (!this.isRightEmail()) {
-                window.alert('邮箱格式不正确！')
+            if (!(this.isRightEmail() || this.isRightPhoneNum())) {
+                window.alert('不是有效的电子邮箱或手机号码')
                 return
             }
             if (this.nickname === '') {
