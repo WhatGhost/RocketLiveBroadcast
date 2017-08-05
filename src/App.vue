@@ -18,7 +18,7 @@ import Content from './components/Content'
 import Info from './components/Info'
 import LoginPage from './components/LoginPage'
 import Register from './components/Register'
-import Forget from './componenets/Forget'
+import Forget from './components/Forget'
 
 export default {
     components: {
