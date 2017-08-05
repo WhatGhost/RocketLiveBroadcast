@@ -33,24 +33,25 @@ export default {
         changePassword() {
             if (this.account === '') {
                 window.alert('未填写邮箱或手机号码')
-                return
+                return 0
             }
             if (this.vertificateCode === '') {
                 window.alert('未填写验证码')
-                return
+                return 0
             }
             if (!this.checkVertification()) {
                 window.alert('验证码错误')
-                return
+                return 0
             }
             if (!this.isPassword()) {
                 window.alert('密码格式错误，请使用8至16位的数字、字母和下划线的组合')
-                return
+                return 0
             }
             if (this.password !== this.surePassword) {
                 window.alert('两次密码不一致')
-                return
+                return 0
             }
+            return 1
         },
         checkVertification() {
             // check vertification code
