@@ -8,6 +8,7 @@
         <button @click="currentView='LoginPage'">login</button>
         <button @click="currentView='Register'" class="register-btn">注册</button>
         <button @click="currentView='Forget'" class="forget-btn">找回密码</button>
+        <button @click="currentView='CreateRoom'" class="create-btn">创建房间</button>
         <component :is="currentView"></component>
     </div>
 </template>
@@ -19,6 +20,7 @@ import Info from './components/Info'
 import LoginPage from './components/LoginPage'
 import Register from './components/Register'
 import Forget from './components/Forget'
+import CreateRoom from './components/CreateRoom'
 
 export default {
     components: {
@@ -27,7 +29,8 @@ export default {
         Info,
         LoginPage,
         Register,
-        Forget
+        Forget,
+        CreateRoom,
     },
     data: function () {
         return {
@@ -41,7 +44,7 @@ export default {
 html {
     border: 0;
     margin: 0;
-    height:100%;
+    height: 100%;
 }
 
 body {
