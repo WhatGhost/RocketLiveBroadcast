@@ -1,14 +1,14 @@
 <template>
     <div class="create-room">
-        <div class="first">
+        <div class="left-page">
             <img id="preview" />
             <br />
             <label for="file-upload" class="custom-file-upload" onchange="imgPreview(this)">
-                <i class="fa fa-cloud-upload"></i> 上传视频截图
+                上传视频截图
             </label>
             <input id="file-upload" type="file" />
         </div>
-        <div class="second">
+        <div class="right-page">
             <div>
                 <input type="text" id="room-name" placeholder="房间名称 " size="30 " />
             </div>
@@ -24,19 +24,19 @@
 export default {
     methods: {
         imgPreview(fileDom) {
+            let reader = new window.FileReader()
             if (window.FileReader) {
-                var reader = new window.FileReader()
             } else {
                 window.alert('您的设备不支持图片预览功能，如需该功能请升级您的设备！')
             }
-            var file = fileDom.files[0]
-            var imageType = /^image\//
+            let file = fileDom.files[0]
+            let imageType = /^image\//
             if (!imageType.test(file.type)) {
                 window.alert('请选择图片！')
                 return
             }
             reader.onload = function (e) {
-                var img = document.getElementById('preview')
+                let img = document.getElementById('preview')
                 img.src = e.target.result
             }
             reader.readAsDataURL(file)
@@ -51,12 +51,12 @@ export default {
     border: 5px solid black;
 }
 
-.first {
+.left-page {
     width: 40%;
     float: left;
 }
 
-.second {
+.right-page {
     width: 60%;
     float: left;
 }
