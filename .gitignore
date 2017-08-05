@@ -8,6 +8,8 @@ test/e2e/reports
 .vscode/
 db.sqlite3
 .venv/
+static/
+staticfiles/
 
 
 
