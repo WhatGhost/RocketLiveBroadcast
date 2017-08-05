@@ -10,5 +10,3 @@ deploy_project:
     - pip3 install -r requirements.txt
     - npm install
     - npm run build
-    - python3 format_index_html.py
-    - python3 manage.py collectstatic --noinput
