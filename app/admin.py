@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.models import Group 
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField 
-from .models import MyUser 
+from .models import MyUser,VertifyRegister,VertifyForgetpasswd
 
 
 class UserCreationForm(forms.ModelForm): 
@@ -87,4 +87,6 @@ admin.site.register(AllSilent)
 admin.site.register(OneSilent)
 admin.site.register(ChatHistory)
 admin.site.register(VisitHistory)
+admin.site.register(VertifyRegister)
+admin.site.register(VertifyForgetpasswd)
 # Register your models here.
