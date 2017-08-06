@@ -8,6 +8,7 @@ from .serializers import RoomSerializer, UserSerializer, LiveRoomSerializer
 from .send_verification import sendMail
 import json
 
+
 def index(request):
     return render(request, 'index.html')
 
