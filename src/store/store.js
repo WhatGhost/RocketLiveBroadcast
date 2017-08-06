@@ -36,32 +36,32 @@ const store = new Vuex.Store({
     actions: {
         // We added a getRooms action for the initial load from the server
         // These URLs come straight from the Django URL router we did in Part 3
-        getRooms(store) {
-            return api.get(apiRoot + '/rooms/')
+        getRooms (store) {
+            return api.get(apiRoot + '/liveroom/')
                 .then((response) => store.commit('GET_ROOMS', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        addRoom(store, room) {
+        addRoom (store, room) {
             return api.post(apiRoot + '/rooms/', room)
                 .then((response) => store.commit('ADD_ROOM', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        clearRooms(store) {
+        clearRooms (store) {
             return api.delete(apiRoot + '/rooms/clear_rooms/')
                 .then((response) => store.commit('CLEAR_ROOMS'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        loginUser(store, userinfo) {
+        loginUser (store, userinfo) {
             return user.get(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        registerUser(store, userinfo) {
+        registerUser (store, userinfo) {
             return user.post(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        changeNick(store, nickname) {
+        changeNick (store, nickname) {
             return user.patch(apiRoot + '/users/', nickname)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))

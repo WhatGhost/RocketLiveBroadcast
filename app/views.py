@@ -3,8 +3,8 @@ from django.contrib import auth
 from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
-from .models import Room, MyUser, MyUserManager
-from .serializers import RoomSerializer, UserSerializer
+from .models import Room, MyUser, MyUserManager, LiveRoom
+from .serializers import RoomSerializer, UserSerializer, LiveRoomSerializer
 
 
 def index(request):
@@ -20,6 +20,11 @@ class RoomViewSet(viewsets.ModelViewSet):
         rooms = Room.objects.all()
         rooms.delete()
         return HttpResponse(status=200)
+
+
+class LiveRoomViewSet(viewsets.ModelViewSet):
+    queryset = LiveRoom.objects.all()
+    serializer_class = LiveRoomSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
