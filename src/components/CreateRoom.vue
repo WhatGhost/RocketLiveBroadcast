@@ -42,11 +42,15 @@ export default {
             window.alert('hahaha')
         },
         createBtnClick: function () {
-            window.alert('创建成功')
+            let roomId = -1
             this.$store.dispatch('createRoom', {
                 room_name: this.room_name,
                 room_introduction: this.room_introduction,
+                // room_img: '',
                 room_creater: 'wanglitong'
+            }).then(() => {
+                roomId = this.$store.state.live_room_id
+                window.alert('创建成功' + roomId)
             })
         }
     }

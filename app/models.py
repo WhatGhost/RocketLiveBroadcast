@@ -83,7 +83,7 @@ class LiveRoom(models.Model):
     room_introduction = models.TextField(null=True)
     room_img = models.ImageField(upload_to='liveroomimg', null=True)
     room_creater = models.CharField(max_length=100)
-    created_time = models.DateTimeField()
+    created_time = models.DateTimeField(auto_now_add=True)
 
 
 class VideoRoom(models.Model):

@@ -14,8 +14,16 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('account', 'nickname', 'is_student',
                   'is_active', 'is_admin', 'password')
 
+
 class LiveRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = LiveRoom
-        fields = ('room_id', 'room_name', 'room_introduction',
-                  'room_img', 'room_creater', 'created_time')
+        fields = ('room_name',
+                  'room_introduction',
+                #   'room_img',
+                  'room_creater',
+                #   'created_time'
+                  )
+
+class LiveRoomIdSerializer(serializers.Serializer):
+    id = serializers.IntegerField()

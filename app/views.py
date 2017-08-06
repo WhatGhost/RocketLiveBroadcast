@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import auth
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, api_view
 from .models import Room, MyUser, MyUserManager, LiveRoom
+from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer
 from .send_verification import sendMail
 import json
 
@@ -28,21 +29,22 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
     queryset = LiveRoom.objects.all()
     serializer_class = LiveRoomSerializer
 
-    def create(self, request):
+    # @api_view(['POST'])
+    def create(self, request, format=None):
         new_room = self.get_serializer(data=request.data)
         new_room.is_valid()
         print(new_room.errors)
-        # if LiveRoom.objects.all():
-        #     new_room['room_id'] = LiveRoom.objects.all(
-        #     ).aggregate(Max("room_id"))
-        # else:
-        #     new_room['room_id'] = 1
-
-        if new_room.is_valid():
-            new_room.save()
-            return Response(new_room.data, status=200)
-        else:
-            return HttpResponse(400)
+        print(new_room.data)
+        r = LiveRoom(
+            room_name=new_room["room_name"], 
+            room_introduction=new_room["room_introduction"], 
+            # room_img=new_room["room_img"], 
+            room_creater=new_room["room_creater"]
+            )
+        r.save()
+        # JsonResponse({"room_id": r.id})
+        serializer = LiveRoomIdSerializer(r)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -56,7 +58,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return HttpResponse(status=200)
     #@list_route(methods=['post'])
     # def register_user(self,request):
-        #MyUser.create_user(request.useremail, request.usernickname, True,request.password)
+        # MyUser.create_user(request.useremail, request.usernickname, True,request.password)
         # return HttpResponse(status=200)
 
     def get(self, request):

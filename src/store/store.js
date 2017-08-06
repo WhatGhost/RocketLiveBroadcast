@@ -8,7 +8,8 @@ const apiRoot = 'http://localhost:8000' // This will change if you deploy later
 
 const store = new Vuex.Store({
     state: {
-        rooms: []
+        rooms: [],
+        live_room_id: -1
     },
     mutations: {
         // Keep in mind that response is an HTTP response
@@ -25,6 +26,11 @@ const store = new Vuex.Store({
             rooms.splice(0, rooms.length)
         },
         // Note that we added one more for logging out errors.
+        'GET_ROOM_ID': function (state, response) {
+            console.log(response.body)
+            state.live_room_id = response.body.id
+            console.log(state.live_room_id)
+        },
         'API_FAIL': function (state, error) {
             window.alert('失败')
             console.error(error)
@@ -73,8 +79,8 @@ const store = new Vuex.Store({
                 .catch((error) => store.commit('API_FAIL', error))
         },
         createRoom(store, createroom) {
-            return user.post(apiRoot + '/users/', createroom)
-                .then((response) => store.commit('API_SUCC'))
+            return user.post(apiRoot + '/liveroom/', createroom)
+                .then((response) => store.commit('GET_ROOM_ID', response))
                 .catch((error) => store.commit('API_FAIL', error))
         }
     }
