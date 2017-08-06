@@ -81,7 +81,7 @@ class LiveRoom(models.Model):
     room_name = models.CharField(max_length=100)
     room_introduction = models.TextField(null=True)
     room_img = models.ImageField(upload_to='liveroomimg', null=True)
-    room_creater = models.CharField(max_length=100)
+    room_creater = models.ForeignKey(MyUser)
     created_time = models.DateTimeField(auto_now_add=True)
 
 

@@ -1,23 +1,25 @@
 <template>
     <div class="create-room">
-        <div class="left-page">
-            <label for="file-upload" class="custom-file-upload">
-                上传视频截图
-            </label>
-            <input id="file-upload" type="file" @change="imgPreview($event)" />
-            <img id="preview" />
-            <br/>
-        </div>
-        <div class="right-page">
-            <div>
-                <input type="text" id="room-name" placeholder="房间名称 " size="30 " v-model="room_name" />
+        <form @submit.prevent="createBtnClick" enctype="multipart/form-data" method="POST">
+            <div class="left-page">
+                <label for="file-upload" class="custom-file-upload">
+                    上传视频截图
+                </label>
+                <input id="file-upload" name="file-upload" type="file" @change="imgPreview($event)" />
+                <img id="preview" />
+                <br/>
             </div>
-            <div>
-                <input type="text" id="room-description" placeholder="房间介绍 " size="30 " v-model="room_introduction" />
+            <div class="right-page">
+                <div>
+                    <input type="text" id="room-name" name="room-name" placeholder="房间名称 " size="30 " v-model="room_name" />
+                </div>
+                <div>
+                    <input type="text" id="room-description" name="room-description" placeholder="房间介绍 " size="30" v-model="room_introduction" />
+                </div>
+                <div class="room-id">系统为您分配的房间id为：</div>
+                <input type="submit" id="create" value="开通房间">
             </div>
-            <div class="room-id">系统为您分配的房间id为：</div>
-            <button id="create" @click="createBtnClick">开通房间</button>
-        </div>
+        </form>
     </div>
 </template>
 <script>
@@ -39,17 +41,28 @@ export default {
                 let output = document.getElementById('preview')
                 output.src = dataURL
             }
-            window.alert('hahaha')
         },
-        createBtnClick: function () {
-            let roomId = -1
-            this.$store.dispatch('createRoom', {
-                room_name: this.room_name,
-                room_introduction: this.room_introduction,
-                // room_img: '',
-                room_creater: 'wanglitong'
-            }).then(() => {
-                roomId = this.$store.state.live_room_id
+        createBtnClick: function (event) {
+            // let roomId = -1
+            // console.log(document.getElementById('file-upload').value)
+            // this.$store.dispatch('createRoom', {
+            //     room_name: this.room_name,
+            //     room_introduction: this.room_introduction,
+            //     room_img: document.getElementById('file-upload').value,
+            //     room_creater: 'wanglitong'
+            // }).then(() => {
+            //     roomId = this.$store.state.live_room_id
+            //     window.alert('创建成功' + roomId)
+            // })
+            let formData = new window.FormData(event.target)
+            console.log('start..')
+            // for (let element of formData) {
+            //     console.log(element)
+            // }
+            console.log(formData.entries)
+            console.log('end..')
+            this.$store.dispatch('createRoom', formData).then(() => {
+                let roomId = this.$store.state.live_room_id
                 window.alert('创建成功' + roomId)
             })
         }
