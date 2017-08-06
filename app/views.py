@@ -3,8 +3,8 @@ from django.contrib import auth
 from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
-from .models import Room, MyUser, MyUserManager
-from .serializers import RoomSerializer, UserSerializer
+from .models import Room, MyUser, MyUserManager, LiveRoom
+from .serializers import RoomSerializer, UserSerializer, LiveRoomSerializer
 from .send_verification import sendMail
 import json
 
