@@ -4,8 +4,9 @@ from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
-from .models import Room, MyUser, MyUserManager, LiveRoom
+from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister
 from .send_verification import sendMail
+from .serializers import RoomSerializer, LiveRoomSerializer,UserSerializer
 import json
 
 
@@ -69,10 +70,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['post'])
     def sendVertificateCode(self, request):
-        account = json.loads(str(request.body, encoding='utf-8'))['account']
-        print(account)
-        vertificate = sendMail(account)
-        if(vertificate != -1):
-            return HttpResponse(status=200)
+        userAccount = json.loads(str(request.body, encoding='utf-8'))['account']
+        print(userAccount)
+        vertification = sendMail(userAccount)
+        if(vertification != -1):
+            VertifyRegister.objects.create(account=userAccount, vertifycode=vertification)
+            return HttpResponse(status=200)           
         else:
             return HttpResponse(status=404)
