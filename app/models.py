@@ -78,7 +78,6 @@ class Room(models.Model):
 
 
 class LiveRoom(models.Model):
-
     room_name = models.CharField(max_length=100)
     room_introduction = models.TextField(null=True)
     room_img = models.ImageField(upload_to='liveroomimg', null=True)
@@ -128,7 +127,7 @@ class VisitHistory(models.Model):
 class VertifyRegister(models.Model):
     account = models.CharField(max_length=100)
     vertifycode = models.CharField(max_length=100)
-    vertifytime = models.DateTimeField()
+    vertifytime = models.DateTimeField(auto_now_add=True)
 
 
 class VertifyForgetpasswd(models.Model):
