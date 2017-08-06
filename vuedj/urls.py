@@ -6,6 +6,7 @@ from app import views
 router = routers.SimpleRouter()
 router.register(r'rooms', views.RoomViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'liveroom', views.LiveRoomViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

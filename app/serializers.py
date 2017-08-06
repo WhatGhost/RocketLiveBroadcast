@@ -1,4 +1,4 @@
-from .models import Room, MyUser
+from .models import Room, MyUser, LiveRoom
 from rest_framework import serializers
 
 
@@ -13,3 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = MyUser
         fields = ('account', 'nickname', 'is_student',
                   'is_active', 'is_admin', 'password')
+
+class LiveRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LiveRoom
+        fields = ('room_id', 'room_name', 'room_introduction',
+                  'room_img', 'room_creater', 'created_time')
