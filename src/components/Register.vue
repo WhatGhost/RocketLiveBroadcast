@@ -7,7 +7,7 @@
         <input type="password" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
         <div class="vertificate">
             <input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode">
-            <a class="send-email-btn" href="http://www.baidu.com">发送邮件，获取验证码</a>
+            <button class="send-email-btn" @click="sendVertificateCode">发送邮件，获取验证码</button>
         </div>
         <button type="button" class="sure-btn" @click="registerBtnClick">确认</button>
     </div>
@@ -73,8 +73,10 @@ export default {
             })
         },
         sendVertificateCode() {
-            // not sure how we'll do this
-            // maybe use method in store.js?
+            window.alert('sendVertificateCode click')
+            this.$store.dispatch('sendVertificateCode', {
+                account: this.account,
+            })
         }
     }
 }

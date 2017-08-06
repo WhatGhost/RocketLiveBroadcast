@@ -30,6 +30,7 @@ const store = new Vuex.Store({
             console.error(error)
         },
         'API_SUCC': function (state) {
+            console.log(state)
             window.alert('成功！')
         }
     },
@@ -63,6 +64,11 @@ const store = new Vuex.Store({
         },
         changeNick (store, nickname) {
             return user.patch(apiRoot + '/users/', nickname)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
+        sendVertificateCode(store, vertificateInfo) {
+            return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },

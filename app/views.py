@@ -5,6 +5,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from .models import Room, MyUser, MyUserManager, LiveRoom
 from .serializers import RoomSerializer, UserSerializer, LiveRoomSerializer
+from .send_verification import sendMail
+import json
 
 
 def index(request):
@@ -32,6 +34,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def post(self, request):
+        print(request.account)
         MyUserManager.create_user(
             request.account, request.nickname, request.is_student, request.password)
         return HttpResponse(status=200)
@@ -47,3 +50,13 @@ class UserViewSet(viewsets.ModelViewSet):
         if user.password == request.password:
             auth.login(request, user)
             return HttpResponse(status=200)
+    
+    @list_route(methods = ['post'])
+    def sendVertificateCode(self ,request):
+        account = json.loads(str(request.body,encoding='utf-8'))['account']
+        print(account)
+        vertificate = sendMail(account)
+        if(vertificate != -1):
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=404)
