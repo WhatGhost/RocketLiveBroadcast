@@ -78,10 +78,10 @@ class Room(models.Model):
 
 
 class LiveRoom(models.Model):
-    room_id = models.IntegerField(primary_key=True)
+
     room_name = models.CharField(max_length=100)
-    room_introduction = models.TextField()
-    room_img = models.ImageField(upload_to='liveroomimg')
+    room_introduction = models.TextField(null=True)
+    room_img = models.ImageField(upload_to='liveroomimg', null=True)
     room_creater = models.CharField(max_length=100)
     created_time = models.DateTimeField()
 
@@ -89,8 +89,8 @@ class LiveRoom(models.Model):
 class VideoRoom(models.Model):
     room_id = models.IntegerField(primary_key=True)
     room_name = models.CharField(max_length=100)
-    room_introduction = models.TextField()
-    room_img = models.ImageField(upload_to='videoroomimg')
+    room_introduction = models.TextField(null=True)
+    room_img = models.ImageField(upload_to='videoroomimg', null=True)
     room_creater = models.CharField(max_length=100)
     created_time = models.DateTimeField()
     videofile = models.FileField()
@@ -118,8 +118,32 @@ class ChatHistory(models.Model):
 
 
 class VisitHistory(models.Model):
+
+
+<< << << < HEAD
     room_id = models.IntegerField()
     user = models.CharField(max_length=100)
     visit_time = models.DateTimeField()
     leave_time = models.DateTimeField()
     is_refused = models.BooleanField()
+== == == =
+    room_id = models.IntegerField()
+    user = models.CharField(max_length=100)
+    visit_time = models.DateTimeField()
+    leave_time = models.DateTimeField()
+    is_refused = models.BooleanField()
+
+
+class VertifyRegister(models.Model):
+    account = models.CharField(max_length=100)
+    vertifycode = models.CharField(max_length=100)
+    vertifytime = models.DateTimeField()
+
+
+class VertifyForgetpasswd(models.Model):
+    account = models.CharField(max_length=100)
+    vertifycode = models.CharField(max_length=100)
+    vertifytime = models.DateTimeField()
+
+
+>>>>>> > lijin / EditModel
