@@ -1,65 +1,121 @@
 <template>
-    <div class="login-panel">
+    <div class="login-div">
         <div>
-            <label  >登录</label>
-            <input id='user-name' type="text" placeholder="用户名" v-model="userName">
+            <h1>登录</h1>
+            <p class="tip">账号</p>
+            <input id="user-name" type="text" placeholder="电子邮箱或手机号码" v-model="userName">
+            <p class="tip">密码</p>
+            <input id="user-password" type="password" placeholder="请输入密码" v-model="userPassword">
+            <button class="sure-btn" @click="loginButtonClick">确认</button>
+            <br/>
+            <button class="forget-btn" @click="this.showForget">忘记密码</button>
         </div>
-        <div>
-            <input id='user-password' type="text" placeholder="密码" v-model="userPassword" >
-        </div>
-        <button class='login-button' @click="loginButtonClick">确认</button>
     </div>
 </template>
 
 
 <script>
-export default {
-    data: function () {
-        return {
-            userName: '',
-            userPassword: ''
-        }
-    },
-    methods: {
-        loginButtonClick() {
-            if (this.userName === '') {
-                window.alert('用户名不能为空')
-                return
+    export default {
+        data: function () {
+            return {
+                userName: '',
+                userPassword: ''
             }
-            if (this.userPassword === '') {
-                window.alert('密码不能为空')
+        },
+        methods: {
+            loginButtonClick () {
+                if (this.userName === '') {
+                    window.alert('用户名不能为空')
+                    return
+                }
+                if (this.userPassword === '') {
+                    window.alert('密码不能为空')
+                    return
+                }
+                this.tryLogin()
+            },
+            showForget: function () {
+                this.$emit('goto', 'Forget')
+            },
+            tryLogin: function () {
+                this.$store.dispatch('loginUser', {
+                    account: this.account,
+                    password: this.password
+                })
             }
-            console.log('Username:  ' + this.userName + '\n Password:  ' + this.userPassword)
         }
     }
-}
 </script>
 <style scoped>
-.login-panel {
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
+    .login-div {
+        display: flex;
+        justify-content: center;
+    }
 
-.login-button {
-    width: 100%;
-    height: 50px;
-    background-color: green;
-    border-radius: 20px;
-    color: #FFF;
-    font-size: 30px;
-}
-label {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    font-size: 40px;
-}
-input {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    width: 100%;
-    line-height: 50px;
-    border-radius: 10px;
-}
+    h1 {
+        font-size: 24px;
+        font-weight: normal;
+    }
+
+    .tip {
+        font-size: 14px;
+        margin-bottom: 5px;
+        text-align: left;
+        color: #2C2C2C;
+        padding-left: 4px;
+    }
+
+    input {
+        display: block;
+        font-size: 16px;
+        border: 2px solid #e8e8e8;
+        width: 380px;
+        height: 34px;
+        margin-bottom: 5px;
+        border-radius: 6px;
+        padding-left: 0.5em;
+    }
+
+    .sure-btn {
+        font-size: 20px;
+        border: none;
+        background-color: #00af50;
+        color: white;
+        border-radius: 20px;
+        width: 384px;
+        height: 40px;
+        margin-top: 20px;
+    }
+
+    .forget-btn {
+        font-size: 16px;
+        color: #999999;
+        background-color: transparent;
+        border: none;
+        margin-top: 20px;
+    }
+
+    input, button {
+        outline: none;
+    }
+
+    input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #e8e8e8;
+    }
+
+    input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #e8e8e8;
+    }
+
+    input::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #e8e8e8;
+    }
+
+    input:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #e8e8e8;
+    }
 </style>

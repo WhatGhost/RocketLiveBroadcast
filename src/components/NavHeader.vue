@@ -55,11 +55,12 @@
     }
 
     button {
-        margin: 6px;
+        margin: 8px;
         height: 34px;
         width: 80px;
         background-color: #e1efd9;
         border: none;
+        outline: none;
     }
 
     #homepage-btn {

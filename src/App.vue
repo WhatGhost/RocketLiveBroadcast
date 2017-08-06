@@ -3,7 +3,7 @@
         <div class="header">
             <nav-header @goto="changePage"></nav-header>
         </div>
-        <component :is="currentView"></component>
+        <component @goto="changePage" :is="currentView"></component>
     </div>
 </template>
 

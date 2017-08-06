@@ -1,137 +1,159 @@
 <template>
     <div class="main">
-        <h1>找回密码</h1>
-        <input type="text" placeholder="账号邮箱" v-model="account">
-        <div class="vertificate">
-            <input type="text" placeholder="验证码" v-model="vertificateCode" class="vertificate-input">
-            <button @click="send-vertificate-code" class="send-vertificate-code-btn">发送验证码</button>
+        <div>
+            <h1>找回密码</h1>
+            <p class="tip">账号</p>
+            <input type="text" placeholder="账号邮箱" v-model="account">
+            <p class="tip">验证码</p>
+            <div class="vertificate">
+                <input type="text" placeholder="验证码" v-model="vertificateCode" class="vertificate-input">
+                <span class="blank"></span>
+                <button @click="send-vertificate-code" class="send-email-btn">发送验证码</button>
+            </div>
+            <p class="tip">新密码</p>
+            <input type="password" placeholder="密码" v-model="password">
+            <p class="tip">重复密码</p>
+            <input type="password" placeholder="确认密码" v-model="surePassword">
+            <button @click="changePassword" class="sure-btn">确认</button>
         </div>
-        <input type="password" placeholder="密码" v-model="password">
-        <input type="password" placeholder="确认密码" v-model="surePassword">
-        <button @click="changePassword" class="sure-btn">确认</button>
     </div>
 </template>
 
 <script>
-export default {
-    data: function () {
-        return {
-            account: '',
-            vertificateCode: '',
-            password: '',
-            surePassword: '',
-        }
-    },
-    methods: {
-        sendVertificateCode() {
+    export default {
+        data: function () {
+            return {
+                account: '',
+                vertificateCode: '',
+                password: '',
+                surePassword: '',
+            }
+        },
+        methods: {
+            sendVertificateCode () {
 
-        },
-        isPassword() {
-            let patrn = /^(\w){8,20}$/
-            return patrn.test(this.password)
-        },
-        changePassword() {
-            if (this.account === '') {
-                window.alert('未填写邮箱或手机号码')
-                return 0
+            },
+            isPassword () {
+                let patrn = /^(\w){8,20}$/
+                return patrn.test(this.password)
+            },
+            changePassword () {
+                if (this.account === '') {
+                    window.alert('未填写邮箱或手机号码')
+                    return 0
+                }
+                if (this.vertificateCode === '') {
+                    window.alert('未填写验证码')
+                    return 0
+                }
+                if (!this.checkVertification()) {
+                    window.alert('验证码错误')
+                    return 0
+                }
+                if (!this.isPassword()) {
+                    window.alert('密码格式错误，请使用8至16位的数字、字母和下划线的组合')
+                    return 0
+                }
+                if (this.password !== this.surePassword) {
+                    window.alert('两次密码不一致')
+                    return 0
+                }
+                return 1
+            },
+            checkVertification () {
+                // check vertification code
+                return true
             }
-            if (this.vertificateCode === '') {
-                window.alert('未填写验证码')
-                return 0
-            }
-            if (!this.checkVertification()) {
-                window.alert('验证码错误')
-                return 0
-            }
-            if (!this.isPassword()) {
-                window.alert('密码格式错误，请使用8至16位的数字、字母和下划线的组合')
-                return 0
-            }
-            if (this.password !== this.surePassword) {
-                window.alert('两次密码不一致')
-                return 0
-            }
-            return 1
-        },
-        checkVertification() {
-            // check vertification code
-            return true
         }
     }
-}
 </script>
 
 <style scoped>
-.main > * {
-    margin-left: auto;
-    margin-right: auto;
-}
+    .main {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
 
-h1 {
-    font-size: 24px;
-    font-weight: normal;
-}
+    h1 {
+        font-size: 24px;
+        font-weight: normal;
+    }
 
-input {
-    display: block;
-    font-size: 16px;
-    border: 1px solid #e8e8e8;
-    padding-left: 10px;
-    width: 350px;
-    height: 26px;
-    margin: 5px;
-    border-radius: 2px;
-}
+    input {
+        display: block;
+        font-size: 16px;
+        border: 2px solid #e8e8e8;
+        width: 380px;
+        height: 34px;
+        margin-bottom: 5px;
+        border-radius: 6px;
+        padding-left: 0.5em;
+    }
 
-.vertificate {
-    margin-left: auto;
-    margin-right: auto;
-}
+    .tip {
+        font-size: 14px;
+        margin-bottom: 5px;
+        text-align: left;
+        color: #2C2C2C;
+        padding-left: 4px;
+    }
 
-.vertificate-input {
-    display: inline-block;
-    width: 250px;
-}
+    .vertificate {
+        display: flex;
+        width: 350px;
+    }
 
-.send-vertificate-code-btn {
-    font-size: 12px;
-    background-color: #a8d18d;
-    width: 80px;
-    height: 3em;
-    border: none;
-    border-radius: 10px;
-    margin-right: auto;
-}
+    .blank {
+        flex-grow: 4;
+    }
 
-.sure-btn {
-    font-size: 20px;
-    display: block;
-    background-color: #00af50;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    width: 350px;
-    height: 40px;
-    margin-top: 15px;
-}
+    .vertificate-input {
+        display: inline-block;
+        width: 250px;
+    }
 
-input::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #e8e8e8;
-}
+    .send-email-btn {
+        font-size: 14px;
+        font-weight: bold;
+        color: #00af50;
+        background-color: transparent;
+        border: none;
+    }
 
-input:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #e8e8e8;
-}
+    .sure-btn {
+        font-size: 20px;
+        border: none;
+        background-color: #00af50;
+        color: white;
+        border-radius: 20px;
+        width: 384px;
+        height: 40px;
+        margin-top: 20px;
+    }
 
-input::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #e8e8e8;
-}
+    input, button {
+        outline: none;
+    }
 
-input:-ms-input-placeholder {
-    /* Internet Explorer 10+ */
-    color: #e8e8e8;
-}
+    input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #e8e8e8;
+    }
+
+    input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #e8e8e8;
+    }
+
+    input::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #e8e8e8;
+    }
+
+    input:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #e8e8e8;
+    }
 </style>
