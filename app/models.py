@@ -118,15 +118,6 @@ class ChatHistory(models.Model):
 
 
 class VisitHistory(models.Model):
-
-
-<< << << < HEAD
-    room_id = models.IntegerField()
-    user = models.CharField(max_length=100)
-    visit_time = models.DateTimeField()
-    leave_time = models.DateTimeField()
-    is_refused = models.BooleanField()
-== == == =
     room_id = models.IntegerField()
     user = models.CharField(max_length=100)
     visit_time = models.DateTimeField()
@@ -144,6 +135,3 @@ class VertifyForgetpasswd(models.Model):
     account = models.CharField(max_length=100)
     vertifycode = models.CharField(max_length=100)
     vertifytime = models.DateTimeField()
-
-
->>>>>> > lijin / EditModel
