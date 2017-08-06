@@ -4,7 +4,7 @@
             <nav-header></nav-header>
         </div>
         <button @click="currentView='Info'">info</button>
-        <button @click="currentView='Content'">content</button>
+        <!-- <button @click="currentView='Content'">content</button> -->
         <button @click="currentView='LoginPage'">login</button>
         <button @click="currentView='Register'" class="register-btn">注册</button>
         <button @click="currentView='Forget'" class="forget-btn">找回密码</button>
@@ -15,7 +15,7 @@
 
 <script>
 import NavHeader from './components/NavHeader'
-import Content from './components/Content'
+// import Content from './components/Content'
 import Info from './components/Info'
 import LoginPage from './components/LoginPage'
 import Register from './components/Register'
@@ -25,7 +25,7 @@ import CreateRoom from './components/CreateRoom'
 export default {
     components: {
         NavHeader,
-        Content,
+        // Content,
         Info,
         LoginPage,
         Register,
@@ -34,7 +34,7 @@ export default {
     },
     data: function () {
         return {
-            currentView: 'Content'
+            currentView: 'Register'
         }
     }
 }
