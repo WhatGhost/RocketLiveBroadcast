@@ -1,15 +1,8 @@
 <template>
     <div id="app">
         <div class="header">
-            <nav-header></nav-header>
+            <nav-header @goto="changePage"></nav-header>
         </div>
-        <button @click="currentView='Info'">info</button>
-        <!--主页直播房间列表展示-->
-        <button @click="showRooms">content</button>
-        <button @click="currentView='LoginPage'">login</button>
-        <button @click="currentView='Register'" class="register-btn">注册</button>
-        <button @click="currentView='Forget'" class="forget-btn">找回密码</button>
-        <button @click="currentView='CreateRoom'" class="create-btn">创建房间</button>
         <component :is="currentView"></component>
     </div>
 </template>
@@ -42,6 +35,12 @@
             showRooms: function () {
                 this.currentView = 'RoomList'
                 this.$store.dispatch('getRooms')
+            },
+            changePage: function (page) {
+                if (page === 'RoomList') {
+                    this.showRooms()
+                }
+                this.currentView = page
             }
         }
     }
@@ -63,7 +62,6 @@
 
     #app {
         color: #2c3e50;
-        max-width: 600px;
         font-family: Source Sans Pro, Helvetica, sans-serif;
         text-align: center;
     }
