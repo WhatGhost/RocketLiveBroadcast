@@ -4,9 +4,9 @@
             <label for="file-upload" class="custom-file-upload">
                 上传视频截图
             </label>
+            <input id="file-upload" type="file" @change="imgPreview($event)" />
             <img id="preview" />
             <br/>
-            <input id="file-upload" type="file" @change="imgPreview(this)" />
         </div>
         <div class="right-page">
             <div>
@@ -30,23 +30,16 @@ export default {
         }
     },
     methods: {
-        imgPreview(fileDom) {
+        imgPreview(event) {
+            let input = event.target
             let reader = new window.FileReader()
-            if (window.FileReader) {
-            } else {
-                window.alert('您的设备不支持图片预览功能，如需该功能请升级您的设备！')
+            reader.readAsDataURL(input.files[0])
+            reader.onload = function () {
+                let dataURL = reader.result
+                let output = document.getElementById('preview')
+                output.src = dataURL
             }
-            let file = fileDom.files[0]
-            let imageType = /^image\//
-            if (!imageType.test(file.type)) {
-                window.alert('请选择图片！')
-                return
-            }
-            reader.onload = function (e) {
-                let img = document.getElementById('preview')
-                img.src = e.target.result
-            }
-            reader.readAsDataURL(file)
+            window.alert('hahaha')
         },
         createBtnClick: function () {
             window.alert('创建成功')
@@ -121,5 +114,10 @@ input[type="file"] {
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+}
+
+#preview {
+    height: 150px;
+    width: 150px;
 }
 </style>
