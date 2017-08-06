@@ -3,11 +3,20 @@
         <div id="title2">用户昵称</div>
         <input name="key" type="text" id="key" value="Leto" size="30" />
         <div>
-            <button id="change" onclick=window.alert('修改成功')>确认修改</button>
+            <button id="change" @click="changeBtnClick">确认修改</button>
         </div>
     </div>
 </template>
 
+<script>
+export default {
+    methods: {
+        changeBtnClick: function () {
+            window.alert('创建成功')
+        }
+    }
+}
+</script>
 <style scoped>
 #title2 {
     padding-top: 100px;

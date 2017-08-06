@@ -66,6 +66,11 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
+        createRoom(store, createroom) {
+            return user.post(apiRoot + '/users/', createroom)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        }
     }
 })
 

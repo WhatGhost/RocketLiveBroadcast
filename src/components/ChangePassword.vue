@@ -10,11 +10,19 @@
             <input type="text" id="renew-password" placeholder="再次输入新密码" size="30" />
         </div>
         <div>
-            <button id="change" onclick=window.alert('修改完成')>确认修改</button>
+            <button id="change" @click="changeBtnClick">确认修改</button>
         </div>
     </div>
 </template>
-
+<script>
+export default {
+    methods: {
+        changeBtnClick: function () {
+            window.alert('创建成功')
+        }
+    }
+}
+</script>
 <style scoped>
 #old-password,
 #new-password,
