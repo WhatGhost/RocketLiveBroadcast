@@ -8,6 +8,7 @@ from .models import Room, MyUser, MyUserManager, LiveRoom
 from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer
 from .send_verification import sendMail
 import json
+from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer
 
 
 def index(request):
@@ -58,12 +59,13 @@ class UserViewSet(viewsets.ModelViewSet):
     # def register_user(self,request):
         # MyUser.create_user(request.useremail, request.usernickname, True,request.password)
         # return HttpResponse(status=200)
-
-    def get(self, request):
-        account = request.account
-        user = get_object_or_404(queryset, account=account)
-        password = user.password
-        if user.password == request.password:
+    @list_route(methods=['patch'])
+    def login_user(self, request):
+        info = json.loads(str(request.body, encoding = 'utf-8'))
+        account = info['account']
+        user = MyUser.objects.get(account=account)
+        password = info['password']
+        if user.password == password:
             auth.login(request, user)
             return HttpResponse(status=200)
 

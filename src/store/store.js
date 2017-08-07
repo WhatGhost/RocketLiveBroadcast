@@ -59,7 +59,7 @@ const store = new Vuex.Store({
                 .catch((error) => store.commit('API_FAIL', error))
         },
         loginUser (store, userinfo) {
-            return user.get(apiRoot + '/users/', userinfo)
+            return user.patch(apiRoot + '/users/login_user', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
