@@ -42,6 +42,8 @@
                     account: this.account,
                     password: this.password
                 })
+                console.log({password: this.userPassword, account: this.userName})
+                this.$store.dispatch('loginUser', {password: this.userPassword, account: this.userName})
             }
         }
     }
