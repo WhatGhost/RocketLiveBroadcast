@@ -1,24 +1,18 @@
 <template>
     <div>
         <div id="title2">用户昵称</div>
-        <input name="key" type="text" id="key" value="Leto" size="30" v-model="newnickname" />
+        <input name="key" type="text" id="key" value="Leto" size="30" />
         <div>
-            <button id="change" @click="changeNickname">确认修改</button>
+            <button id="change" @click="changeBtnClick">确认修改</button>
         </div>
     </div>
 </template>
+
 <script>
 export default {
-    data: function () {
-        return {
-            newnickname: '',
-            account: ''
-        }
-    },
     methods: {
-        changeNickname() {
-            console.log('fuck')
-            this.$store.dispatch('changeNick', { nickname: this.newnickname, account: this.account, is_password: 'False' })
+        changeBtnClick: function () {
+            window.alert('创建成功')
         }
     }
 }

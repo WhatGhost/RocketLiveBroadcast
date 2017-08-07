@@ -1,36 +1,26 @@
 <template>
     <div>
         <div>
-            <input type="text" id="old-password" placeholder="原始密码" size="30" v-model="oldpassword" />
+            <input type="text" id="old-password" placeholder="原始密码" size="30" />
         </div>
         <div>
-            <input type="text" id="new-password" placeholder="新密码" size="30" v-model="newpassword" />
+            <input type="text" id="new-password" placeholder="新密码" size="30" />
         </div>
         <div>
-            <input type="text" id="renew-password" placeholder="再次输入新密码" size="30" v-model="newpassword" />
+            <input type="text" id="renew-password" placeholder="再次输入新密码" size="30" />
         </div>
         <div>
-            <button id="change" @click='changepasswdClick'>确认修改</button>
+            <button id="change" @click="changeBtnClick">确认修改</button>
         </div>
     </div>
 </template>
 <script>
 export default {
-    data: function () {
-        return {
-            useraccount: '',
-            oldpassword: '',
-            newpassword: '',
-        }
-    },
-    computed: {
-    },
     methods: {
-        changepasswdClick() {
-            this.useraccount = this.$store.state.account
-            this.$store.dispatch('changePasswd', { oldpassword: this.oldpassword, newpassword: this.newpassword, account: this.useraccount, is_password: 'True' })
+        changeBtnClick: function () {
+            window.alert('创建成功')
         }
-    },
+    }
 }
 </script>
 <style scoped>
