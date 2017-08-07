@@ -1,75 +1,55 @@
 <template>
-
-    <div id="title1">
-        <div id="tag">
-            <button id="personal-information" @click="conversion='PersonalInformation'">个人信息</button>
-            <button id="change-password" @click="conversion='ChangePassword'">修改密码</button>
-            <button id="change-nickname" @click="conversion='ChangeNickname'">修改昵称</button>
+    <div id="main-div">
+        <div class="two-sides">
+            <div id="tag">
+                <el-button type="primary" id="personal-information" @click="conversion='PersonalInformation'">个人信息
+                </el-button>
+                <el-button type="primary" id="change-password" @click="conversion='ChangePassword'">修改密码</el-button>
+                <el-button type="primary" id="change-nickname" @click="conversion='ChangeNickname'">修改昵称</el-button>
+            </div>
         </div>
-        <div id="center-div"></div>
-        <component :is="conversion"></component>
     </div>
 </template>
+
 <script>
-import PersonalInformation from './PersonalInformation.vue'
-import ChangePassword from './ChangePassword.vue'
-import ChangeNickname from './ChangeNickname.vue'
-export default {
-    components: {
-        PersonalInformation,
-        ChangeNickname,
-        ChangePassword,
-    },
-    data: function () {
-        return {
-            conversion: 'PersonalInformation'
+    import PersonalInformation from './PersonalInformation.vue'
+    import ChangePassword from './ChangePassword.vue'
+    import ChangeNickname from './ChangeNickname.vue'
+
+    export default {
+        components: {
+            PersonalInformation,
+            ChangeNickname,
+            ChangePassword,
+        },
+        data: function () {
+            return {
+                conversion: 'PersonalInformation'
+            }
         }
     }
-}
 </script>
+
 <style scoped>
-#title1 {
-    height: 300px;
-    width: 700px;
-    border: 5px solid black;
-}
+    #main-div {
+        display: flex;
+        justify-content: center;
+    }
 
-#tag {
-    position: absolute;
-    top: 100px;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 120px;
-}
+    .two-sides {
+        display: flex;
+        flex-direction: row;
+    }
 
-#personal-information {
-    flex: 1 1 40px;
-    border: 1px solid grey;
-    text-align: center;
-    line-height: 40px;
-}
+    #tag {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+    }
 
-#change-password {
-    flex: 1 1 40px;
-    border: 1px solid grey;
-    text-align: center;
-    line-height: 40px;
-}
+    #tag > * {
+        margin: 5px 20px;
 
-#change-nickname {
-    flex: 1 1 40px;
-    border: 1px solid grey;
-    text-align: center;
-    line-height: 40px;
-}
+    }
 
-#center-div {
-    float: left;
-    width: 250px;
-    border-right: 1px dashed black;
-    padding-bottom: 300px;
-    margin-bottom: -300px;
-}
 </style>

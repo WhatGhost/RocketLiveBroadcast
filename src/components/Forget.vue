@@ -3,18 +3,17 @@
         <div>
             <h1>找回密码</h1>
             <p class="tip">账号</p>
-            <input type="text" placeholder="账号邮箱" v-model="account">
+            <el-input type="text" placeholder="账号邮箱" v-model="account"></el-input>
             <p class="tip">验证码</p>
             <div class="vertificate">
-                <input type="text" placeholder="验证码" v-model="vertificateCode" class="vertificate-input">
-                <span class="blank"></span>
-                <button @click="send-vertificate-code" class="send-email-btn">发送验证码</button>
+                <el-input type="text" placeholder="验证码" v-model="vertificateCode" class="vertificate-input"></el-input>
+                <el-button type="text" @click="send-vertificate-code" class="send-email-btn">发送验证码</el-button>
             </div>
             <p class="tip">新密码</p>
-            <input type="password" placeholder="密码" v-model="password">
+            <el-input type="password" placeholder="密码" v-model="password"></el-input>
             <p class="tip">重复密码</p>
-            <input type="password" placeholder="确认密码" v-model="surePassword">
-            <button @click="changePassword" class="sure-btn">确认</button>
+            <el-input type="password" placeholder="确认密码" v-model="surePassword"></el-input>
+            <el-button @click="changePassword" class="sure-btn">确认</el-button>
         </div>
     </div>
 </template>
@@ -74,22 +73,12 @@
         margin-right: auto;
         display: flex;
         justify-content: center;
+        width: 380px;
     }
 
     h1 {
         font-size: 24px;
         font-weight: normal;
-    }
-
-    input {
-        display: block;
-        font-size: 16px;
-        border: 2px solid #e8e8e8;
-        width: 380px;
-        height: 34px;
-        margin-bottom: 5px;
-        border-radius: 6px;
-        padding-left: 0.5em;
     }
 
     .tip {
@@ -105,10 +94,6 @@
         width: 350px;
     }
 
-    .blank {
-        flex-grow: 4;
-    }
-
     .vertificate-input {
         display: inline-block;
         width: 250px;
@@ -117,43 +102,16 @@
     .send-email-btn {
         font-size: 14px;
         font-weight: bold;
-        color: #00af50;
-        background-color: transparent;
-        border: none;
+        margin-left: 30px;
     }
 
     .sure-btn {
         font-size: 20px;
-        border: none;
         background-color: #00af50;
         color: white;
         border-radius: 20px;
         width: 384px;
         height: 40px;
-        margin-top: 20px;
-    }
-
-    input, button {
-        outline: none;
-    }
-
-    input::-webkit-input-placeholder {
-        /* WebKit browsers */
-        color: #e8e8e8;
-    }
-
-    input:-moz-placeholder {
-        /* Mozilla Firefox 4 to 18 */
-        color: #e8e8e8;
-    }
-
-    input::-moz-placeholder {
-        /* Mozilla Firefox 19+ */
-        color: #e8e8e8;
-    }
-
-    input:-ms-input-placeholder {
-        /* Internet Explorer 10+ */
-        color: #e8e8e8;
+        margin-top: 26px;
     }
 </style>
