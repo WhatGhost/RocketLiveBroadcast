@@ -78,8 +78,13 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        createRoom(store, createroom) {
-            return user.post(apiRoot + '/liveroom/', createroom)
+        // createRoom(store, createroom) {
+        //     return api.post(apiRoot + '/liveroom/', createroom)
+        //         .then((response) => store.commit('GET_ROOM_ID', response))
+        //         .catch((error) => store.commit('API_FAIL', error))
+        // }
+        createRoom(store, formData) {
+            return api.post(apiRoot + '/liveroom/', formData)
                 .then((response) => store.commit('GET_ROOM_ID', response))
                 .catch((error) => store.commit('API_FAIL', error))
         }

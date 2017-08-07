@@ -20,7 +20,7 @@ class LiveRoomSerializer(serializers.ModelSerializer):
         model = LiveRoom
         fields = ('room_name',
                   'room_introduction',
-                #   'room_img',
+                  'room_img',
                   'room_creater',
                 #   'created_time'
                   )
