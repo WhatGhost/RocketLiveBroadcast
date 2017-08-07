@@ -1,13 +1,13 @@
 <template>
     <div class="whole-div">
-        <button @click="showCreateRoom">开房</button>
-        <button id="homepage-btn" @click="showRoomList">平台首页</button>
+        <el-button id="open-room-btn" @click="showCreateRoom">开房</el-button>
+        <el-button type="text" id="homepage-btn" @click="showRoomList">平台首页</el-button>
         <div id="blank"></div>
         <div id="right-btns">
-            <button @click="showLogin">登录</button>
-            <button @click="showRegister">注册</button>
-            <button @click="logout" v-if="this.logged">登出</button>
-            <button @click="showInfo" v-if="this.logged">{{userName}}</button>
+            <el-button @click="showLogin">登录</el-button>
+            <el-button @click="showRegister">注册</el-button>
+            <el-button @click="logout" v-if="this.logged">登出</el-button>
+            <el-button @click="showInfo" v-if="this.logged">{{userName}}</el-button>
         </div>
     </div>
 </template>
@@ -16,8 +16,8 @@
     export default {
         data: function () {
             return {
-                userName: '',
-                logged: false,
+                userName: 'leto',
+                logged: true,
                 isTeacher: false
             }
         },
@@ -56,22 +56,20 @@
 
     button {
         margin: 8px;
-        height: 34px;
         width: 80px;
-        background-color: #e1efd9;
-        border: none;
-        outline: none;
     }
 
     #homepage-btn {
-        background-color: transparent;
-        color: white;
-        border: none;
-        outline: none;
+        color: #2C2C2C;
+        font-weight: bold;
     }
 
     #blank {
         flex-grow: 1;
+    }
+
+    #open-room-btn {
+        background-color: yellow;
     }
 </style>
 

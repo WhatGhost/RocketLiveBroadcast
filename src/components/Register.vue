@@ -3,20 +3,20 @@
         <div>
             <h1>注册</h1>
             <p class="tip">账号</p>
-            <input type="text" placeholder="电子邮箱或手机号码" class="account" v-model="account">
+            <el-input type="text" placeholder="电子邮箱或手机号码" class="account" v-model="account"></el-input>
             <p class="tip">昵称</p>
-            <input type="text" placeholder="昵称" class="name" v-model="nickname">
+            <el-input type="text" placeholder="昵称" class="name" v-model="nickname"></el-input>
             <p class="tip">密码</p>
-            <input type="password" placeholder="密码" class="password" v-model="password">
+            <el-input type="password" placeholder="密码" class="password" v-model="password"></el-input>
             <p class="tip">确认密码</p>
-            <input type="password" placeholder="确认密码" class="sure-password" v-model="confirmPassword">
+            <el-input type="password" placeholder="确认密码" class="sure-password" v-model="confirmPassword"></el-input>
             <p class="tip">验证码</p>
             <div class="vertificate">
-                <input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode">
+                <el-input type="text" placeholder="验证码" class="vertificate-input" v-model="vertificateCode"></el-input>
                 <span class="blank"></span>
-                <button class="send-email-btn" @click="sendVertificateCode">发送邮件，获取验证码</button>
+                <el-button type="text" class="send-email-btn" @click="sendVertificateCode">发送邮件，获取验证码</el-button>
             </div>
-            <button type="button" class="sure-btn" @click="registerBtnClick">确认</button>
+            <el-button type="primary" class="sure-btn" @click="registerBtnClick">确认</el-button>
         </div>
     </div>
 </template>
@@ -104,17 +104,6 @@
         font-weight: normal;
     }
 
-    input {
-        display: block;
-        font-size: 16px;
-        border: 2px solid #e8e8e8;
-        width: 380px;
-        height: 34px;
-        margin-bottom: 5px;
-        border-radius: 6px;
-        padding-left: 0.5em;
-    }
-
     .tip {
         font-size: 14px;
         margin-bottom: 5px;
@@ -132,24 +121,15 @@
         flex-grow: 4;
     }
 
-    .vertificate-input {
-        display: inline-block;
-        width: 150px;
-    }
-
     .send-email-btn {
         font-size: 14px;
         font-weight: bold;
-        color: #00af50;
-        background-color: transparent;
-        border: none;
+        margin-left: 30px;
     }
 
     .sure-btn {
         font-size: 20px;
-        border: none;
         background-color: #00af50;
-        color: white;
         border-radius: 20px;
         width: 384px;
         height: 40px;
@@ -158,25 +138,5 @@
 
     input, button {
         outline: none;
-    }
-
-    input::-webkit-input-placeholder {
-        /* WebKit browsers */
-        color: #e8e8e8;
-    }
-
-    input:-moz-placeholder {
-        /* Mozilla Firefox 4 to 18 */
-        color: #e8e8e8;
-    }
-
-    input::-moz-placeholder {
-        /* Mozilla Firefox 19+ */
-        color: #e8e8e8;
-    }
-
-    input:-ms-input-placeholder {
-        /* Internet Explorer 10+ */
-        color: #e8e8e8;
     }
 </style>
