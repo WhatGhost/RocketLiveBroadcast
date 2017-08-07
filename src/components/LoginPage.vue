@@ -29,7 +29,8 @@ export default {
             if (this.userPassword === '') {
                 window.alert('密码不能为空')
             }
-            console.log('Username:  ' + this.userName + '\n Password:  ' + this.userPassword)
+            console.log({password: this.userPassword, account: this.userName})
+            this.$store.dispatch('loginUser', {password: this.userPassword, account: this.userName})
         }
     }
 }
