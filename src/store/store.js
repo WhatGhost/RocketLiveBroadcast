@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api.js'
-import user from './user.js'
 
 Vue.use(Vuex)
 const apiRoot = 'http://localhost:8000' // This will change if you deploy later
@@ -30,8 +29,10 @@ const store = new Vuex.Store({
             console.error(error)
         },
         'API_SUCC': function (state) {
+            console.log('成功')
         },
         'SUCC_LOGIN': function (state, response) {
+            window.alert('登陆成功')
             state.account = response.body
         },
     },
@@ -55,23 +56,23 @@ const store = new Vuex.Store({
         },
 
         loginUser(store, userinfo) {
-            return user.post(apiRoot + '/users/login_users/', userinfo)
+            return api.post(apiRoot + '/users/login_users/', userinfo)
                 .then((response) => store.commit('SUCC_LOGIN', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         registerUser(store, userinfo) {
-            return user.post(apiRoot + '/users/', userinfo)
+            return api.post(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('API_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changeNick(store, userinfo) {
             userinfo.account = store.state.account
-            return user.patch(apiRoot + '/users/change_info/', userinfo)
+            return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changePasswd(store, userinfo) {
-            return user.patch(apiRoot + '/users/change_info/', userinfo)
+            return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
@@ -79,7 +80,13 @@ const store = new Vuex.Store({
             return api.post(apiRoot + '/liveroom/', formData)
                 .then((response) => store.commit('GET_ROOM_ID', response))
                 .catch((error) => store.commit('API_FAIL', error))
-        }
+        },
+        sendVertificateCode(store, vertificateInfo) {
+            return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
+
     }
 })
 

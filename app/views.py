@@ -4,11 +4,12 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route, api_view
-from .models import Room, MyUser, MyUserManager, LiveRoom
+from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister
 from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer
 from .send_verification import sendMail
 import json
 from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer
+from datetime import datetime,timedelta
 
 def index(request):
     return render(request, 'index.html')
@@ -52,16 +53,29 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def create(self,request):
         info=json.loads(str(request.body,encoding='utf-8'))
-        MyUser.objects.create_user(info['account'],info['nickname'],info['is_student'])
-        return HttpResponse(status=200)
-
+        endTime = datetime.now()
+        startTime = endTime- timedelta(minutes = -30)
+        userSets = VertifyRegister.objects.filter(account=info['account'],vertifycode=info['vertificateCode'])
+        if userSets.exists():
+            print(endTime-userSets[0].vertifytime < timedelta(minutes = 30))
+            MyUser.objects.create_user(info['account'],info['nickname'],info['is_student'])
+            return HttpResponse(status=200)
+        else:
+            return Response('验证码不存在',status=422)
+    
 
     @list_route(methods=['post'])
     def sendVertificateCode(self, request):
         account = json.loads(str(request.body, encoding='utf-8'))['account']
         print(account)
-        vertificate = sendMail(account)
-        if(vertificate != -1):
+        vertification = sendMail(account)
+        if(vertification != -1):
+            VertifyRegister.objects.create(account=account, vertifycode=vertification)
+            return HttpResponse(status=200)           
+        else:
+            return HttpResponse(status=422)
+
+
 
     @list_route(methods=['post'])
     def login_users(self,request):

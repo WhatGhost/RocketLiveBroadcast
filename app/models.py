@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
+from datetime import datetime
 
 
 class MyUserManager(BaseUserManager):
@@ -61,7 +62,6 @@ class MyUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-
     @property
     def is_staff(self):
         "Is the user a member of staff?"
@@ -127,7 +127,12 @@ class VisitHistory(models.Model):
 class VertifyRegister(models.Model):
     account = models.CharField(max_length=100)
     vertifycode = models.CharField(max_length=100)
-    vertifytime = models.DateTimeField(auto_now_add=True)
+    vertifytime = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        print(self.vertifytime)
+        return "account:" + self.account + ", code:" + self.vertifycode
+        # return "account:" + self.account + ", code:" + self.vertifycode + ", time:" + self.vertifytime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 class VertifyForgetpasswd(models.Model):
