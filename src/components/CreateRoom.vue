@@ -14,7 +14,7 @@
                     <input type="text" id="room-name" name="room-name" placeholder="房间名称 " size="30 " v-model="room_name" />
                 </div>
                 <div>
-                    <input type="text" id="room-description" name="room-description" placeholder="房间介绍 " size="30" v-model="room_introduction" />
+                    <input type="text" id="room-introduction" name="room-introduction" placeholder="房间介绍 " size="30" v-model="room_introduction" />
                 </div>
                 <div class="room-id">系统为您分配的房间id为：</div>
                 <input type="submit" id="create" value="开通房间">
@@ -91,7 +91,7 @@ export default {
     height: 30px;
 }
 
-#room-description {
+#room-introduction {
     margin-top: 20px;
     height: 80px;
 }

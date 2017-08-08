@@ -75,7 +75,8 @@
                     account: this.account,
                     nickname: this.nickname,
                     is_student: true,
-                    password: this.password
+                    password: this.password,
+                    vertificateCode: this.vertificateCode,
                 })
             },
             sendVertificateCode () {
