@@ -12,9 +12,9 @@
 </template>
 
 <style scoped>
-.room-menu {
-    display: flex;
-    justify-content: center;
-    padding-left: 30px
-}
+    .room-menu {
+        display: flex;
+        justify-content: center;
+        padding-left: 30px
+    }
 </style>

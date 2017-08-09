@@ -46,59 +46,59 @@ export default {
 </script>
 
 <style scoped>
-.teacher-message {
-    float: left;
-    height: 30px;
-}
+    .teacher-message {
+        float: left;
+        height: 30px;
+    }
 
-.back {
-    top: 10px;
-    float: left;
-    height: 30px;
-}
+    .back {
+        top: 10px;
+        float: left;
+        height: 30px;
+    }
 
-.message {
-    top: 100px;
-    display: flex;
-    justify-content: left;
-    width: 30%;
-}
+    .message {
+        top: 100px;
+        display: flex;
+        justify-content: left;
+        width: 30%;
+    }
 
-.room {
-    position: absolute;
-    top: 80px;
-    padding-left: 300px;
-    width: 400px;
-    flex-direction: column;
-    width: 70%;
-}
+    .room {
+        position: absolute;
+        top: 80px;
+        padding-left: 300px;
+        width: 400px;
+        flex-direction: column;
+        width: 70%;
+    }
 
-.left {
-    width: 50%;
-    float: left;
-    height: 400px;
-    border: 1px solid #3B6273;
-    margin-right: -4px;
-}
+    .left {
+        width: 50%;
+        float: left;
+        height: 400px;
+        border: 1px solid #3B6273;
+        margin-right: -4px;
+    }
 
-.right {
-    width: 50%;
-    float: right;
-    height: 400px;
-    border: 1px solid #3B6273;
-    margin-right: -4px;
-}
+    .right {
+        width: 50%;
+        float: right;
+        height: 400px;
+        border: 1px solid #3B6273;
+        margin-right: -4px;
+    }
 
-.video {
-    height: 50%;
-    border: 1px solid #3B6273;
-    margin-right: -4px;
-}
+    .video {
+        height: 50%;
+        border: 1px solid #3B6273;
+        margin-right: -4px;
+    }
 
-.code-editor {
-    height: 50%;
-    border: 1px solid #3B6273;
-}
+    .code-editor {
+        height: 50%;
+        border: 1px solid #3B6273;
+    }
 </style>
 
 
