@@ -2,12 +2,13 @@
     <div id="main-div">
         <div class="two-sides">
             <div id="tag">
-                <el-button type="primary" id="personal-information" @click="conversion='PersonalInformation'">个人信息
+                <el-button type="primary" id="personal-information" @click="switchLabel('personalInformation')">个人信息
                 </el-button>
-                <el-button type="primary" id="change-password" @click="conversion='ChangePassword'">修改密码</el-button>
-                <el-button type="primary" id="change-nickname" @click="conversion='ChangeNickname'">修改昵称</el-button>
+                <el-button type="primary" id="change-password" @click="switchLabel('changePassword')">修改密码</el-button>
+                <el-button type="primary" id="change-nickname" @click="switchLabel('changeNickname')">修改昵称</el-button>
             </div>
         </div>
+         <router-view></router-view>
     </div>
 </template>
 
@@ -25,6 +26,11 @@
         data: function () {
             return {
                 conversion: 'PersonalInformation'
+            }
+        },
+        methods: {
+            switchLabel: function(destination) {
+                this.$router.push('/info/' + destination)
             }
         }
     }
