@@ -2,47 +2,62 @@
     <div class="live-room">
         <div class="button-message">
             <div>
-                <button class="teacher-message" @click="changePage">message</button>
-                <button class="back" @click="currentView=''">back</button>
-            </div>
-            </br>
-            <div class="message">
-                <component @click="changePage" :is='currentView'></component>
+                <el-button class="teacher-message" @click="switchMessageMenu">message</el-button>
+                <el-button class="back" @click="goHomepage">Go Homepage</el-button>
             </div>
         </div>
-        <div class="room">    
+        <div class="room">
             <p>LiveRoomPage</p>
             <div class='left'>
-                <button></button>
-                <button></button>
-                <button></button>
+                <el-button @click="currentView = 'SlidePage'">Slide</el-button>
+                <el-button @click="currentView = 'CodeEditorPage'">Code Editor</el-button>
+                <el-button @click="currentView = 'WhiteBoardPage'">WhiteBoard</el-button>
+                <component :is='currentView'></component>
             </div>
             <div class='right'>
-                <div class='vedio'>
-                </div>
-                <div class='code-editor'></div>
+                <record-video></record-video>
+                <hr>
+                <chat-area></chat-area>
             </div>
+        </div>
+        <div class="message">
+            <live-room-menu v-if="showMessageMenu"></live-room-menu>
         </div>
     </div>
 </template>
 
 <script>
-import LiveRoomMenu from './LiveRoomMenu'
-export default {
-    components: {
-        LiveRoomMenu,
-    },
-    data: function () {
-        return {
-            currentView: ''
-        }
-    },
-    methods: {
-        changePage: function () {
-            this.currentView = LiveRoomMenu
+    import LiveRoomMenu from './LiveRoomMenu'
+    import SlidePage from './SlidePage'
+    import WhiteBoardPage from './WhiteboardPage'
+    import CodeEditorPage from './CodeEditorPage'
+    import RecordVideo from './RecordVideo'
+    import ChatArea from './ChatArea'
+
+    export default {
+        components: {
+            LiveRoomMenu,
+            SlidePage,
+            WhiteBoardPage,
+            CodeEditorPage,
+            RecordVideo,
+            ChatArea
+        },
+        data: function () {
+            return {
+                currentView: 'SlidePage',
+                showMessageMenu: false
+            }
+        },
+        methods: {
+            switchMessageMenu: function () {
+                this.showMessageMenu = !this.showMessageMenu
+            },
+            goHomepage: function () {
+                // add vue rooter
+            }
         }
     }
-}
 </script>
 
 <style scoped>
@@ -58,27 +73,26 @@ export default {
     }
 
     .message {
-        top: 100px;
         display: flex;
-        justify-content: left;
-        width: 30%;
+        position: absolute;
+        left: 20px;
+        top: 120px;
+        background-color: silver;
+        text-align: left;
     }
 
     .room {
-        position: absolute;
         top: 80px;
-        padding-left: 300px;
-        width: 400px;
+        padding-left: 20px;
         flex-direction: column;
-        width: 70%;
     }
 
     .left {
-        width: 50%;
         float: left;
-        height: 400px;
         border: 1px solid #3B6273;
         margin-right: -4px;
+        width: 600px;
+        height: 500px;
     }
 
     .right {
@@ -95,7 +109,7 @@ export default {
         margin-right: -4px;
     }
 
-    .code-editor {
+    .chat-area {
         height: 50%;
         border: 1px solid #3B6273;
     }

@@ -3,8 +3,8 @@
         <div class="header">
             <nav-header @goto="changePage" @show="doShowDialog"></nav-header>
         </div>
-        <!-- <component :is="currentView" v-bind:class="{ blur: $store.state.background_blur }"></component> -->
-        <router-view></router-view>
+        <!--<router-view></router-view>-->
+        <component :is="currentView" v-bind:class="{ blur: $store.state.background_blur }"></component>
     </div>
 </template>
 
@@ -16,6 +16,7 @@
     import Register from './components/Register'
     import Forget from './components/Forget'
     import CreateRoom from './components/CreateRoom'
+    import LiveRoom from './components/LiveRoom'
 
     export default {
         components: {
@@ -25,11 +26,12 @@
             LoginPage,
             Register,
             Forget,
-            CreateRoom
+            CreateRoom,
+            LiveRoom
         },
         data: function () {
             return {
-                currentView: 'Register',
+                currentView: 'LiveRoom',
                 showDialog: true
             }
         },

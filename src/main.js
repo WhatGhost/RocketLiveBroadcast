@@ -12,10 +12,12 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+const v = new Vue({
     el: '#app',
     router,
     store: store,
     template: '<App/>',
-    components: { App }
+    components: {App}
 })
+
+v.$store.dispatch('getRooms')
