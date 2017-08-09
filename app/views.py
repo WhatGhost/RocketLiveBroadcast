@@ -10,6 +10,9 @@ from .send_verification import sendMail
 import json
 from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer
 from datetime import datetime,timedelta
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
+
 
 def index(request):
     return render(request, 'index.html')
@@ -58,7 +61,7 @@ class UserViewSet(viewsets.ModelViewSet):
         userSets = VertifyRegister.objects.filter(account=info['account'],vertifycode=info['vertificateCode'])
         if userSets.exists():
             print(endTime-userSets[0].vertifytime < timedelta(minutes = 30))
-            MyUser.objects.create_user(info['account'],info['nickname'],info['is_student'])
+            MyUser.objects.create_user(info['account'],info['nickname'],info['is_student'],info['password'])
             return HttpResponse(status=200)
         else:
             return Response('验证码不存在',status=422)
@@ -81,26 +84,21 @@ class UserViewSet(viewsets.ModelViewSet):
     def login_users(self,request):
         info=json.loads(str(request.body,encoding='utf-8'))
         account=info['account']
-        print(account)
-        user=MyUser.objects.get(account=account)
-        print(user.password)
-        if True:
+        user =auth.authenticate(account=account,password=info['password'])
+        print(request.user)
+        print(user)
+        if user is not None:
+            print('验证成功')
             auth.login(request,user)
-            return Response(info['account'],status=200)
+            print(request.session.items())
+            print(request.user)
+            backInfo = {
+                'account': info['account'],
+                'is_student': True
+            }
+            return Response(backInfo, status=200)
         else:
-            print('sb')
-            return HttpResponse(status=200)
-    @list_route(methods=['patch'])
-    def change_info(self,request):
-        info=json.loads(str(request.body,encoding='utf-8'))
-        choose=info['is_password']
-        user=MyUser.objects.get(account=info['account'])
-        if choose==True:
-            return HttpResponse(status=200)
-        else:
-            user.nickname=info['nickname']
-            user.save()
-            return HttpResponse(status=200)
+            print('验证失败')
+            return HttpResponse(status=422) 
 
-        
-        
+

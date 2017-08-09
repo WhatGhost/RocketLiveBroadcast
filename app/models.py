@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from datetime import datetime
-
+from django.contrib.auth.hashers import make_password
 
 class MyUserManager(BaseUserManager):
     def create_user(self, account, nickname, is_student=True, password=None):
@@ -62,6 +62,9 @@ class MyUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+    # def set_password(self,raw_password):
+    #     self.password=make_password(raw_password, 'jisuanke', 'pbkdf2_sha256')
+    #     self._password=self.password
     @property
     def is_staff(self):
         "Is the user a member of staff?"
