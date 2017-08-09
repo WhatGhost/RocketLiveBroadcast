@@ -3,7 +3,8 @@
         <div class="header">
             <nav-header @goto="changePage" @show="doShowDialog"></nav-header>
         </div>
-        <component :is="currentView" v-bind:class="{ blur: $store.state.background_blur }"></component>
+        <!-- <component :is="currentView" v-bind:class="{ blur: $store.state.background_blur }"></component> -->
+        <router-view></router-view>
     </div>
 </template>
 

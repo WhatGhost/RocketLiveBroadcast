@@ -2,6 +2,7 @@
     <div>
         <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
             <el-button type="text" id="open-room-btn" @click="showCreateRoom">开房</el-button>
+            <el-button type="text"  @click="showRoomList">主页</el-button>
             <div id="blank"></div>
             <div id="right-btns">
                 <el-button class="show-modal-btn" type="text"
@@ -56,13 +57,14 @@
                 this.$emit('goto', 'LoginPage')
             },
             showInfo: function () {
-                this.$emit('goto', 'Info')
+                this.$router.push('info')
             },
             showCreateRoom: function () {
-                this.$emit('goto', 'CreateRoom')
+                // this.$emit('goto', 'CreateRoom')
+                this.$router.push('createRoom')
             },
             showRoomList: function () {
-                this.$emit('goto', 'RoomList')
+                this.$router.push('roomList')
             },
             openRegisterDialog: function () {
                 this.$store.dispatch('openRegisterDialog')
