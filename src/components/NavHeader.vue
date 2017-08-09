@@ -2,19 +2,19 @@
     <div>
         <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
             <el-button type="text" id="open-room-btn" @click="showCreateRoom">开房</el-button>
-            <el-button type="text"  @click="showRoomList">主页</el-button>
+            <el-button type="text" @click="showRoomList">主页</el-button>
             <div id="blank"></div>
             <div id="right-btns">
-                <el-button class="show-modal-btn" type="text"
+                <el-button class="right-text-btn" type="text"
                            @click="logout" v-if="this.logged">Log Out
                 </el-button>
-                <el-button class="show-modal-btn" type="text"
+                <el-button class="right-text-btn" type="text"
                            @click="showInfo" v-if="this.logged">{{userName}}
                 </el-button>
-                <el-button class="show-modal-btn" type="text"
+                <el-button class="right-text-btn" type="text"
                            @click="openRegisterDialog">Register
                 </el-button>
-                <el-button class="show-modal-btn" type="text"
+                <el-button class="right-text-btn" type="text"
                            @click="openLoginDialog">Log in
                 </el-button>
             </div>
@@ -57,7 +57,7 @@
                 this.$emit('goto', 'LoginPage')
             },
             showInfo: function () {
-                this.$router.push('/info')
+                this.$router.push('info')
             },
             showCreateRoom: function () {
                 // this.$emit('goto', 'CreateRoom')
@@ -87,7 +87,7 @@
         color: white;
     }
 
-    .show-modal-btn {
+    .right-text-btn {
         font-size: 16px;
         color: #BCB8B8;
         margin-left: 0;

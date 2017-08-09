@@ -17,7 +17,7 @@ const v = new Vue({
     router,
     store: store,
     template: '<App/>',
-    components: { App }
+    components: {App}
 })
 
 v.$store.dispatch('getRooms')
