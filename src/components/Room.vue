@@ -1,7 +1,7 @@
 <template>
     <div class="one-room">
         <!--图片包含超链接-->
-        <!--<img src="{{room.room_img}}" class="room-img">-->
+        <!-- <img src="{{room.room_img}}" class="room-img"> -->
         <p>img:{{room.room_img}}</p>
         <div class="txt-introduce">
             <p class="room-name">房间名：{{room.room_name}}</p>
