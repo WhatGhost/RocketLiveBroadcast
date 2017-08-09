@@ -18,7 +18,7 @@ export default {
     methods: {
         changeNickname() {
             console.log('fuck')
-            this.$store.dispatch('changeNick', { nickname: this.newnickname, account: this.account, is_password: 'False' })
+            this.$store.dispatch('changeNick', { nickname: this.newnickname, account: this.account, is_password: false })
         }
     }
 }

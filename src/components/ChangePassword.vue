@@ -28,7 +28,7 @@ export default {
     methods: {
         changepasswdClick() {
             this.useraccount = this.$store.state.account
-            this.$store.dispatch('changePasswd', { oldpassword: this.oldpassword, newpassword: this.newpassword, account: this.useraccount, is_password: 'True' })
+            this.$store.dispatch('changePasswd', { oldpassword: this.oldpassword, newpassword: this.newpassword, account: this.useraccount, is_password: true })
         }
     },
 }
