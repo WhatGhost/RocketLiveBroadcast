@@ -64,6 +64,7 @@
                 this.$router.push('createRoom')
             },
             showRoomList: function () {
+                this.$store.dispatch('getRooms')
                 this.$router.push('roomList')
             },
             openRegisterDialog: function () {
