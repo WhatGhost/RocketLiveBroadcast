@@ -77,15 +77,6 @@
         text-decoration: none;
     }
 
-    .dialog {
-
-    }
-
-    .logo {
-        width: 100px;
-        height: 100px
-    }
-
     .header {
         width: 100%;
     }

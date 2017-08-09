@@ -13,7 +13,7 @@
                             </div>
                             <div class="dialog-body">
                                 <input type="text" placeholder="E-MAIL OR PHONE NUM"
-                                           v-model="account">
+                                       v-model="account">
                                 <input type="password" placeholder="PASSWORD"
                                        v-model="password">
                                 <el-button type="primary" class="sure-btn shadow-m" @click="loginButtonClick">Log In
@@ -73,11 +73,11 @@
                     return
                 }
                 if (!(this.isRightEmail() || this.isRightPhoneNum())) {
-                    this.errorMes = '不是有效的电子邮箱或手机号码'
+                    this.showErrorMes('不是有效的电子邮箱或手机号码')
                     return
                 }
                 if (!this.isPassword()) {
-                    this.errorMes = '密码格式不正确，请使用8至16位的数字、字母和下划线组合'
+                    this.showErrorMes('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
                     return
                 }
                 this.$store.dispatch('loginUser', {
@@ -116,6 +116,7 @@
         vertical-align: middle;
     }
 
+    /*webstorm shows the two style not used, but they do works*/
     .modal-enter {
         opacity: 0;
     }
