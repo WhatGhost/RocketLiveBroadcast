@@ -57,7 +57,7 @@
                 this.$emit('goto', 'LoginPage')
             },
             showInfo: function () {
-                this.$router.push('info')
+                this.$router.push('/info')
             },
             showCreateRoom: function () {
                 // this.$emit('goto', 'CreateRoom')
@@ -65,7 +65,7 @@
             },
             showRoomList: function () {
                 this.$store.dispatch('getRooms')
-                this.$router.push('roomList')
+                this.$router.push('/roomList')
             },
             openRegisterDialog: function () {
                 this.$store.dispatch('openRegisterDialog')
