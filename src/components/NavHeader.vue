@@ -1,27 +1,51 @@
 <template>
-    <div class="whole-div">
-        <el-button id="open-room-btn" @click="showCreateRoom">开房</el-button>
-        <el-button type="text" id="homepage-btn" @click="showRoomList">平台首页</el-button>
-        <div id="blank"></div>
-        <div id="right-btns">
-            <el-button @click="showLogin">登录</el-button>
-            <el-button @click="showRegister">注册</el-button>
-            <el-button @click="logout" v-if="this.logged">登出</el-button>
-            <el-button @click="showInfo" v-if="this.logged">{{userName}}</el-button>
+    <div>
+        <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
+            <el-button type="text" id="open-room-btn" @click="showCreateRoom">开房</el-button>
+            <div id="blank"></div>
+            <div id="right-btns">
+                <el-button class="show-modal-btn" type="text"
+                           @click="logout" v-if="this.logged">Log Out
+                </el-button>
+                <el-button class="show-modal-btn" type="text"
+                           @click="showInfo" v-if="this.logged">{{userName}}
+                </el-button>
+                <el-button class="show-modal-btn" type="text"
+                           @click="openRegisterDialog">Register
+                </el-button>
+                <el-button class="show-modal-btn" type="text"
+                           @click="openLoginDialog">Log in
+                </el-button>
+            </div>
         </div>
+        <register-modal-dialog></register-modal-dialog>
+        <login-modal-dialog></login-modal-dialog>
     </div>
 </template>
 
 <script>
+    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+    import RegisterModalDialog from './RegisterModalDialog.vue'
+    import LoginModalDialog from './LoginModalDialog'
+
     export default {
+        components: {
+            ElButton,
+            RegisterModalDialog,
+            LoginModalDialog
+        },
         data: function () {
             return {
                 userName: 'leto',
                 logged: true,
-                isTeacher: false
+                isTeacher: false,
+                isBlur: true
             }
         },
         methods: {
+            switchBlur: function () {
+                this.isBlur = !this.isBlur
+            },
             showRegister: function () {
                 this.$emit('goto', 'Register')
             },
@@ -39,6 +63,12 @@
             },
             showRoomList: function () {
                 this.$emit('goto', 'RoomList')
+            },
+            openRegisterDialog: function () {
+                this.$store.dispatch('openRegisterDialog')
+            },
+            openLoginDialog: function () {
+                this.$store.dispatch('openLoginDialog')
             }
         }
     }
@@ -50,8 +80,14 @@
         align-items: center;
         height: 60px;
         border: none;
-        background-color: #92d050;
+        background-color: #f7f7f7;
         color: white;
+    }
+
+    .show-modal-btn {
+        font-size: 16px;
+        color: #BCB8B8;
+        margin-left: 0;
     }
 
     button {
@@ -69,7 +105,8 @@
     }
 
     #open-room-btn {
-        background-color: yellow;
+        background-color: #81cdc6;
+        color: white;
     }
 </style>
 

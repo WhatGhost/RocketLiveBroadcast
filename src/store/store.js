@@ -9,7 +9,11 @@ const store = new Vuex.Store({
     state: {
         rooms: [],
         live_room_id: -1,
-        account: ''
+        account: '',
+        // background blur flag
+        background_blur: false,
+        showRegister: false,
+        showLogin: false
     },
     mutations: {
         // Keep in mind that response is an HTTP response
@@ -43,6 +47,25 @@ const store = new Vuex.Store({
             window.alert('登陆成功')
             state.account = response.body
         },
+        // waiting for comfiring which kind code style is good
+        trueBlur: function (state) {
+            state.background_blur = true
+        },
+        falseBlur: function (state) {
+            state.background_blur = false
+        },
+        trueRegister: function (state) {
+            state.showRegister = true
+        },
+        falseRegister: function (state) {
+            state.showRegister = false
+        },
+        trueLogin: function (state) {
+            state.showLogin = true
+        },
+        falseLogin: function (state) {
+            state.showLogin = false
+        }
     },
     actions: {
         // We added a getRooms action for the initial load from the server
@@ -62,13 +85,13 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('CLEAR_ROOMS'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-
         loginUser(store, userinfo) {
             return api.post(apiRoot + '/users/login_users/', userinfo)
                 .then((response) => store.commit('SUCC_LOGIN', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         registerUser(store, userinfo) {
+            console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('API_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
@@ -90,11 +113,28 @@ const store = new Vuex.Store({
                 .catch((error) => store.commit('API_FAIL', error))
         },
         sendVertificateCode(store, vertificateInfo) {
+            console.log('dispatched')
             return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-
+        openRegisterDialog: function () {
+            store.commit('trueRegister')
+            store.commit('trueBlur')
+        },
+        closeRegisterDialog: function () {
+            store.commit('falseRegister')
+            store.commit('falseBlur')
+        },
+        openLoginDialog: function () {
+            store.commit('trueLogin')
+            store.commit('trueBlur')
+        },
+        closeLoginDialog: function () {
+            console.log('commiting')
+            store.commit('falseLogin')
+            store.commit('falseBlur')
+        }
     }
 })
 
