@@ -11,13 +11,36 @@ import './mystyle.css'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
+Vue.http.interceptors.push(function(request, next) {
+    // 跨域携带cookie
+    request.credentials = true
+    next()
+})
+
+function getCookie(name) {
+    var cookieValue = null
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';')
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i]
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+                break
+            }
+        }
+    }
+    return cookieValue
+}
+
+Vue.http.headers.common['X-CSRFToken'] = getCookie('csrftoken')
+
 /* eslint-disable no-new */
 const v = new Vue({
     el: '#app',
     router,
     store: store,
     template: '<App/>',
-    components: {App}
+    components: { App }
 })
 
 v.$store.dispatch('getRooms')
