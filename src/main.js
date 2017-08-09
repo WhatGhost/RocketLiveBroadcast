@@ -4,7 +4,7 @@ import '../theme/index.css'
 import ElementUI from 'element-ui'
 import Vue from 'vue'
 import App from './App'
-
+import router from './router/index.js'
 import store from './store/store.js'
 import './mystyle.css'
 
@@ -14,6 +14,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
+    router,
     store: store,
     template: '<App/>',
     components: { App }
