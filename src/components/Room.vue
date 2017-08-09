@@ -7,7 +7,7 @@
         <div class="txt-introduce">
             <p class="room-name">房间名：{{room.room_name}}</p>
             <p class="room-teacher">教师：{{room.room_creater}}</p>
-            <p class="room-id">房间id：{{room.room_id}}</p>
+            <p class="room-id">房间id：{{room.id}}</p>
             <p class="room-info">详情：{{room.room_introduction}}</p>
         </div>
     </div>
@@ -21,6 +21,7 @@
         props: ['room'],
         methods: {
             enterRoom: function () {
+                this.$router.push('/room/' + this.room.id)
             }
         }
     }
