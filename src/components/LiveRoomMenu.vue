@@ -7,7 +7,6 @@
             <p class="room-teacher">教师：22</p>
             <p class="room-id">房间id：312321</p>
             <p class="room-info">详情：33</p>
-            <p class="room-teacher">teacher：324</p>
         </div>
     </div>
 </template>

@@ -10,8 +10,7 @@
                 <component @click="changePage" :is='currentView'></component>
             </div>
         </div>
-        <div class="room">
-    
+        <div class="room">    
             <p>LiveRoomPage</p>
             <div class='left'>
                 <button></button>
@@ -30,7 +29,6 @@
 <script>
 import LiveRoomMenu from './LiveRoomMenu'
 export default {
-
     components: {
         LiveRoomMenu,
     },
