@@ -99,38 +99,6 @@
         transition: opacity .4s ease;
     }
 
-    .modal-mask {
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .5);
-        display: table;
-        transition: opacity .3s ease;
-    }
-
-    .modal-wrapper {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    /*webstorm shows the two style not used, but they do works*/
-    .modal-enter {
-        opacity: 0;
-    }
-
-    .modal-leave-active {
-        opacity: 0;
-    }
-
-    .modal-enter .container,
-    .modal-leave-active .container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
-    }
-
     .container {
         width: 480px;
         height: 460px;
@@ -201,5 +169,4 @@
         position: relative;
         left: 32px;
     }
-
 </style>

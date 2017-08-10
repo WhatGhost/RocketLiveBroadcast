@@ -13,7 +13,9 @@ const store = new Vuex.Store({
         // background blur flag
         background_blur: false,
         showRegister: false,
-        showLogin: false
+        showLogin: false,
+        // 完成幻灯片上传
+        finishSlideUpload: false
     },
     mutations: {
         // Keep in mind that response is an HTTP response
@@ -65,6 +67,9 @@ const store = new Vuex.Store({
         },
         falseLogin: function (state) {
             state.showLogin = false
+        },
+        finishSlideUpload: function (state) {
+            state.finishSlideUpload = true
         }
     },
     actions: {
@@ -134,6 +139,9 @@ const store = new Vuex.Store({
             console.log('commiting')
             store.commit('falseLogin')
             store.commit('falseBlur')
+        },
+        endUploadingSlide: function () {
+            store.commit('finshSlideUpload')
         }
     }
 })

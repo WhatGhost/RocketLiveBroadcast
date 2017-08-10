@@ -9,15 +9,17 @@
         <div class="room">
             <p>LiveRoomPage</p>
             <div class='left'>
-                <el-button @click="currentView = 'SlidePage'">Slide</el-button>
-                <el-button @click="currentView = 'CodeEditorPage'">Code Editor</el-button>
-                <el-button @click="currentView = 'WhiteBoardPage'">WhiteBoard</el-button>
-                <component :is='currentView'></component>
+                <el-button @click="showingComponent = 'slide'">Slide</el-button>
+                <el-button @click="showingComponent = 'codeEditor'">Code Editor</el-button>
+                <el-button @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
+                <slide-page :hide="hideSlide"></slide-page>
+                <code-editor-page :hide="hideCodeEditor"></code-editor-page>
+                <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
             <div class='right'>
-                <record-video></record-video>
+                <record-video class="video-area"></record-video>
                 <hr>
-                <chat-area></chat-area>
+                <chat-area class="chat-area"></chat-area>
             </div>
         </div>
         <div class="message">
@@ -45,8 +47,19 @@
         },
         data: function () {
             return {
-                currentView: 'SlidePage',
-                showMessageMenu: false
+                showMessageMenu: false,
+                showingComponent: 'slide'
+            }
+        },
+        computed: {
+            hideSlide: function () {
+                return this.showingComponent !== 'slide'
+            },
+            hideCodeEditor: function () {
+                return this.showingComponent !== 'codeEditor'
+            },
+            hideWhiteBoard: function () {
+                return this.showingComponent !== 'whiteBoard'
             }
         },
         methods: {
@@ -55,7 +68,7 @@
             },
             goHomepage: function () {
                 // add vue rooter
-            }
+            },
         }
     }
 </script>
@@ -99,11 +112,10 @@
         width: 50%;
         float: right;
         height: 400px;
-        border: 1px solid #3B6273;
-        margin-right: -4px;
+        margin-right: 20px;
     }
 
-    .video {
+    .video-area {
         height: 50%;
         border: 1px solid #3B6273;
         margin-right: -4px;
@@ -114,5 +126,3 @@
         border: 1px solid #3B6273;
     }
 </style>
-
-
