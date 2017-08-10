@@ -71,6 +71,19 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response('验证码不存在', status=422)
 
     @list_route(methods=['post'])
+    def current_user(self,request):
+        user = request.user
+        print("sbbbbb")
+        print(user)
+        print(user.account)
+        print(user.nickname)
+        if request.user.is_authenticated():
+            print("authenticated~")
+            return Response({"account": user.account, "nickname": user.nickname, "isTeacher": not user.is_student})
+        else:
+            return Response({"account": None, "nickname": None, "isTeacher": False})
+
+    @list_route(methods=['post'])
     def sendVertificateCode(self, request):
         account = request.data.get('account')
         #account = json.loads(str(request.body, encoding='utf-8'))['account']

@@ -9,7 +9,9 @@ const store = new Vuex.Store({
     state: {
         rooms: [],
         live_room_id: -1,
-        account: '',
+        account: null,
+        nickname: null,
+        isTeacher: false,
         // background blur flag
         background_blur: false,
         showRegister: false,
@@ -70,6 +72,17 @@ const store = new Vuex.Store({
         },
         finishSlideUpload: function (state) {
             state.finishSlideUpload = true
+        },
+        getUser: function (state, response) {
+            if (response.body.account) {
+                state.account = response.body['account']
+                state.nickname = response.body['nickname']
+                state.isTeacher = response.body['isTeacher']
+            } else {
+                state.account = null
+                state.nickname = null
+                state.isTeacher = false
+            }
         }
     },
     actions: {
@@ -148,6 +161,11 @@ const store = new Vuex.Store({
         },
         endUploadingSlide: function () {
             store.commit('finshSlideUpload')
+        },
+        getUserFromDjango: function () {
+            return api.post(apiRoot + '/users/current_user/')
+                .then((response) => store.commit('getUser', response))
+                .catch((error) => store.commit('API_FAIL', error))
         }
     }
 })
