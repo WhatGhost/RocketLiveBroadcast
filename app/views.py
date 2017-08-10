@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route, api_view
-from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister
+from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
 from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer
 from .send_verification import sendMail
 import json
@@ -59,9 +59,9 @@ class UserViewSet(viewsets.ModelViewSet):
         info = request.data
         #info = json.loads(str(request.body, encoding='utf-8'))
         endTime = datetime.now()
-        startTime = endTime - timedelta(minutes=-30)
+        startTime = endTime + timedelta(minutes=-30)
         userSets = VertifyRegister.objects.filter(
-            account=info['account'], vertifycode=info['vertificateCode'])
+            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime,endTime))
         if userSets.exists():
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
             MyUser.objects.create_user(
@@ -76,10 +76,14 @@ class UserViewSet(viewsets.ModelViewSet):
         #account = json.loads(str(request.body, encoding='utf-8'))['account']
         print(account)
         vertification = sendMail(account)
-        if(vertification != -1):
-            VertifyRegister.objects.create(
-                account=account, vertifycode=vertification)
-            return HttpResponse(status=200)
+        if vertification != -1 :
+            if(request.data.get('mode') == 'register'):
+                VertifyRegister.objects.create(
+                    account=account, vertifycode=vertification)
+                return HttpResponse(status=200)
+            elif request.data.get('mode') == 'forget':
+                VertifyForgetpasswd.objects.create(account = account, vertifycode = vertification)
+                return HttpResponse(status=200)
         else:
             return HttpResponse(status=422)
 
@@ -103,7 +107,8 @@ class UserViewSet(viewsets.ModelViewSet):
         
     @list_route(methods=['patch'])
     def change_info(self,request):
-        info=json.loads(str(request.body,encoding='utf-8'))
+        info = request.data
+        #info=json.loads(str(request.body,encoding='utf-8'))
         #user=MyUser.objects.get(account=info['account'])
         print(111)
         print(info['is_password'])
@@ -123,4 +128,24 @@ class UserViewSet(viewsets.ModelViewSet):
             user.nickname=info['nickname']
             user.save()
             return HttpResponse(status=200)
+
+    @list_route(methods=['patch'])
+    def forget_info(self,request):
+        info = request.data
+        endTime = datetime.now()
+        startTime = endTime + timedelta(minutes=-30)
+        print(info['account'])
+        userSets = VertifyForgetpasswd.objects.filter(
+            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime,endTime))
+        print(userSets)
+        if userSets.exists():
+            print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
+            user=MyUser.objects.get(account=info['account'])
+            print(user.password)
+            user.set_password(info['password'])
+            print(user.password)
+            user.save()
+            return HttpResponse(status=200)
+        else:
+            return Response('更改失败', status=422)
 
