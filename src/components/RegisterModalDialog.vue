@@ -24,7 +24,7 @@
                                 <input type="password" placeholder="CONFIRM PASSWORD"
                                        class="input sure-password" v-model="confirmPassword">
                                 <div class="vertificate">
-                                    <input type="text" placeholder="vertificate CODE"
+                                    <input type="text" placeholder="VERIFICATION CODE"
                                            class="vertificate-input input" v-model="vertificateCode">
                                     <el-button type="text" class="send-code-btn"
                                                @click="sendVertificateCode">send
@@ -134,37 +134,6 @@
         margin: 20px auto 0 auto;
         border-radius: 10px;
         transition: opacity .4s ease;
-    }
-
-    .modal-mask {
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .5);
-        display: table;
-        transition: opacity .3s ease;
-    }
-
-    .modal-wrapper {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .modal-enter {
-        opacity: 0;
-    }
-
-    .modal-leave-active {
-        opacity: 0;
-    }
-
-    .modal-enter .container,
-    .modal-leave-active .container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
     }
 
     .container {

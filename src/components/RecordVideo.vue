@@ -9,8 +9,8 @@
         data: function () {
             return {}
         },
-        methods: function () {
-        }
+//        methods: function () {
+//        }
     }
 </script>
 

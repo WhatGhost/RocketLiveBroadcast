@@ -71,7 +71,7 @@
 
     #app {
         color: #2c3e50;
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: Helvetica Neue, Arial, Hiragino Sans GB, STHeiti, Microsoft YaHei, serif;
         text-align: center;
     }
 
