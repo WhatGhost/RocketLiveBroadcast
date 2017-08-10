@@ -25,7 +25,7 @@ def sendMail(to_addr, message="您的验证码为： ", mode='plain', encode='ut
     msg['Subject'] = Header('火箭队直播平台验证码', 'utf-8').encode()
 
     try:
-        server = smtplib.SMTP(smtp_server, 25, None, 5)  # SMTP协议默认端口是25
+        server = smtplib.SMTP(smtp_server, 25, None, 10)  # SMTP协议默认端口是25
         server.set_debuglevel(1)
         server.login(from_addr, password)
         server.sendmail(from_addr, [to_addr], msg.as_string())
