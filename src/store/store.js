@@ -45,7 +45,7 @@ const store = new Vuex.Store({
         },
         'SUCC_LOGIN': function (state, response) {
             window.alert('登陆成功')
-            state.account = response.body
+            state.account = response.body['account']
         },
         // waiting for comfiring which kind code style is good
         trueBlur: function (state) {

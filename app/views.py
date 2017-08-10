@@ -100,5 +100,26 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             print('验证失败')
             return HttpResponse(status=422) 
-
+    @list_route(methods=['patch'])
+    def change_info(self,request):
+        info=json.loads(str(request.body,encoding='utf-8'))
+        #user=MyUser.objects.get(account=info['account'])
+        print(111)
+        print(info['is_password'])
+        if info['is_password']:
+            print(info['account'])
+            print(info['oldpassword'])
+            user =auth.authenticate(account=info['account'],password=info['oldpassword'])
+            if user is not None :
+                #user.check_password(info['password'])
+                user.set_password(info['newpassword'])
+                user.save()
+                return HttpResponse(status=200)
+            else:
+                return Response('原密码错误',status=422)
+        else:
+            user=MyUser.objects.get(account=info['account'])
+            user.nickname=info['nickname']
+            user.save()
+            return HttpResponse(status=200)
 
