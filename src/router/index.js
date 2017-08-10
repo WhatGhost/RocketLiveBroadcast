@@ -7,6 +7,7 @@ import PersonalInformation from '../components/PersonalInformation'
 import ChangeNickname from '../components/ChangeNickname'
 import ChangePassword from '../components/ChangePassword'
 import LiveRoom from '../components/LiveRoom'
+import Forget from '../components/Forget'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,10 @@ const router = new VueRouter({
         {
             path: '/room/:id',
             component: LiveRoom
+        },
+        {
+            path: '/forget',
+            component: Forget
         }
     ]
 })

@@ -87,6 +87,7 @@
                 window.alert('sendVertificateCode click')
                 this.$store.dispatch('sendVertificateCode', {
                     account: this.account,
+                    mode: 'register'
                 })
             }
         }

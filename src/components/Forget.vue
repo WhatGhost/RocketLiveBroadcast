@@ -7,7 +7,7 @@
             <p class="tip">验证码</p>
             <div class="vertificate">
                 <el-input type="text" placeholder="验证码" v-model="vertificateCode" class="vertificate-input"></el-input>
-                <el-button type="text" @click="send-vertificate-code" class="send-email-btn">发送验证码</el-button>
+                <el-button type="text" @click="sendVertificateCode" class="send-email-btn">发送验证码</el-button>
             </div>
             <p class="tip">新密码</p>
             <el-input type="password" placeholder="密码" v-model="password"></el-input>
@@ -30,7 +30,15 @@
         },
         methods: {
             sendVertificateCode () {
-
+                if (this.account === '') {
+                    window.alert('请输入用户名')
+                    return
+                }
+                window.alert('sendVertificateCode click')
+                this.$store.dispatch('sendVertificateCode', {
+                    account: this.account,
+                    mode: 'forget'
+                })
             },
             isPassword () {
                 let patrn = /^(\w){8,20}$/
@@ -57,6 +65,11 @@
                     window.alert('两次密码不一致')
                     return 0
                 }
+                this.$store.dispatch('forgetPassword', {
+                    account: this.account,
+                    password: this.password,
+                    vertificateCode: this.vertificateCode
+                })
                 return 1
             },
             checkVertification () {

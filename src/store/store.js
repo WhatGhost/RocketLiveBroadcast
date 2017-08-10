@@ -123,6 +123,12 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
+        forgetPassword(store, info) {
+            console.log('dispathed')
+            return api.patch(apiRoot + '/users/forget_info/', info)
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
         openRegisterDialog: function () {
             store.commit('trueRegister')
             store.commit('trueBlur')
