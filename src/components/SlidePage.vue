@@ -4,8 +4,7 @@
             <div class="upload-btn-div">
                 <el-upload
                     class="upload-file"
-                    action="http://localhost:8000/liveroom/"
-                    :file-list="fileList">
+                    action="http://localhost:8000/liveroom/">
                     <el-button size="small" type="primary">点击上传演示文档</el-button>
                     <div slot="tip" class="el-upload__tip">支持PPT、PPTX、Key文件，且不超过500MB</div>
                 </el-upload>
@@ -17,14 +16,15 @@
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+    // import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+    // import ElButton from '../../node_modules/element-ui/packages/upload/src/upload.vue'
 
     export default {
         props: {
             'hide': false,
         },
         components: {
-            ElButton
+            // ElButton
         },
         data: function () {
             return {
