@@ -56,7 +56,8 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def create(self, request):
-        info = json.loads(str(request.body, encoding='utf-8'))
+        info = request.data
+        #info = json.loads(str(request.body, encoding='utf-8'))
         endTime = datetime.now()
         startTime = endTime - timedelta(minutes=-30)
         userSets = VertifyRegister.objects.filter(
@@ -71,7 +72,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['post'])
     def sendVertificateCode(self, request):
-        account = json.loads(str(request.body, encoding='utf-8'))['account']
+        account = request.data.get('account')
+        #account = json.loads(str(request.body, encoding='utf-8'))['account']
         print(account)
         vertification = sendMail(account)
         if(vertification != -1):
