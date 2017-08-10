@@ -1,21 +1,22 @@
 <template>
     <div>
         <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
-            <el-button type="text" id="open-room-btn" @click="showCreateRoom">开房</el-button>
+            <el-button type="text" id="open-room-btn" v-if="$store.state.isTeacher"
+                       @click="showCreateRoom">开房</el-button>
             <el-button type="text" @click="showRoomList">主页</el-button>
             <div id="blank"></div>
             <div id="right-btns">
                 <el-button class="right-text-btn" type="text"
-                           @click="logout" v-if="this.logged">Log Out
+                           @click="logout" v-if="logged">Log Out
                 </el-button>
                 <el-button class="right-text-btn" type="text"
-                           @click="showInfo" v-if="this.logged">{{userName}}
+                           @click="showInfo" v-if="logged">{{userName}}
                 </el-button>
                 <el-button class="right-text-btn" type="text"
-                           @click="openRegisterDialog">Register
+                           @click="openRegisterDialog" v-if="!logged">Register
                 </el-button>
                 <el-button class="right-text-btn" type="text"
-                           @click="openLoginDialog">Log in
+                           @click="openLoginDialog" v-if="!logged">Log in
                 </el-button>
             </div>
         </div>
@@ -37,10 +38,17 @@
         },
         data: function () {
             return {
-                userName: 'leto',
-                logged: true,
                 isTeacher: false,
                 isBlur: true
+            }
+        },
+        computed: {
+            userName: function () {
+                console.log(this.$store.state.nickname)
+                return this.$store.state.nickname
+            },
+            logged: function () {
+                return this.$store.state.account !== null
             }
         },
         methods: {

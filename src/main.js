@@ -52,4 +52,5 @@ const v = new Vue({
     components: { App }
 })
 
+v.$store.dispatch('getUserFromDjango')
 v.$store.dispatch('getRooms')
