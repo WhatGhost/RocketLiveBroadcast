@@ -52,6 +52,7 @@
             },
             logout: function () {
                 this.loged = false
+                this.$store.dispatch('logout')
             },
             showLogin: function () {
                 this.$emit('goto', 'LoginPage')

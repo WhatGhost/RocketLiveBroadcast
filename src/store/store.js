@@ -129,6 +129,12 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
+        logout(store) {
+            console.log('dispathed')
+            return api.post(apiRoot + '/users/logout_user/')
+                .then((response) => store.commit('API_SUCC'))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
         openRegisterDialog: function () {
             store.commit('trueRegister')
             store.commit('trueBlur')
