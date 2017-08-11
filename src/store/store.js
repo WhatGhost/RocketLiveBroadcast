@@ -44,6 +44,12 @@ const store = new Vuex.Store({
             window.alert('失败')
             console.error(error)
         },
+        'Register_SUCC': function (state) {
+            console.log(state)
+            window.alert('成功！')
+            state.showLogin = true
+            state.showRegister = false
+        },
         'API_SUCC': function (state) {
             console.log(state)
             window.alert('成功！')
@@ -118,7 +124,7 @@ const store = new Vuex.Store({
         registerUser(store, userinfo) {
             console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
-                .then((response) => store.commit('API_SUCC', userinfo))
+                .then((response) => store.commit('Register_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changeNick(store, userinfo) {
