@@ -47,6 +47,13 @@ const store = new Vuex.Store({
             console.log(state)
             window.alert('成功！')
         },
+        'LOGOUT_SUCC': function (state) {
+            console.log(state)
+            window.alert('登出成功！')
+            state.account = null
+            state.nickname = null
+            state.isTeacher = false
+        },
         'SUCC_LOGIN': function (state, response) {
             window.alert('登陆成功')
             state.account = response.body['account']
@@ -145,7 +152,7 @@ const store = new Vuex.Store({
         logout(store) {
             console.log('dispathed')
             return api.post(apiRoot + '/users/logout_user/')
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => store.commit('LOGOUT_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         openRegisterDialog: function () {
