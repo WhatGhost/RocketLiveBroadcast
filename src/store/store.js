@@ -19,7 +19,11 @@ const store = new Vuex.Store({
         showLogin: false,
         showForget: false,
         // 完成幻灯片上传
-        finishSlideUpload: false
+        finishSlideUpload: false,
+        // 上传凭证
+        token: '',
+        // 服务端文件名称
+        slideKey: ''
     },
     mutations: {
         // Keep in mind that response is an HTTP response
@@ -70,7 +74,6 @@ const store = new Vuex.Store({
             state.showLogin = false
             router.push('/roomList')
         },
-        // waiting for comfiring which kind code style is good
         trueBlur: function (state) {
             state.background_blur = true
         },
@@ -108,6 +111,14 @@ const store = new Vuex.Store({
                 state.nickname = null
                 state.isTeacher = false
             }
+        },
+        gotToken: function (state, response) {
+            state.token = response.body['token']
+            state.slideKey = response.body['key']
+        },
+        gotTokenFail: function (state, response) {
+            state.token = ''
+            state.slideKey = ''
         }
     },
     actions: {
@@ -172,6 +183,11 @@ const store = new Vuex.Store({
             return api.post(apiRoot + '/users/logout_user/')
                 .then((response) => store.commit('LOGOUT_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
+        },
+        askToken(store, fileName) {
+            return api.post(apiRoot + '/slide/askToken', fileName)
+                .then((response) => store.commit('gotToken', response))
+                .catch((error) => store.commit('gotTokenFail', error))
         },
         openRegisterDialog: function () {
             store.commit('trueRegister')
