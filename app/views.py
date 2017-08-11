@@ -107,13 +107,14 @@ class UserViewSet(viewsets.ModelViewSet):
             auth.login(request, user)
             backInfo = {
                 'account': request.data.get('account', ''),
-                'is_student': True
+                'is_student': True,
+                'nickname': user.nickname
             }
             return Response(backInfo, status=200)
         else:
             print('验证失败')
-            return HttpResponse(status=422) 
-        
+            return HttpResponse(status=422)
+
     @list_route(methods=['patch'])
     def change_info(self,request):
         info = request.data
@@ -169,5 +170,5 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response('请先登录',status=422)
 
 
-        
+
 

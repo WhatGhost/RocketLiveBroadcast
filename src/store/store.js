@@ -65,7 +65,9 @@ const store = new Vuex.Store({
         },
         'SUCC_LOGIN': function (state, response) {
             window.alert('登陆成功')
+            console.log(response)
             state.account = response.body['account']
+            state.nickname = response.body['nickname']
             state.background_blur = false
             state.showLogin = false
             router.push('/roomList')
