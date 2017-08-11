@@ -17,6 +17,7 @@ const store = new Vuex.Store({
         background_blur: false,
         showRegister: false,
         showLogin: false,
+        showForget: false,
         // 完成幻灯片上传
         finishSlideUpload: false
     },
@@ -43,6 +44,12 @@ const store = new Vuex.Store({
         'API_FAIL': function (state, error) {
             window.alert('失败')
             console.error(error)
+        },
+        'Register_SUCC': function (state) {
+            console.log(state)
+            window.alert('成功！')
+            state.showLogin = true
+            state.showRegister = false
         },
         'API_SUCC': function (state) {
             console.log(state)
@@ -81,6 +88,12 @@ const store = new Vuex.Store({
         },
         falseLogin: function (state) {
             state.showLogin = false
+        },
+        trueForget: function (state) {
+            state.showForget = false
+        },
+        falseForget: function (state) {
+            state.showForget = false
         },
         finishSlideUpload: function (state) {
             state.finishSlideUpload = true
@@ -123,7 +136,7 @@ const store = new Vuex.Store({
         registerUser(store, userinfo) {
             console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
-                .then((response) => store.commit('API_SUCC', userinfo))
+                .then((response) => store.commit('Register_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changeNick(store, userinfo) {
@@ -171,6 +184,14 @@ const store = new Vuex.Store({
         openLoginDialog: function () {
             store.commit('trueLogin')
             store.commit('trueBlur')
+        },
+        openForget: function () {
+            store.commit('trueForget')
+            store.commit('trueBlur')
+        },
+        closeForget: function () {
+            store.commit('closeForget')
+            store.commit('closeBlur')
         },
         closeLoginDialog: function () {
             console.log('commiting')
