@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div>
+        <div v-if="this.$store.state.showLogin">
             <h1>找回密码</h1>
             <p class="tip">账号</p>
             <el-input type="text" placeholder="账号邮箱" v-model="account"></el-input>

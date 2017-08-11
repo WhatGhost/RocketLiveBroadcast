@@ -16,6 +16,7 @@ const store = new Vuex.Store({
         background_blur: false,
         showRegister: false,
         showLogin: false,
+        showForget: false,
         // 完成幻灯片上传
         finishSlideUpload: false
     },
@@ -69,6 +70,12 @@ const store = new Vuex.Store({
         },
         falseLogin: function (state) {
             state.showLogin = false
+        },
+        trueForget: function (state) {
+            state.showForget = false
+        },
+        falseForget: function (state) {
+            state.showForget = false
         },
         finishSlideUpload: function (state) {
             state.finishSlideUpload = true
@@ -159,6 +166,14 @@ const store = new Vuex.Store({
         openLoginDialog: function () {
             store.commit('trueLogin')
             store.commit('trueBlur')
+        },
+        openForget: function () {
+            store.commit('trueForget')
+            store.commit('trueBlur')
+        },
+        closeForget: function () {
+            store.commit('closeForget')
+            store.commit('closeBlur')
         },
         closeLoginDialog: function () {
             console.log('commiting')
