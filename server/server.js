@@ -4,8 +4,12 @@ var io = require('socket.io')(http)
 
 io.on('connection', function (socket) {
     console.log('新连接已创建 !')
+    socket.on('init', function(obj) {
+        console.log('enter' + obj.roomId)
+        socket.join(obj.roomId)
+    })
     socket.on('message', function(obj) {
-        this.broadcast.emit('message', obj)
+        this.to(obj.roomId).emit('message', obj)
     })
 })
 

@@ -6,7 +6,7 @@
             </li>
         </ul>
         <button @click='sendMessage'>send</button>
-        <input id="m" v-model="message" autocomplete="off">
+        <input id="m" v-model="message" autocomplete="off" :placeholder="roomId">
     </div>
 </template>
 
@@ -22,9 +22,13 @@ export default {
         return {
             messageList: [],
             message: '',
-            nickname: 'xiaoming',
-            httpServer: null
+            nickname: 'Various Artist',
+            httpServer: null,
+            roomId: this.$route.params['id']
         }
+    },
+    created() {
+        this.nickname = this.$store.state.nickname
     },
     mounted() {
         this.connectEvent()
@@ -32,16 +36,28 @@ export default {
     methods: {
         connectEvent() {
             this.httpServer = io.connect('http://127.0.0.1:3000')
+            this.httpServer.emit('init', {
+                roomId: this.roomId
+            })
             this.httpServer.on('message', (obj) => {
                 this.messageList.push(obj)
             })
         },
         sendMessage() {
             if (this.message !== '') {
-                this.httpServer.emit('message', {content: this.message, nickname: this.nickname})
+                this.httpServer.emit('message', {
+                    content: this.message,
+                    nickname: this.nickname,
+                    roomId: this.roomId
+                })
+                this.messageList.push({
+                    content: this.message,
+                    nickname: this.nickname,
+                    roomId: this.roomId
+                })
+                this.message = ''
             }
-            this.messageList.push({content: this.message, nickname: this.nickname})
-            this.message = ''
+            console.log(this.$store.state.nickname)
         }
     }
 }
@@ -59,5 +75,4 @@ export default {
 li {
     text-align: left;
 }
-
 </style>
