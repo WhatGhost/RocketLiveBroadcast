@@ -76,14 +76,6 @@
                     this.showErrorMes('请填写电子邮箱或手机号码')
                     return
                 }
-                if (!(this.isRightEmail() || this.isRightPhoneNum())) {
-                    this.showErrorMes('不是有效的电子邮箱或手机号码')
-                    return
-                }
-                if (!this.isPassword()) {
-                    this.showErrorMes('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
-                    return
-                }
                 this.$store.dispatch('loginUser', {
                     account: this.account,
                     password: this.password

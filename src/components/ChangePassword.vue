@@ -1,75 +1,52 @@
 <template>
     <div>
-        <div>
-            <input type="text" id="old-password" placeholder="原始密码" size="30" v-model="oldpassword" />
-        </div>
-        <div>
-            <input type="text" id="new-password" placeholder="新密码" size="30" v-model="newpassword" />
-        </div>
-        <div>
-            <input type="text" id="renew-password" placeholder="再次输入新密码" size="30" v-model="newpassword" />
-        </div>
-        <div>
-            <button id="change" @click='changepasswdClick'>确认修改</button>
-        </div>
+        <el-input type="text" id="old-password" placeholder="原始密码" v-model="oldpassword"></el-input>
+        <el-input type="password" id="new-password" placeholder="新密码" v-model="newpassword1"></el-input>
+        <el-input type="password" id="renew-password" placeholder="再次输入新密码" v-model="newpassword2"></el-input>
+        <el-button id="change" @click='changepasswdClick'>确认修改</el-button>
     </div>
 </template>
 <script>
-export default {
-    data: function () {
-        return {
-            useraccount: '',
-            oldpassword: '',
-            newpassword: '',
-        }
-    },
-    computed: {
-    },
-    methods: {
-        changepasswdClick() {
-            this.useraccount = this.$store.state.account
-            this.$store.dispatch('changePasswd', { oldpassword: this.oldpassword, newpassword: this.newpassword, account: this.useraccount, is_password: true })
-        }
-    },
-}
+    export default {
+        data: function () {
+            return {
+                useraccount: '',
+                oldpassword: '',
+                newpassword1: '',
+                newpassword2: ''
+            }
+        },
+        computed: {},
+        methods: {
+            changepasswdClick() {
+                if (this.newpassword1 !== this.newpassword2) {
+                    this.$message.error('两次密码不一致')
+                    return
+                }
+                if (this.newpassword1 === '') {
+                    this.$message.error('请完成输入')
+                    return
+                }
+                this.useraccount = this.$store.state.account
+                this.$store.dispatch('changePasswd', {
+                    oldpassword: this.oldpassword,
+                    newpassword: this.newpassword1,
+                    account: this.useraccount,
+                    is_password: true
+                })
+            }
+        },
+    }
 </script>
 <style scoped>
-.inputs>* {
-    margin: 10px;
-}
+    .inputs > * {
+        margin: 10px;
+    }
 
-.inputs {
-    width: 300px;
-}
+    .inputs {
+        width: 300px;
+    }
 
-#change {
-    width: 100px;
-    background-color: #00af50;
-    margin: 10px;
-}
-
-#change {
-    position: absolute;
-    width: 100px;
-    height: 30px;
-    margin-top: 50px;
-    margin-left: 150px;
-    color: white;
-    background-color: green;
-    border-radius: 10px;
-    background: #a5cd4e;
-    /* Old browsers */
-    background: -moz-linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
-    /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5cd4e), color-stop(100%, #6b8f1a));
-    /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
-    /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
-    /* IE10+ */
-    background: linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
-    /* W3C */
-}
+    #change {
+    }
 </style>

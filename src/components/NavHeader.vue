@@ -10,7 +10,7 @@
                            @click="logout" v-if="logged">Log Out
                 </el-button>
                 <el-button class="right-text-btn" type="text"
-                           @click="showInfo" v-if="logged">{{userName}}
+                           @click="showInfoDialog" v-if="logged">{{userName}}
                 </el-button>
                 <el-button class="right-text-btn" type="text"
                            @click="openRegisterDialog" v-if="!logged">Register
@@ -22,6 +22,7 @@
         </div>
         <register-modal-dialog></register-modal-dialog>
         <login-modal-dialog></login-modal-dialog>
+        <info-modal-dialog></info-modal-dialog>
     </div>
 </template>
 
@@ -29,12 +30,14 @@
     import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import RegisterModalDialog from './RegisterModalDialog.vue'
     import LoginModalDialog from './LoginModalDialog'
+    import InfoModalDialog from './InfoModalDialog'
 
     export default {
         components: {
             ElButton,
             RegisterModalDialog,
-            LoginModalDialog
+            LoginModalDialog,
+            InfoModalDialog
         },
         data: function () {
             return {
@@ -65,8 +68,8 @@
             showLogin: function () {
                 this.$emit('goto', 'LoginPage')
             },
-            showInfo: function () {
-                this.$router.push('info')
+            showInfoDialog: function () {
+                this.$store.dispatch('openInfoDialog')
             },
             showCreateRoom: function () {
                 // this.$emit('goto', 'CreateRoom')
