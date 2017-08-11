@@ -6,7 +6,6 @@
         <transition name="fade">
             <router-view></router-view>
         </transition>
-        <!-- <component :is="currentView" v-bind:class="{ blur: $store.state.background_blur }"></component> -->
     </div>
 </template>
 

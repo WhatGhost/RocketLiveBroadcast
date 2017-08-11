@@ -163,7 +163,7 @@
 
     .side-img {
         height: 460px;
-        position: relative;
-        left: 32px;
+        margin-left: auto;
+        margin-right: -1px;
     }
 </style>

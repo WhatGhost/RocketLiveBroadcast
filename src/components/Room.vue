@@ -1,5 +1,5 @@
 <template>
-    <div class="card shadow-m" @click="enterRoom">
+    <div class="card shadow-l" @click="enterRoom">
         <img src="../assets/vue.png" class="video-image">
         <div class="text">
             <label>{{ room.room_name }}</label>
@@ -34,10 +34,16 @@
         margin: 20px;
         display: inline-block;
         border-radius: 7px;
+        transition: background 0.5s ease-in-out;
     }
 
     .card:hover {
         cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.23);
+        background-image: url("../assets/play.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1000;
     }
 
     .video-image {
