@@ -1,7 +1,7 @@
 <template>
     <div class="main-div">
         <ul>
-            <li v-for="msg in messageList">
+            <li v-for="msg in messageList" :class="isTeacher?'highlight':''">
                 {{ msg.nickname}}: {{ msg.content }}
             </li>
         </ul>
@@ -23,12 +23,14 @@ export default {
             messageList: [],
             message: '',
             nickname: 'Various Artist',
+            isTeacher: false,
             httpServer: null,
             roomId: this.$route.params['id']
         }
     },
     created() {
         this.nickname = this.$store.state.nickname
+        this.isTeacher = this.$store.state.isTeacher
     },
     mounted() {
         this.connectEvent()
@@ -44,17 +46,15 @@ export default {
             })
         },
         sendMessage() {
+            let messageToSend = {
+                content: this.message,
+                nickname: this.nickname,
+                roomId: this.roomId,
+                highlight: this.isTeacher
+            }
             if (this.message !== '') {
-                this.httpServer.emit('message', {
-                    content: this.message,
-                    nickname: this.nickname,
-                    roomId: this.roomId
-                })
-                this.messageList.push({
-                    content: this.message,
-                    nickname: this.nickname,
-                    roomId: this.roomId
-                })
+                this.httpServer.emit('message', messageToSend)
+                this.messageList.push(messageToSend)
                 this.message = ''
             }
             console.log(this.$store.state.nickname)
@@ -74,5 +74,9 @@ export default {
 
 li {
     text-align: left;
+}
+
+.highlight {
+    color: red;
 }
 </style>
