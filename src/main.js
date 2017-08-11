@@ -11,11 +11,12 @@ import './mystyle.css'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-Vue.http.interceptors.push(function(request, next) {
+Vue.http.interceptors.push(function (request, next) {
     // 跨域携带cookie
     request.credentials = true
     next()
 })
+
 function strTrim(name) {
     return name.replace(/(^\s*)|(\s*$)/g, '')
 }
@@ -25,9 +26,6 @@ function getCookie(name) {
     // console.log(document.cookie)
     if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';')
-        // console.log(cookies)
-        // console.log(cookies[2])
-        // console.log(cookies[2].charAt(0))
         for (var i = 0; i < cookies.length; i++) {
             var cookie = strTrim(cookies[i])
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
@@ -36,12 +34,11 @@ function getCookie(name) {
             }
         }
     }
+    console.log('this is ' + cookieValue)
     return cookieValue
 }
 
 Vue.http.headers.common['X-CSRFToken'] = getCookie('csrftoken')
-// console.log(getCookie('csrftoken'))
-// console.log(Vue.http.headers.common['X-CSRFToken'])
 
 /* eslint-disable no-new */
 const v = new Vue({
@@ -49,7 +46,7 @@ const v = new Vue({
     router,
     store: store,
     template: '<App/>',
-    components: { App }
+    components: {App}
 })
 
 v.$store.dispatch('getUserFromDjango')
