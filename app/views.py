@@ -73,10 +73,6 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['post'])
     def current_user(self,request):
         user = request.user
-        print("sbbbbb")
-        print(user)
-        print(user.account)
-        print(user.nickname)
         if request.user.is_authenticated():
             print("authenticated~")
             return Response({"account": user.account, "nickname": user.nickname, "isTeacher": not user.is_student})
