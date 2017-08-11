@@ -33,9 +33,13 @@
 
 <script>
     import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+    import Forget from './Forget'
 
     export default {
-        components: {ElButton},
+        components: {
+            ElButton,
+            Forget,
+        },
         data: function () {
             return {
                 account: '',
@@ -86,6 +90,7 @@
                 })
             },
             showForget: function () {
+                this.$store.dispatch('openForget')
             }
         }
     }

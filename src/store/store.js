@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api.js'
+import router from '../router/index.js'
 
 Vue.use(Vuex)
 const apiRoot = 'http://localhost:8000' // This will change if you deploy later
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
         background_blur: false,
         showRegister: false,
         showLogin: false,
+        showForget: false,
         // 完成幻灯片上传
         finishSlideUpload: false
     },
@@ -43,13 +45,30 @@ const store = new Vuex.Store({
             window.alert('失败')
             console.error(error)
         },
+        'Register_SUCC': function (state) {
+            console.log(state)
+            window.alert('成功！')
+            state.showLogin = true
+            state.showRegister = false
+        },
         'API_SUCC': function (state) {
             console.log(state)
             window.alert('成功！')
         },
+        'LOGOUT_SUCC': function (state) {
+            console.log(state)
+            window.alert('登出成功！')
+            state.account = null
+            state.nickname = null
+            state.isTeacher = false
+            router.push('/roomList')
+        },
         'SUCC_LOGIN': function (state, response) {
             window.alert('登陆成功')
             state.account = response.body['account']
+            state.background_blur = false
+            state.showLogin = false
+            router.push('/roomList')
         },
         // waiting for comfiring which kind code style is good
         trueBlur: function (state) {
@@ -69,6 +88,12 @@ const store = new Vuex.Store({
         },
         falseLogin: function (state) {
             state.showLogin = false
+        },
+        trueForget: function (state) {
+            state.showForget = false
+        },
+        falseForget: function (state) {
+            state.showForget = false
         },
         finishSlideUpload: function (state) {
             state.finishSlideUpload = true
@@ -111,7 +136,7 @@ const store = new Vuex.Store({
         registerUser(store, userinfo) {
             console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
-                .then((response) => store.commit('API_SUCC', userinfo))
+                .then((response) => store.commit('Register_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changeNick(store, userinfo) {
@@ -145,7 +170,7 @@ const store = new Vuex.Store({
         logout(store) {
             console.log('dispathed')
             return api.post(apiRoot + '/users/logout_user/')
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => store.commit('LOGOUT_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         openRegisterDialog: function () {
@@ -159,6 +184,14 @@ const store = new Vuex.Store({
         openLoginDialog: function () {
             store.commit('trueLogin')
             store.commit('trueBlur')
+        },
+        openForget: function () {
+            store.commit('trueForget')
+            store.commit('trueBlur')
+        },
+        closeForget: function () {
+            store.commit('closeForget')
+            store.commit('closeBlur')
         },
         closeLoginDialog: function () {
             console.log('commiting')

@@ -1,5 +1,5 @@
 <template>
-    <div id="live-rooms">
+    <div id="live-rooms" v-bind:class="{ blur: $store.state.background_blur }">
         <h1>直播房间</h1>
         <hr>
         <room v-for="room in rooms" v-bind:room="room"></room>

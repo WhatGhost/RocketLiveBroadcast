@@ -1,5 +1,5 @@
 <template>
-    <div class="live-room">
+    <div class="live-room" v-bind:class="{ blur: $store.state.background_blur }">
         <div class="button-message">
             <div>
                 <el-button class="teacher-message" @click="switchMessageMenu">message</el-button>
