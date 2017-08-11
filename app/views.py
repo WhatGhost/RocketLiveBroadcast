@@ -162,3 +162,16 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             return Response('更改失败', status=422)
 
+    @list_route(methods=['post'])
+    def logout_user(self,request):
+        user = request.user
+        print(user)
+        if request.user.is_authenticated():
+            auth.logout(request)
+            return Response(status=200)
+        else:
+            return Response('请先登录',status=422)
+
+
+        
+
