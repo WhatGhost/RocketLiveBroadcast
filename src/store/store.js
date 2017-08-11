@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api.js'
+import router from '../router/index.js'
 
 Vue.use(Vuex)
 const apiRoot = 'http://localhost:8000' // This will change if you deploy later
@@ -53,10 +54,14 @@ const store = new Vuex.Store({
             state.account = null
             state.nickname = null
             state.isTeacher = false
+            router.push('/roomList')
         },
         'SUCC_LOGIN': function (state, response) {
             window.alert('登陆成功')
             state.account = response.body['account']
+            state.background_blur = false
+            state.showLogin = false
+            router.push('/roomList')
         },
         // waiting for comfiring which kind code style is good
         trueBlur: function (state) {
