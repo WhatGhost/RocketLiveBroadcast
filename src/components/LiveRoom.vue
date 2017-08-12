@@ -9,10 +9,10 @@
         <div class="room">
             <p>LiveRoomPage</p>
             <div class='left'>
-                <el-button @click="showingComponent = 'slide'">Slide</el-button>
+                <el-button @click="showingComponent = 'pdfViewer'">PDF</el-button>
                 <el-button @click="showingComponent = 'codeEditor'">Code Editor</el-button>
                 <el-button @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
-                <slide-page :hide="hideSlide"></slide-page>
+                <pdf-viewer :hide="hidePdfViewer"></pdf-viewer>
                 <code-editor-page :hide="hideCodeEditor"></code-editor-page>
                 <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
@@ -35,6 +35,7 @@
     import CodeEditorPage from './CodeEditorPage'
     import RecordVideo from './RecordVideo'
     import ChatArea from './ChatArea'
+    import PdfViewer from './PdfViewer'
 
     export default {
         components: {
@@ -43,17 +44,18 @@
             WhiteBoardPage,
             CodeEditorPage,
             RecordVideo,
-            ChatArea
+            ChatArea,
+            PdfViewer
         },
         data: function () {
             return {
                 showMessageMenu: false,
-                showingComponent: 'slide'
+                showingComponent: 'pdfViewer'
             }
         },
         computed: {
-            hideSlide: function () {
-                return this.showingComponent !== 'slide'
+            hidePdfViewer: function () {
+                return this.showingComponent !== 'pdfViewer'
             },
             hideCodeEditor: function () {
                 return this.showingComponent !== 'codeEditor'
