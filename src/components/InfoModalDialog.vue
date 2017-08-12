@@ -1,38 +1,21 @@
 <template>
     <div>
         <transition name="modal">
-            <div class="modal-mask" v-if="this.$store.state.showRegister">
+            <div class="modal-mask" v-if="this.$store.state.showInfo">
                 <div class="modal-wrapper">
                     <div class="container">
-                        <img class="side-img" src="../assets/dialog-side-register.svg">
-                        <div class="right-side">
-                            <div class="header">
-                                <p class="title">Sign up</p>
-                                <el-button type="text" class="close-btn" @click="closeDialog">×
-                                </el-button>
-                            </div>
-                            <div class="dialog-body">
-                                <!--<el-tooltip placement="bottom">-->
-                                <input type="text" placeholder="E-MAIL OR PHONE NUM" class="input account"
-                                       v-model="account">
-                                <!--</el-tooltip>-->
-                                <input type="text" placeholder="NICKNAME" class="input name" v-model="nickname">
-                                <input type="password" placeholder="PASSWORD" class="input password" v-model="password">
-                                <input type="password" placeholder="CONFIRM PASSWORD" class="input sure-password"
-                                       v-model="confirmPassword">
-                                <div class="vertificate">
-                                    <input type="text" placeholder="VERIFICATION CODE" class="vertificate-input input"
-                                           v-model="vertificateCode">
-                                    <el-button type="text" class="send-code-btn" @click="sendVertificateCode">send
-                                    </el-button>
-                                </div>
-                                <el-button type="primary" class="sure-btn shadow-m" @click="registerBtnClick">SIGN UP
-                                </el-button>
-                                <el-button type="text" class="to-login" @click="alreadyMemberBtnClick">
-                                    <U>I&rsquo;m already member</U>
-                                </el-button>
-                            </div>
-                        </div>
+                        <el-tabs type="border-card" class="info-tab">
+                            <el-tab-pane label="个人信息">
+                                <personal-information class="inner"></personal-information>
+                            </el-tab-pane>
+                            <el-tab-pane label="修改密码">
+                                <change-password class="inner"></change-password>
+                            </el-tab-pane>
+                            <el-tab-pane label="修改昵称">
+                                <change-nickname class="inner"></change-nickname>
+                            </el-tab-pane>
+                        </el-tabs>
+                        <el-button @click="closeDialog">关闭</el-button>
                     </div>
                 </div>
             </div>
@@ -43,11 +26,17 @@
 <script>
     import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import LoginModalDialog from './LoginModalDialog'
+    import PersonalInformation from './PersonalInformation'
+    import ChangeNickname from './ChangeNickname'
+    import ChangePassword from './ChangePassword'
 
     export default {
         components: {
             ElButton,
             LoginModalDialog,
+            PersonalInformation,
+            ChangeNickname,
+            ChangePassword
         },
         data: function () {
             return {
@@ -60,7 +49,7 @@
         },
         methods: {
             closeDialog: function () {
-                this.$store.dispatch('closeRegisterDialog')
+                this.$store.dispatch('closeInfoDialog')
                 this.errorMes = ''
             },
             showErrorMes: function (mes) {
@@ -121,7 +110,7 @@
                     vertificateCode: this.vertificateCode
                 })
             },
-            sendVertificateCode() {
+            sendVertificateCode: function () {
                 if (this.account === '' || this.nickname === '' || this.password === '' || this.confirmPassword === '') {
                     this.showErrorMes('以上信息未完成输入')
                     return
@@ -131,12 +120,19 @@
                     account: this.account,
                     mode: 'register'
                 })
-            },
+            }
         }
     }
 </script>
 
 <style scoped>
+    .alert {
+        width: 500px;
+        margin: 20px auto 0 auto;
+        border-radius: 10px;
+        transition: opacity .4s ease;
+    }
+
     .container {
         width: 480px;
         height: 460px;
@@ -150,14 +146,10 @@
 
     .side-img {
         height: 460px;
-        margin-right: auto;
-        margin-left: 0;
     }
 
     .right-side {
         margin-top: 15px;
-        position: relative;
-        left: -37px;
     }
 
     .header {
@@ -199,31 +191,6 @@
         padding-left: 0.2em;
     }
 
-    .sure-btn {
-        font-size: 20px;
-        background-color: #00af50;
-        border-radius: 20px;
-        margin-top: 15px;
-    }
-
-    .vertificate {
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .vertificate-input {
-    }
-
-    .send-code-btn {
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: -24px;
-        margin-left: 15px;
-        float: right;
-    }
-
-    .to-login {
-        margin-top: 15px;
-        font-weight: bold;
+    .inner {
     }
 </style>

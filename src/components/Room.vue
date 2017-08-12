@@ -1,24 +1,25 @@
 <template>
-    <div class="one-room">
-        <!--图片包含超链接-->
-        <!-- <img src="{{room.room_img}}" class="room-img"> -->
-        <p>img:{{room.room_img}}</p>
-        <el-button @click="enterRoom">进入</el-button>
-        <div class="txt-introduce">
-            <p class="room-name">房间名：{{room.room_name}}</p>
-            <p class="room-teacher">教师：{{room.room_creater}}</p>
-            <p class="room-id">房间id：{{room.id}}</p>
-            <p class="room-info">详情：{{room.room_introduction}}</p>
+    <div class="card shadow-l" @click="enterRoom">
+        <img src="../assets/vue.png" class="video-image">
+        <div class="text">
+            <label>{{ room.room_name }}</label>
+            <label class="intro">　id：{{ room.id }}</label>
+            <div class="bottom">
+                <p class="intro">教师：{{ room.room_creater }}</p>
+                <p class="intro">简介：{{ room.room_introduction }}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
-
     export default {
-        components: {ElButton},
         props: ['room'],
+        data() {
+            return {
+                currentDate: new Date()
+            }
+        },
         methods: {
             enterRoom: function () {
                 this.$router.push('/room/' + this.room.id)
@@ -28,16 +29,42 @@
 </script>
 
 <style scoped>
-    .one-room {
+    .card {
+        height: 220px;
         margin: 20px;
         display: inline-block;
-        width: 300px;
+        border-radius: 7px;
+        transition: background 0.5s ease-in-out;
     }
 
-    p {
-        font-size: 12px;
-        height: 6px;
+    .card:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.23);
+        background-image: url("../assets/play.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1000;
+    }
+
+    .video-image {
+        width: 100px;
+        display: block;
+    }
+
+    .text {
+        margin: 10px;
+    }
+
+    .intro {
+        font-size: 13px;
+        color: #999;
+        line-height: 1.3em;
+        margin: auto;
         text-align: left;
-        word-wrap: break-word;
+    }
+
+    .bottom {
+        margin-top: 13px;
+        line-height: 12px;
     }
 </style>

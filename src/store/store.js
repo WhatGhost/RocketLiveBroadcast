@@ -18,6 +18,7 @@ const store = new Vuex.Store({
         showRegister: false,
         showLogin: false,
         showForget: false,
+        showInfo: false,
         // 完成幻灯片上传
         finishSlideUpload: false,
         // 上传凭证
@@ -68,8 +69,10 @@ const store = new Vuex.Store({
             router.push('/roomList')
         },
         'SUCC_LOGIN': function (state, response) {
-            window.alert('登陆成功')
-            console.log(response)
+            Vue.prototype.$message({
+                type: 'success',
+                message: '登录成功'
+            })
             state.account = response.body['account']
             state.nickname = response.body['nickname']
             state.background_blur = false
@@ -121,6 +124,15 @@ const store = new Vuex.Store({
         gotTokenFail: function (state, response) {
             state.token = ''
             state.slideKey = ''
+        },
+        trueInfo: function (state) {
+            state.showInfo = true
+        },
+        falseInfo: function (state) {
+            state.showInfo = false
+        },
+        refreshNickname: function (state, nickname) {
+            state.nickname = nickname
         }
     },
     actions: {
@@ -155,7 +167,10 @@ const store = new Vuex.Store({
         changeNick(store, userinfo) {
             userinfo.account = store.state.account
             return api.patch(apiRoot + '/users/change_info/', userinfo)
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => {
+                    store.commit('API_SUCC')
+                    store.commit('refreshNickname', userinfo.nickname)
+                })
                 .catch((error) => store.commit('API_FAIL', error))
         },
         changePasswd(store, userinfo) {
@@ -223,6 +238,12 @@ const store = new Vuex.Store({
             return api.post(apiRoot + '/users/current_user/')
                 .then((response) => store.commit('getUser', response))
                 .catch((error) => store.commit('API_FAIL', error))
+        },
+        openInfoDialog: function () {
+            store.commit('trueInfo')
+        },
+        closeInfoDialog: function () {
+            store.commit('falseInfo')
         }
     }
 })
