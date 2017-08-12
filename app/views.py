@@ -44,7 +44,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             room_name=request.data["room-name"],
             room_introduction=request.data["room-introduction"],
             room_img=request.FILES['file-upload'],
-            room_creater=MyUser.objects.all()[0]
+            room_creater=request.user
         )
         r.save()
         serializer = LiveRoomIdSerializer(r)
