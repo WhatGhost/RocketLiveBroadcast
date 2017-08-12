@@ -37,9 +37,10 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
 
     # @api_view(['POST'])
     def create(self, request):
-        # print(request.data)
-        # print(request.FILES)
-        # print(request.user)
+        if not request.user.is_authenticated():
+            return Response("您未登录", status=400)
+        if request.user.is_student:
+            return Response("您不是教师，没有创建房间的权限", status=400)
         r = LiveRoom(
             room_name=request.data["room-name"],
             room_introduction=request.data["room-introduction"],

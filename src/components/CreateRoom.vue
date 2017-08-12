@@ -43,27 +43,17 @@ export default {
             }
         },
         createBtnClick: function (event) {
-            // let roomId = -1
-            // console.log(document.getElementById('file-upload').value)
-            // this.$store.dispatch('createRoom', {
-            //     room_name: this.room_name,
-            //     room_introduction: this.room_introduction,
-            //     room_img: document.getElementById('file-upload').value,
-            //     room_creater: 'wanglitong'
-            // }).then(() => {
-            //     roomId = this.$store.state.live_room_id
-            //     window.alert('创建成功' + roomId)
-            // })
             let formData = new window.FormData(event.target)
             console.log('start..')
-            // for (let element of formData) {
-            //     console.log(element)
-            // }
             console.log(formData.entries)
             console.log('end..')
-            this.$store.dispatch('createRoom', formData).then(() => {
+            this.$store.dispatch('createRoom', formData).then((response) => {
                 let roomId = this.$store.state.live_room_id
-                window.alert('创建成功' + roomId)
+                if (roomId === -1) {
+                    window.alert('您没有开房权限')
+                } else {
+                    window.alert('创建成功,您的房间ID为' + roomId)
+                }
             })
         }
     }
