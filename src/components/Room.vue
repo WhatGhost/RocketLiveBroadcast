@@ -13,58 +13,63 @@
 </template>
 
 <script>
-    export default {
-        props: ['room'],
-        data() {
-            return {
-                currentDate: new Date()
-            }
-        },
-        methods: {
-            enterRoom: function () {
+export default {
+    props: ['room'],
+    data() {
+        return {
+            currentDate: new Date()
+        }
+    },
+    methods: {
+        enterRoom: function () {
+            console.log(this.$store.state.nickname)
+            if (this.$store.state.account !== null) {
                 this.$router.push('/room/' + this.room.id)
+            } else {
+                window.alert('请您先登录')
             }
         }
     }
+}
 </script>
 
 <style scoped>
-    .card {
-        height: 220px;
-        margin: 20px;
-        display: inline-block;
-        border-radius: 7px;
-        transition: background 0.5s ease-in-out;
-    }
+.card {
+    height: 220px;
+    margin: 20px;
+    display: inline-block;
+    border-radius: 7px;
+    transition: background 0.5s ease-in-out;
+}
 
-    .card:hover {
-        cursor: pointer;
-        background-color: rgba(0, 0, 0, 0.23);
-        background-image: url("../assets/play.gif");
-        background-repeat: no-repeat;
-        background-position: center;
-        z-index: 1000;
-    }
+.card:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.23);
+    background-image: url("../assets/play.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1000;
+}
 
-    .video-image {
-        width: 100px;
-        display: block;
-    }
+.video-image {
+    width: 100px;
+    display: block;
+}
 
-    .text {
-        margin: 10px;
-    }
+.text {
+    margin: 10px;
+}
 
-    .intro {
-        font-size: 13px;
-        color: #999;
-        line-height: 1.3em;
-        margin: auto;
-        text-align: left;
-    }
+.intro {
+    font-size: 13px;
+    color: #999;
+    line-height: 1.3em;
+    margin: auto;
+    text-align: left;
+}
 
-    .bottom {
-        margin-top: 13px;
-        line-height: 12px;
-    }
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
 </style>
