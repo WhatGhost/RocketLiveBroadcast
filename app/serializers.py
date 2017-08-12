@@ -11,11 +11,13 @@ class RoomSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = ('account', 'nickname', 'is_student',
-                  'is_active', 'is_admin', 'password')
+        fields = ('account', 'nickname', 'is_student')
+        read_only_fields = ('account', 'nickname', 'is_student')
 
 
 class LiveRoomSerializer(serializers.ModelSerializer):
+    room_creater = UserSerializer()
+
     class Meta:
         model = LiveRoom
         fields = ('id',
@@ -23,9 +25,14 @@ class LiveRoomSerializer(serializers.ModelSerializer):
                   'room_introduction',
                   'room_img',
                   'room_creater',
-                  #   'created_time'
                   )
+        read_only_fields = ('id',
+                            'room_name',
+                            'room_introduction',
+                            'room_img',
+                            'room_creater',
+                            )
 
 
 class LiveRoomIdSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(read_only=True)
