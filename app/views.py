@@ -166,7 +166,7 @@ class UserViewSet(viewsets.ModelViewSet):
         print(user)
         if request.user.is_authenticated():
             auth.logout(request)
-            return Response(status=200)
+            return Response('登出成功',status=200)
         else:
             return Response('请先登录',status=422)
 
