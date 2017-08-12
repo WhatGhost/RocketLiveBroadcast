@@ -12,39 +12,30 @@
 </template>
 <script>
 export default {
-
     computed: {
         getIntroduction: function () {
-            var url = window.location.href
-            var strs = url.split('/')
             for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(strs[5])) {
+                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                     return this.$store.state.rooms[i].room_introduction
                 }
             }
         },
         getNickname: function () {
-            var url = window.location.href
-            var strs = url.split('/')
             for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(strs[5])) {
+                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                     return this.$store.state.rooms[i].room_creater.nickname
                 }
             }
         },
         getRoomname: function () {
-            var url = window.location.href
-            var strs = url.split('/')
             for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(strs[5])) {
+                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                     return this.$store.state.rooms[i].room_name
                 }
             }
         },
         getId: function () {
-            var url = window.location.href
-            var strs = url.split('/')
-            return parseInt(strs[5])
+            return this.$route.params['id']
         }
     }
 }
