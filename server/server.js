@@ -13,7 +13,9 @@ io.on('connection', function (socket) {
     })
     socket.on('changePage', function(obj) {
         this.to(obj.roomId).emit('changePage', obj)
-        console.log('page:' + obj.page + 'to room' + obj.roomId)
+    })
+    socket.on('changeCode', function(obj) {
+        this.to(obj.roomId).emit('changeCode', obj)
     })
 })
 
