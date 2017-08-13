@@ -24,15 +24,7 @@ export default {
         for (let i = 0; i < this.$store.state.rooms.length; i++) {
             if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                 this.roomIntroduction = this.$store.state.rooms[i].room_introduction
-            }
-        }
-        for (let i = 0; i < this.$store.state.rooms.length; i++) {
-            if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                 this.roomTeacher = this.$store.state.rooms[i].room_creater.nickname
-            }
-        }
-        for (let i = 0; i < this.$store.state.rooms.length; i++) {
-            if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                 this.roomName = this.$store.state.rooms[i].room_name
             }
         }
