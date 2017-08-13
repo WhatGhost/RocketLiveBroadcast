@@ -10,7 +10,7 @@
                     <el-button class="top-btn" @click="showingComponent = 'codeEditor'">Code Editor</el-button>
                     <el-button class="top-btn" @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
                 </div>
-                <pdf-viewer :hide="hidePdfViewer"></pdf-viewer>
+                <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer"></pdf-viewer>
                 <code-editor-page :hide="hideCodeEditor"></code-editor-page>
                 <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
@@ -76,7 +76,7 @@ export default {
             return '房间名：如何构建单页面应用　　房间号：10010　　主讲教师：诸葛亮'
         }
     },
-    mounted() {
+    created() {
         this.getRoomInfo()
         this.getUserInfo()
         this.connect()

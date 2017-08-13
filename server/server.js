@@ -11,6 +11,10 @@ io.on('connection', function (socket) {
     socket.on('message', function(obj) {
         this.to(obj.roomId).emit('message', obj)
     })
+    socket.on('changePage', function(obj) {
+        this.to(obj.roomId).emit('changePage', obj)
+        console.log('page:' + obj.page + 'to room' + obj.roomId)
+    })
 })
 
 http.listen(3000, function () {
