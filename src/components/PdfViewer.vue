@@ -1,6 +1,5 @@
 <template>
     <div class="main-div" :class="{ hiding: hide }">
-        <h1>PDFViewer</h1>
         <button @click="pgup">Previous Page</button>
         <button @click="pgdn">Next Page</button>
         <input v-model.number="page" type="number" style="width: 5em"> /{{ numPages }}
