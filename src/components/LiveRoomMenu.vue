@@ -3,40 +3,40 @@
         <!--图片包含超链接-->
         <!--<img src="{{room.room_img}}" class="room-img">-->
         <div class="txt-introduce">
-            <p class="room-id">Id: {{ getId }}</p>
-            <p class="room-name">直播间名: {{ getRoomname }}</p>
-            <p class="room-teacher">教师：{{ getNickname }}</p>
-            <p id="room-introduction">简介：{{ getIntroduction }}</p>
+            <p class="room-id">Id: {{ this.roomId }}</p>
+            <p class="room-name">直播间名: {{ this.roomName }}</p>
+            <p class="room-teacher">教师： {{ this.roomTeacher }}</p>
+            <p id="room-introduction">Id: {{ this.roomIntroduction }}</p>
         </div>
     </div>
 </template>
 <script>
 export default {
-    computed: {
-        getIntroduction: function () {
-            for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
-                    return this.$store.state.rooms[i].room_introduction
-                }
-            }
-        },
-        getNickname: function () {
-            for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
-                    return this.$store.state.rooms[i].room_creater.nickname
-                }
-            }
-        },
-        getRoomname: function () {
-            for (var i = 0; i < this.$store.state.rooms.length; i++) {
-                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
-                    return this.$store.state.rooms[i].room_name
-                }
-            }
-        },
-        getId: function () {
-            return this.$route.params['id']
+    data: function () {
+        return {
+            roomId: -1,
+            roomName: '',
+            roomTeacher: '',
+            roomIntroduction: ''
         }
+    },
+    created() {
+        for (let i = 0; i < this.$store.state.rooms.length; i++) {
+            if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
+                this.roomIntroduction = this.$store.state.rooms[i].room_introduction
+            }
+        }
+        for (let i = 0; i < this.$store.state.rooms.length; i++) {
+            if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
+                this.roomTeacher = this.$store.state.rooms[i].room_creater.nickname
+            }
+        }
+        for (let i = 0; i < this.$store.state.rooms.length; i++) {
+            if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
+                this.roomName = this.$store.state.rooms[i].room_name
+            }
+        }
+        this.roomId = this.$route.params['id']
     }
 }
 </script>
