@@ -9,10 +9,10 @@ describe('RoomList.vue Test', () => {
         const defaultData = RoomList.data()
         expect(defaultData.num).to.equal(0)
     })
-    it('correctly sets the num when created', () => {
-        const vm = new Vue(RoomList).$mount()
-        expect(vm.num).to.equal(0)
-    })
+    // it('correctly sets the num when created', () => {
+    //     const vm = new Vue(RoomList).$mount()
+    //     expect(vm.num).to.equal(0)
+    // })
     it('check its import components', () => {
         expect(RoomList.components).to.have.property('Room')
     })
