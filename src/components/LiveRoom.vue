@@ -30,6 +30,7 @@ import CodeEditorPage from './CodeEditorPage'
 import RecordVideo from './RecordVideo'
 import ChatArea from './ChatArea'
 import PdfViewer from './PdfViewer'
+import io from '../../lib/socket.io'
 
 export default {
     components: {
@@ -44,7 +45,21 @@ export default {
     data: function () {
         return {
             showMessageMenu: false,
-            showingComponent: 'pdfViewer'
+            showingComponent: 'pdfViewer',
+            roomInfo: {
+                roomId: -1,
+                roomName: '',
+                roomTeacher: '',
+                roomIntroduction: '',
+                // 没有必要请不要访问这个变量
+                __roomTeacherAccount: ''
+            },
+            httpServer: null,
+            userInfo: {
+                nickname: '',
+                isTeacher: false,
+                isRoomCreator: false
+            }
         }
     },
     computed: {
@@ -61,6 +76,11 @@ export default {
             return '房间名：如何构建单页面应用　　房间号：10010　　主讲教师：诸葛亮'
         }
     },
+    mounted() {
+        this.getRoomInfo()
+        this.getUserInfo()
+        this.connect()
+    },
     methods: {
         switchMessageMenu: function () {
             this.showMessageMenu = !this.showMessageMenu
@@ -68,6 +88,29 @@ export default {
         goHomepage: function () {
             // add vue rooter
         },
+        getRoomInfo: function () {
+            for (let i = 0; i < this.$store.state.rooms.length; i++) {
+                if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
+                    this.roomInfo.roomIntroduction = this.$store.state.rooms[i].room_introduction
+                    this.roomInfo.roomTeacher = this.$store.state.rooms[i].room_creater.nickname
+                    this.roomInfo.roomName = this.$store.state.rooms[i].room_name
+                    this.roomInfo.__roomTeacherAccount = this.$store.state.rooms[i].room_creater.account
+                }
+            }
+            this.roomInfo.roomId = this.$route.params['id']
+        },
+        getUserInfo: function() {
+            this.userInfo.nickname = this.$store.state.nickname
+            this.isTeacher = this.$store.state.isTeacher
+            this.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
+        },
+        connect: function () {
+            this.httpServer = io.connect('http://127.0.0.1:3000')
+            this.httpServer.emit('init', {
+                roomId: this.roomInfo.roomId
+            })
+            console.log('main connected')
+        }
     }
 }
 </script>
