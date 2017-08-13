@@ -1,6 +1,5 @@
 <template>
     <div class="main-div" :class="{ hiding: hide }">
-        <h1>Code Editor</h1>
         <codemirror v-model="code" :options="editorOptions"></codemirror>
     </div>
 </template>
@@ -37,5 +36,9 @@ export default {
 
 .hiding {
     display: none;
+}
+
+.CodeMirror {
+    text-align: left !important;
 }
 </style>

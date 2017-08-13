@@ -1,13 +1,6 @@
 <template>
     <div class="live-room" v-bind:class="{ blur: $store.state.background_blur }">
-        <div class="button-message">
-            <div>
-                <el-button class="teacher-message" @click="switchMessageMenu">message</el-button>
-                <el-button class="back" @click="goHomepage">Go Homepage</el-button>
-            </div>
-        </div>
         <div class="room">
-            <p>LiveRoomPage</p>
             <div class='left'>
                 <el-button @click="showingComponent = 'pdfViewer'">PDF</el-button>
                 <el-button @click="showingComponent = 'codeEditor'">Code Editor</el-button>
@@ -23,7 +16,7 @@
             </div>
         </div>
         <div class="message">
-            <live-room-menu v-if="showMessageMenu"></live-room-menu>
+            <p>{{ roomMessage }}</p>
         </div>
     </div>
 </template>
@@ -62,6 +55,9 @@
             },
             hideWhiteBoard: function () {
                 return this.showingComponent !== 'whiteBoard'
+            },
+            roomMessage: function () {
+                return '呵呵'
             }
         },
         methods: {
@@ -76,49 +72,32 @@
 </script>
 
 <style scoped>
-    .teacher-message {
-        float: left;
-        height: 30px;
-    }
-
-    .back {
-        top: 10px;
-        float: left;
-        height: 30px;
-    }
-
-    .message {
+    .live-room {
         display: flex;
-        position: absolute;
-        left: 20px;
-        top: 120px;
-        background-color: silver;
-        text-align: left;
+        flex-direction: column;
+        padding: 20px;
     }
 
     .room {
         top: 80px;
-        padding-left: 20px;
         flex-direction: column;
     }
 
     .left {
         float: left;
         border: 1px solid #3B6273;
-        margin-right: -4px;
-        width: 600px;
-        height: 500px;
+        width: 45%;
+        height: 1200px;
     }
 
     .right {
         width: 50%;
         float: right;
         height: 400px;
-        margin-right: 20px;
     }
 
     .video-area {
-        height: 50%;
+        height: 80%;
         border: 1px solid #3B6273;
         margin-right: -4px;
     }
@@ -126,5 +105,11 @@
     .chat-area {
         height: 50%;
         border: 1px solid #3B6273;
+    }
+
+    .message {
+        display: flex;
+        text-align: left;
+        background-color: yellow;
     }
 </style>

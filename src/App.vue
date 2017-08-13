@@ -73,7 +73,7 @@
     #app {
         color: #2c3e50;
         font-family: Helvetica Neue, Arial, Hiragino Sans GB, STHeiti, Microsoft YaHei, serif;
-        text-align: center;
+        /*text-align: center;*/
     }
 
     #app a {
