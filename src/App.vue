@@ -13,8 +13,6 @@
     import NavHeader from './components/NavHeader'
     import RoomList from './components/RoomList'
     import Info from './components/Info'
-    import LoginPage from './components/LoginPage'
-    import Register from './components/Register'
     import Forget from './components/Forget'
     import CreateRoom from './components/CreateRoom'
     import LiveRoom from './components/LiveRoom'
@@ -24,8 +22,6 @@
             NavHeader,
             RoomList,
             Info,
-            LoginPage,
-            Register,
             Forget,
             CreateRoom,
             LiveRoom
@@ -61,6 +57,7 @@
         border: 0;
         margin: 0;
         height: 100%;
+        min-width: 300px;
     }
 
     body {

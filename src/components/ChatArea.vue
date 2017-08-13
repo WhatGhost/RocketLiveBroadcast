@@ -1,31 +1,41 @@
 <template>
     <div class="main-div">
-        <ul>
-            <li v-for="msg in messageList" :class="isTeacher?'highlight':''">
-                {{ msg.nickname}}: {{ msg.content }}
-            </li>
-        </ul>
-        <button @click='sendMessage'>send</button>
-        <input id="m" v-model="message" autocomplete="off" :placeholder="roomId">
+        <div class="above-div">
+            <div class="items">
+                <chat-item v-for="msg in messageList" v-bind:message="msg">
+                </chat-item>
+            </div>
+            <div class="emoji-div" v-if="showEmoji">
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <el-button>😄</el-button>
+            <el-input class="mes-input" v-model="message" autocomplete="off"></el-input>
+            <el-button @click='sendMessage'>send</el-button>
+        </div>
     </div>
 </template>
 
 <script>
 import Chat from './Chat'
 import io from '../../lib/socket.io'
+import ChatItem from './ChatItem'
 
 export default {
     components: {
-        Chat
+        Chat,
+        ChatItem
     },
     data: function () {
         return {
             messageList: [],
             message: '',
-            nickname: 'Various Artist',
+            nickname: '',
             isTeacher: false,
             httpServer: null,
-            roomId: this.$route.params['id']
+            roomId: this.$route.params['id'],
+            showEmoji: false,
+            emojis: ['😂', '🙏', '😄', '😏', '😇', '😅', '😌', '😘', '😍', '🤓', '😜', '😎', '😊', '😳', '🙄', '😱', '😒', '😔', '😷', '👿', '🤗', '😩', '😤', '😣', '😰', '😴', '😬', '😭', '👻', '👍', '✌️', '👉', '👀', '🐶', '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳']
         }
     },
     created() {
@@ -57,26 +67,37 @@ export default {
                 this.messageList.push(messageToSend)
                 this.message = ''
             }
-            console.log(this.$store.state.nickname)
+//            console.log(this.$store.state.nickname)
         }
     }
 }
 </script>
 
 <style scoped>
-/* copied from socket-io guidance */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.main-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-li {
-    text-align: left;
+.above-div {
+    height: 80%;
+    background-color: #fafafa;
 }
 
-.highlight {
-    color: red;
+.items {
+    overflow-y: scroll;
+    height: 95%;
 }
+
+.bottom-bar {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.mes-input {
+    padding: 0 5px 0 5px;
+}
+
 </style>
