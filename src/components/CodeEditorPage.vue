@@ -1,37 +1,35 @@
 <template>
     <div class="main-div" :class="{ hiding: hide }">
         <h1>Code Editor</h1>
-        <vue-code v-model="code" :options="options" @ready="onReady"></vue-code>
+        <codemirror v-model="code" :options="editorOptions"></codemirror>
     </div>
 </template>
 
 <script>
-import VueCode from 'vue-code'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript'
+import { CodeMirror, codemirror } from 'vue-codemirror'
 export default {
     props: {
         'hide': true
     },
     components: {
-        VueCode
+        CodeMirror,
+        codemirror
     },
-    data: function () {
+    data() {
         return {
-            code: 'console.log("hello, world");',
-            options: {
-                mode: 'javascript',
-            },
+            code: 'const a = 10',
+            editorOptions: {
+                // codemirror options
+                tabSize: 4,
+                mode: 'text/javascript',
+                theme: 'base16-dark',
+                lineNumbers: true,
+                line: true
+            }
         }
     },
-    methods: {
-        onReady(cm) {
-            console.log('Oh, you got the CodeMirror instance:', cm)
-        },
-    }
 }
 </script>
-
 <style scoped>
 .main-div {
     background-color: yellow;
