@@ -61,7 +61,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .modal-mask {
     position: fixed;
-    z-index: 9998;
+    z-index: 1000;
     top: 0;
     left: 0;
     width: 100%;
@@ -88,4 +88,20 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .modal-leave-active .container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;  /* for vertical scrollbars */
+    height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
 }
