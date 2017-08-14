@@ -11,7 +11,7 @@
                     <el-button class="top-btn" @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
                 </div>
                 <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer"></pdf-viewer>
-                <code-editor-page :hide="hideCodeEditor"></code-editor-page>
+                <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer"></code-editor-page>
                 <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
             <div class='right'>
@@ -45,7 +45,7 @@ export default {
     data: function () {
         return {
             showMessageMenu: false,
-            showingComponent: 'pdfViewer',
+            showingComponent: 'codeEditor',
             roomInfo: {
                 roomId: -1,
                 roomName: '',
@@ -101,8 +101,8 @@ export default {
         },
         getUserInfo: function() {
             this.userInfo.nickname = this.$store.state.nickname
-            this.isTeacher = this.$store.state.isTeacher
-            this.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
+            this.userInfo.isTeacher = this.$store.state.isTeacher
+            this.userInfo.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
         },
         connect: function () {
             this.httpServer = io.connect('http://127.0.0.1:3000')
