@@ -24,7 +24,6 @@
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import LoginModalDialog from './LoginModalDialog'
     import PersonalInformation from './PersonalInformation'
     import ChangeNickname from './ChangeNickname'
@@ -32,7 +31,6 @@
 
     export default {
         components: {
-            ElButton,
             LoginModalDialog,
             PersonalInformation,
             ChangeNickname,

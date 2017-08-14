@@ -21,12 +21,17 @@ export default {
         }
     },
     methods: {
+        showErrorMes: function (mes) {
+            this.$message({
+                message: mes,
+                type: 'error'
+            })
+        },
         enterRoom: function () {
-            console.log(this.$store.state.nickname)
             if (this.$store.state.account !== null) {
                 this.$router.push('/room/' + this.room.id)
             } else {
-                window.alert('请您先登录')
+                this.showErrorMes('请您先登录')
             }
         }
     }

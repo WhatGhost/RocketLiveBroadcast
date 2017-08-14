@@ -98,7 +98,7 @@ const store = new Vuex.Store({
             state.showLogin = false
         },
         trueForget: function (state) {
-            state.showForget = false
+            state.showForget = true
         },
         falseForget: function (state) {
             state.showForget = false
@@ -218,13 +218,13 @@ const store = new Vuex.Store({
             store.commit('trueLogin')
             store.commit('trueBlur')
         },
-        openForget: function () {
+        openForgetDialog: function () {
             store.commit('trueForget')
             store.commit('trueBlur')
         },
-        closeForget: function () {
-            store.commit('closeForget')
-            store.commit('closeBlur')
+        closeForgetDialog: function () {
+            store.commit('falseForget')
+            store.commit('falseBlur')
         },
         closeLoginDialog: function () {
             console.log('commiting')
