@@ -1,7 +1,7 @@
 <template>
     <div class="main-div">
         <label class="currentTime">{{ currentTime }}</label>
-        <div class="message-div" v-bind:class="{ hightlight: message.isTeacher }">
+        <div class="message-div" v-bind:class="{ highlight: message.highlight }">
             <label>{{ message.nickname }}</label>
             <span class="mes-body shadow-s">{{ message.content }}</span>
         </div>
@@ -40,5 +40,9 @@ export default {
     background-color: white;
     border-radius: 5px;
     padding: 10px 6px 6px 6px;
+}
+
+.highlight span {
+    background-color: yellow;
 }
 </style>
