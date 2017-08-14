@@ -20,10 +20,12 @@
                 numpages: 0
             }
         },
-        mounted() {
+        created() {
             this.httpServer.on('changePage', (obj) => {
-                console.log('receive page:' + obj.page)
                 this.page = obj.page
+            })
+            this.httpServer.emit('getCurrentData', {
+                roomId: this.roomInfo.roomId
             })
         },
         methods: {

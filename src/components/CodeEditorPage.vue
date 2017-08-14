@@ -12,10 +12,13 @@ export default {
         CodeMirror,
         codemirror
     },
-    mounted() {
+    created() {
         this.httpServer.on('changeCode', (obj) => {
             this.syncCode = obj.code
             this.code = obj.code
+        })
+        this.httpServer.emit('getCurrentData', {
+            roomId: this.roomInfo.roomId
         })
     },
     data() {
