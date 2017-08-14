@@ -41,12 +41,10 @@
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import LoginModalDialog from './LoginModalDialog'
 
     export default {
         components: {
-            ElButton,
             LoginModalDialog,
         },
         data: function () {

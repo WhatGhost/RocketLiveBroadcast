@@ -2,15 +2,17 @@
     <div class="main-div">
         <div class="above-div">
             <div class="items">
-                <chat-item v-for="msg in messageList" v-bind:message="msg">
-                </chat-item>
+                <transition-group name="itemlist" tag="div">
+                    <chat-item v-for="msg in messageList" v-bind:message="msg" :key="index">
+                    </chat-item>
+                </transition-group>
             </div>
             <div class="emoji-div" v-if="showEmoji">
             </div>
         </div>
         <div class="bottom-bar">
             <el-button>😄</el-button>
-            <el-input class="mes-input" v-model="message" autocomplete="off"></el-input>
+            <el-input class="mes-input" v-model="message" autoComplete="" omplete="off"></el-input>
             <el-button @click='sendMessage'>send</el-button>
         </div>
     </div>
@@ -28,6 +30,7 @@ export default {
     },
     data: function () {
         return {
+            num: 0,
             messageList: [],
             message: '',
             nickname: '',
@@ -38,15 +41,21 @@ export default {
             emojis: ['😂', '🙏', '😄', '😏', '😇', '😅', '😌', '😘', '😍', '🤓', '😜', '😎', '😊', '😳', '🙄', '😱', '😒', '😔', '😷', '👿', '🤗', '😩', '😤', '😣', '😰', '😴', '😬', '😭', '👻', '👍', '✌️', '👉', '👀', '🐶', '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳']
         }
     },
-    created() {
+    computed: {
+        index: function () {
+            this.num += 1
+            return this.num
+        }
+    },
+    created () {
         this.nickname = this.$store.state.nickname
         this.isTeacher = this.$store.state.isTeacher
     },
-    mounted() {
+    mounted () {
         this.connectEvent()
     },
     methods: {
-        connectEvent() {
+        connectEvent () {
             this.httpServer = io.connect('http://127.0.0.1:3000')
             this.httpServer.emit('init', {
                 roomId: this.roomId
@@ -55,7 +64,7 @@ export default {
                 this.messageList.push(obj)
             })
         },
-        sendMessage() {
+        sendMessage () {
             let messageToSend = {
                 content: this.message,
                 nickname: this.nickname,
@@ -100,4 +109,13 @@ export default {
     padding: 0 5px 0 5px;
 }
 
+.itemlist-enter-active,
+.itemlist-leave-active {
+    transition: all 1s;
+}
+
+.itemlist-enter,
+.itemlist-leave-active {
+    opacity: 0;
+}
 </style>

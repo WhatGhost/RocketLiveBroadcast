@@ -23,21 +23,22 @@
         <register-modal-dialog></register-modal-dialog>
         <login-modal-dialog></login-modal-dialog>
         <info-modal-dialog></info-modal-dialog>
+        <forget-modal-dialog></forget-modal-dialog>
     </div>
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import RegisterModalDialog from './RegisterModalDialog.vue'
     import LoginModalDialog from './LoginModalDialog'
     import InfoModalDialog from './InfoModalDialog'
+    import ForgetModalDialog from './ForgetModalDialog'
 
     export default {
         components: {
-            ElButton,
             RegisterModalDialog,
             LoginModalDialog,
-            InfoModalDialog
+            InfoModalDialog,
+            ForgetModalDialog
         },
         data: function () {
             return {

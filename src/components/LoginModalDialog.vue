@@ -32,12 +32,10 @@
 </template>
 
 <script>
-    import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import Forget from './Forget'
 
     export default {
         components: {
-            ElButton,
             Forget,
         },
         data: function () {
@@ -82,7 +80,8 @@
                 })
             },
             showForget: function () {
-                this.$store.dispatch('openForget')
+                this.$store.dispatch('closeLoginDialog')
+                this.$store.dispatch('openForgetDialog')
             }
         }
     }
