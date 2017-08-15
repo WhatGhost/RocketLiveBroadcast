@@ -1,19 +1,17 @@
 <template>
-    <div class="main-div">
+    <div class="main-div shadow-fixed">
         <div class="above-div">
-            <div class="items">
-                <transition-group name="itemlist" tag="div">
-                    <chat-item v-for="msg in messageList" v-bind:message="msg" :key="index">
-                    </chat-item>
-                </transition-group>
-            </div>
-            <div class="emoji-div" v-if="showEmoji">
-            </div>
+            <transition-group name="itemlist" tag="div">
+                <chat-item v-for="msg in messageList" v-bind:message="msg" :key="index">
+                </chat-item>
+            </transition-group>
+        </div>
+        <div class="emoji-div" v-if="showEmoji">
         </div>
         <div class="bottom-bar">
-            <el-button>😄</el-button>
-            <el-input class="mes-input" v-model="message" autoComplete="" omplete="off"></el-input>
-            <el-button @click='sendMessage'>send</el-button>
+            <el-button class="bottom">😄</el-button>
+            <el-input class="mes-input bottom" v-model="message" autoComplete="" omplete="off"></el-input>
+            <el-button class="bottom" @click='sendMessage'>send</el-button>
         </div>
     </div>
 </template>
@@ -47,15 +45,15 @@ export default {
             return this.num
         }
     },
-    created () {
+    created() {
         this.nickname = this.$store.state.nickname
         this.isTeacher = this.$store.state.isTeacher
     },
-    mounted () {
+    mounted() {
         this.connectEvent()
     },
     methods: {
-        connectEvent () {
+        connectEvent() {
             this.httpServer = io.connect('http://127.0.0.1:3000')
             this.httpServer.emit('init', {
                 roomId: this.roomId
@@ -64,7 +62,7 @@ export default {
                 this.messageList.push(obj)
             })
         },
-        sendMessage () {
+        sendMessage() {
             let messageToSend = {
                 content: this.message,
                 nickname: this.nickname,
@@ -86,27 +84,29 @@ export default {
 .main-div {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-around;
 }
 
 .above-div {
-    height: 80%;
-    background-color: #fafafa;
-}
-
-.items {
+    height: 78%;
+    margin-top: 0;
     overflow-y: scroll;
-    height: 95%;
+    background-color: lightcyan;
 }
 
 .bottom-bar {
     display: flex;
     flex-direction: row;
-    margin: 5px;
+    /*margin: 5px;*/
+    /*height: 18%;*/
 }
 
 .mes-input {
     padding: 0 5px 0 5px;
+}
+
+.bottom {
+    /*height: 100%;*/
 }
 
 .itemlist-enter-active,

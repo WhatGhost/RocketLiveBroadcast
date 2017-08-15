@@ -5,16 +5,16 @@
 </template>
 
 <script>
-    export default {
-        data: function () {
-            return {}
-        },
+export default {
+    data: function () {
+        return {}
+    },
 //        methods: function () {
 //        }
-    }
+}
 </script>
 
 <style scoped>
-    .main-div {
-    }
+.main-div {
+}
 </style>
