@@ -53,7 +53,7 @@ export default {
 .card:hover {
     cursor: pointer;
     background-color: rgb(232, 232, 232);
-    background-image: url("../assets/play.gif");
+    background-image: url("http://okonvxmbq.bkt.clouddn.com/never/delete/play.gif");
     background-repeat: no-repeat;
     background-position: center;
     z-index: 0;
