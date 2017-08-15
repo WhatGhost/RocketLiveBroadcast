@@ -57,7 +57,7 @@ export default {
     display: none;
 }
 
-.CodeMirror {
-    text-align: left !important;
-}
+/*.CodeMirror {*/
+    /*text-align: left !important;*/
+/*}*/
 </style>

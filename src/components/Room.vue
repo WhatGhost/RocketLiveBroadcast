@@ -45,15 +45,16 @@ export default {
     display: inline-block;
     border-radius: 7px;
     transition: background 0.5s ease-in-out;
+    background-color: white;
 }
 
 .card:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.23);
+    background-color: rgb(232, 232, 232);
     background-image: url("../assets/play.gif");
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 1000;
+    z-index: 0;
 }
 
 .video-image {

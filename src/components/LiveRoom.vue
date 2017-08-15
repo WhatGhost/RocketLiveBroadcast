@@ -4,7 +4,7 @@
             <p>{{ roomMessage }}</p>
         </div>
         <div class="room">
-            <div class='left'>
+            <div class='left shadow-fixed'>
                 <div class="top-btn-div">
                     <el-button class="top-btn" @click="showingComponent = 'pdfViewer'">PDF</el-button>
                     <el-button class="top-btn" @click="showingComponent = 'codeEditor'">Code Editor</el-button>
@@ -119,22 +119,27 @@ export default {
 .live-room {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    align-content: flex-start;
 }
 
 .room {
     top: 80px;
     flex-direction: column;
     padding: 10px;
+    height: 100%;
 }
 
 .left {
     float: left;
     width: 48%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 4px;
     border: 1px solid #e5e5e5;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .top-btn-div {
@@ -153,25 +158,27 @@ export default {
 .right {
     width: 50%;
     float: right;
-    height: 400px;
+    height: 75%;
 }
 
 .video-area {
     height: 80%;
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px solid #e5e5e5;
+    background-color: lightseagreen;
 }
 
 .chat-area {
     height: 50%;
-    margin-top: 10px;
+    margin-top: 1%;
     border-radius: 5px;
     border: 1px solid #e5e5e5;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .message {
     text-align: left;
-    height: 24px;
+    height: 3%;
     font-size: 9px;
     color: #d9d9d9;
     padding-left: 8px;
