@@ -5,7 +5,7 @@ from .views import LiveRoomViewSet, UserViewSet
 from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
 from .views import index
 from .send_verification import sendMail
-
+import time
 # Create your tests here.
 
 # 测试访问主页
@@ -24,6 +24,11 @@ class TestView(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+    def test_render(self):
+        response = self.client.get('/')
+        self.assertTrue(str(response.content).find(
+            '<div id="app"></div>)') == -1)
+
 # 测试登录
 
 
@@ -36,21 +41,26 @@ class TestLogin(TestCase):
         myuser.set_password(111)
         myuser.save()
 
+    def test_login_with_buildin_function(self):
+        self.assertTrue(self.client.login(account='123', password='111'))
+        self.assertFalse(self.client.login(account='124', password='111'))
+        self.assertFalse(self.client.login(account='123', password='1111'))
     # 正确密码登录
-    def test_login(self):
+
+    def test_login_view(self):
         response = self.client.post(
             '/users/login_users/', {'account': '123', 'password': '111'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['account'], '123')
 
     # 错误密码登录
-    def testLoginWithWrongPassword(self):
+    def test_login_with_wrong_password(self):
         response = self.client.post(
             '/users/login_users/', {'account': '123', 'password': '5657'})
         self.assertFalse(response.status_code == 200)
 
     # 错误用户名登录
-    def testLoginWithWrongAccount(self):
+    def test_login_with_wrong_account(self):
         response = self.client.post(
             '/users/login_users/', {'account': 'gao', 'password': '111'})
         self.assertFalse(response.status_code == 200)
@@ -188,6 +198,7 @@ class TestLogout(TestCase):
 class TestRegisterVerification(TestCase):
     def setUp(self):
         print("=====Test Send Register Verification")
+        time.sleep(5)
 
     def test_send(self):
         self.client.post(
@@ -196,12 +207,13 @@ class TestRegisterVerification(TestCase):
             account='register@r.com').exists())
 
     def tearDown(self):
-        pass
+        time.sleep(5)
 
 
 class TestForgetVerification(TestCase):
     def setUp(self):
         print("=====Test Send Forget Verification")
+        time.sleep(5)
 
     def test_send(self):
         self.client.post(
@@ -211,3 +223,53 @@ class TestForgetVerification(TestCase):
 
     def tearDown(self):
         pass
+
+
+# class TestChangeNickname(TestCase):
+#     def setUp(self):
+#         print('=======Test Change Nickname')
+#         myuser = MyUser.objects.create(
+#             account='123', nickname='gyybaba', is_student='True', is_active='True', is_admin='False')
+#         myuser.set_password(111)
+#         myuser.save()
+
+#     def test_change_nickname(self):
+#         response = self.client.patch('/users/change_info/',
+#                                      {'nickname': 'gyyyeye', 'account': '123', 'is_password': False},
+#                                      content_type='application/x-www-form-urlencoded')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(MyUser.objects.get(account='123').nickname, 'gyyyeye')
+
+#     def tearDown(self):
+#         pass
+
+
+# class TestChangePassword(TestCase):
+#     def setUp(self):
+#         print('=======Test Change Password')
+#         myuser = MyUser.objects.create(
+#             account='123', nickname='gyybaba', is_student='True', is_active='True', is_admin='False')
+#         myuser.set_password(111)
+#         myuser.save()
+
+#     def test_change_password(self):
+#         response = self.client.patch('/users/change_info/',
+#                                      {'oldpassword': '111',
+#                                       'newpassword': '222',
+#                                       'account': '123',
+#                                       'is_password': True},
+#                                       content_type='application/x-www-form-urlencoded')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertTrue(MyUser.objects.get(account='123').check_password('222'))
+
+#     def test_change_password_with_wrong_old_password(self):
+#         response = self.client.patch('/users/change_info/',
+#                                      {'oldpassword': '333',
+#                                       'newpassword': '222',
+#                                       'account': '123',
+#                                       'is_password': True},
+#                                       content_type='application/x-www-form-urlencoded')
+#         self.assertEqual(response.data, '原密码错误')
+
+#     def tearDown(self):
+#         pass
