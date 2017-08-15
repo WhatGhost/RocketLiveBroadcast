@@ -3,7 +3,7 @@
         <button @click="pgup">Previous Page</button>
         <button @click="pgdn">Next Page</button>
         <input v-model.number="page" type="number" style="width: 5em"> /{{ numPages }}
-        <pdf src="../static/review.pdf" :page=page ref="pdf" @numPages="numPages=$event"></pdf>
+        <pdf src="/static/static/review.pdf" :page=page ref="pdf" @numPages="numPages=$event"></pdf>
     </div>
 </template>
 
