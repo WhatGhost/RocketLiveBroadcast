@@ -14,7 +14,7 @@ def _format_addr(s):
 def sendMail(to_addr, message="您的验证码为： ", mode='plain', encode='utf-8'):
     # 输入Email地址和口令:
     from_addr = 'HJDLive@163.com'
-    password = 'huojiandui666'
+    password = 'huojiandui233'
     # 输入SMTP服务器地址:
     smtp_server = 'smtp.163.com'
     verification_code = generate_verification_code()
