@@ -1,13 +1,13 @@
 <template>
     <div class="main-div" :class="{ hiding: hide }">
-        <codemirror v-model="code" :options="editorOptions" @change="emitCodeChange" ></codemirror>
+        <codemirror ref="codemirror" v-model="code" :options="editorOptions" @change="emitCodeChange" ></codemirror>
     </div>
 </template>
 
 <script>
 import { CodeMirror, codemirror } from 'vue-codemirror'
 export default {
-    props: ['hide', 'httpServer', 'roomInfo'],
+    props: ['hide', 'httpServer', 'roomInfo', 'userInfo'],
     components: {
         CodeMirror,
         codemirror
@@ -20,6 +20,7 @@ export default {
         this.httpServer.emit('getCurrentData', {
             roomId: this.roomInfo.roomId
         })
+        this.editorOptions['readOnly'] = !this.userInfo.isRoomCreator
     },
     data() {
         return {
@@ -31,7 +32,8 @@ export default {
                 theme: 'base16-light',
                 lineNumbers: true,
                 line: true,
-                autofocus: true
+                autofocus: true,
+                readOnly: true
             }
         }
     },

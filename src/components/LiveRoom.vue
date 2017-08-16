@@ -6,12 +6,12 @@
         <div class="room">
             <div class='left shadow-fixed'>
                 <div class="top-btn-div">
-                    <el-button class="top-btn" @click="showingComponent = 'pdfViewer'">PDF</el-button>
-                    <el-button class="top-btn" @click="showingComponent = 'codeEditor'">Code Editor</el-button>
-                    <el-button class="top-btn" @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
+                    <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
+                    <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
+                    <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
                 </div>
                 <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></pdf-viewer>
-                <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer"></code-editor-page>
+                <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></code-editor-page>
                 <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
             <div class='right'>
@@ -110,6 +110,9 @@ export default {
                 roomId: this.roomInfo.roomId
             })
             console.log('main connected')
+        },
+        switchPane: function(pane) {
+            this.showingComponent = pane
         }
     }
 }
