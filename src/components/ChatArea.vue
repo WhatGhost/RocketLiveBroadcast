@@ -2,7 +2,7 @@
     <div class="main-div shadow-fixed">
         <div class="above-div">
             <transition-group name="itemlist" tag="div">
-                <chat-item v-for="msg in messageList" v-bind:message="msg" :key="index">
+                <chat-item v-for="(msg, key) in messageList" v-bind:message="msg" :key="key">
                 </chat-item>
             </transition-group>
         </div>
@@ -18,63 +18,40 @@
 
 <script>
 import Chat from './Chat'
-import io from '../../lib/socket.io'
 import ChatItem from './ChatItem'
 
 export default {
+    props: ['httpServer', 'roomInfo', 'userInfo'],
     components: {
         Chat,
         ChatItem
     },
     data: function () {
         return {
-            num: 0,
             messageList: [],
             message: '',
-            nickname: '',
-            isTeacher: false,
-            httpServer: null,
-            roomId: this.$route.params['id'],
             showEmoji: false,
             emojis: ['😂', '🙏', '😄', '😏', '😇', '😅', '😌', '😘', '😍', '🤓', '😜', '😎', '😊', '😳', '🙄', '😱', '😒', '😔', '😷', '👿', '🤗', '😩', '😤', '😣', '😰', '😴', '😬', '😭', '👻', '👍', '✌️', '👉', '👀', '🐶', '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳']
         }
     },
-    computed: {
-        index: function () {
-            this.num += 1
-            return this.num
-        }
-    },
     created() {
-        this.nickname = this.$store.state.nickname
-        this.isTeacher = this.$store.state.isTeacher
-    },
-    mounted() {
-        this.connectEvent()
+        this.httpServer.on('message', (obj) => {
+            this.messageList.push(obj)
+        })
     },
     methods: {
-        connectEvent() {
-            this.httpServer = io.connect('http://127.0.0.1:3000')
-            this.httpServer.emit('init', {
-                roomId: this.roomId
-            })
-            this.httpServer.on('message', (obj) => {
-                this.messageList.push(obj)
-            })
-        },
         sendMessage() {
             let messageToSend = {
                 content: this.message,
-                nickname: this.nickname,
-                roomId: this.roomId,
-                highlight: this.isTeacher
+                nickname: this.userInfo.nickname,
+                roomId: this.roomInfo.roomId,
+                highlight: this.userInfo.isRoomCreator
             }
             if (this.message !== '') {
                 this.httpServer.emit('message', messageToSend)
                 this.messageList.push(messageToSend)
                 this.message = ''
             }
-//            console.log(this.$store.state.nickname)
         }
     }
 }
