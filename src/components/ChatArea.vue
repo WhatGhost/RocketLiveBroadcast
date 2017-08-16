@@ -17,13 +17,11 @@
 </template>
 
 <script>
-import Chat from './Chat'
 import io from '../../lib/socket.io'
 import ChatItem from './ChatItem'
 
 export default {
     components: {
-        Chat,
         ChatItem
     },
     data: function () {

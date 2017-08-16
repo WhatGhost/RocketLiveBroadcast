@@ -6,25 +6,21 @@
         <transition name="fade">
             <router-view></router-view>
         </transition>
-        <img class="footer-img" src="./assets/footer-img.gif"/>
+        <img class="footer-img" v-bind:class="{ blur: $store.state.background_blur }" src="./assets/footer-img.gif"/>
     </div>
 </template>
 
 <script>
 import NavHeader from './components/NavHeader'
 import RoomList from './components/RoomList'
-import Info from './components/Info'
 import Forget from './components/Forget'
-import CreateRoom from './components/CreateRoom'
 import LiveRoom from './components/LiveRoom'
 
 export default {
     components: {
         NavHeader,
         RoomList,
-        Info,
         Forget,
-        CreateRoom,
         LiveRoom
     },
     data: function () {
@@ -104,7 +100,7 @@ body {
     width: 100%;
     height: 70px;
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     z-index: -1;
 }
 </style>

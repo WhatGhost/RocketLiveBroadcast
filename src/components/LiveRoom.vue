@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import LiveRoomMenu from './LiveRoomMenu'
 import SlidePage from './SlidePage'
 import WhiteBoardPage from './WhiteboardPage'
 import CodeEditorPage from './CodeEditorPage'
@@ -34,7 +33,6 @@ import io from '../../lib/socket.io'
 
 export default {
     components: {
-        LiveRoomMenu,
         SlidePage,
         WhiteBoardPage,
         CodeEditorPage,

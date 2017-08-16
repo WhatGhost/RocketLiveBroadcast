@@ -19,6 +19,7 @@ const store = new Vuex.Store({
         showLogin: false,
         showForget: false,
         showInfo: false,
+        showCreateRoom: false,
         // 完成幻灯片上传
         finishSlideUpload: false,
         // 上传凭证
@@ -102,6 +103,12 @@ const store = new Vuex.Store({
         },
         falseForget: function (state) {
             state.showForget = false
+        },
+        trueCreateRoom: function (state) {
+            state.showCreateRoom = true
+        },
+        falseCreateRoom: function (state) {
+            state.showCreateRoom = false
         },
         finishSlideUpload: function (state) {
             state.finishSlideUpload = true
@@ -229,6 +236,14 @@ const store = new Vuex.Store({
         closeLoginDialog: function () {
             console.log('commiting')
             store.commit('falseLogin')
+            store.commit('falseBlur')
+        },
+        openCreateRoomDialog: function () {
+            store.commit('trueCreateRoom')
+            store.commit('trueBlur')
+        },
+        closeCreateRoomDialog: function () {
+            store.commit('falseCreateRoom')
             store.commit('falseBlur')
         },
         endUploadingSlide: function () {
