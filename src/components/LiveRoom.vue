@@ -16,7 +16,7 @@
             </div>
             <div class='right'>
                 <record-video class="video-area"></record-video>
-                <chat-area class="chat-area"></chat-area>
+                <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
             </div>
         </div>
     </div>
