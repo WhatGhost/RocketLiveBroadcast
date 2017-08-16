@@ -1,6 +1,7 @@
 <template>
     <div class="card shadow-l" @click="enterRoom">
-        <img src="../assets/vue.png" class="video-image">
+         <!-- <img src="../assets/vue.png" class="video-image">  -->
+        <img :src="room.room_img" class="video-image"> 
         <div class="text">
             <label>{{ room.room_name }}</label>
             <label class="intro">　id：{{ room.id }}</label>
@@ -28,6 +29,7 @@ export default {
             })
         },
         enterRoom: function () {
+            console.log(this.room.room_img)
             if (this.$store.state.account !== null) {
                 this.$router.push('/room/' + this.room.id)
             } else {
@@ -51,7 +53,7 @@ export default {
 .card:hover {
     cursor: pointer;
     background-color: rgb(232, 232, 232);
-    background-image: url("../assets/play.gif");
+    background-image: url("http://okonvxmbq.bkt.clouddn.com/never/delete/play.gif");
     background-repeat: no-repeat;
     background-position: center;
     z-index: 0;
