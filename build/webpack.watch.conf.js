@@ -10,7 +10,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 
-var env = config.build.env
+var env = config.dev.env
 
 var webpackConfig = merge(baseWebpackConfig, {
   watch: true,
@@ -20,7 +20,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       extract: true
     })
   },
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
+  devtool: config.build.productionSourceMap ? '#source-map' : true,  // Modified to support vue develop extension on Chrome
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].js'),
