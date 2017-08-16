@@ -10,7 +10,7 @@
                     <el-button class="top-btn" @click="showingComponent = 'codeEditor'">Code Editor</el-button>
                     <el-button class="top-btn" @click="showingComponent = 'whiteBoard'">WhiteBoard</el-button>
                 </div>
-                <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer"></pdf-viewer>
+                <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></pdf-viewer>
                 <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer"></code-editor-page>
                 <white-board-page :hide="hideWhiteBoard"></white-board-page>
             </div>
