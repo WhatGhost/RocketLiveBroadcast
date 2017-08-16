@@ -41,6 +41,7 @@ class RoomViewSet(viewsets.ModelViewSet):
 
 
 class LiveRoomViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = LiveRoom.objects.all()
     serializer_class = LiveRoomSerializer
 
