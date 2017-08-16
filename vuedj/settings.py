@@ -65,6 +65,11 @@ CORS_ORIGIN_WHITELIST = [
     'app.mydomain.com',
 ]
 
+DEFAULT_AUTHENTICATION_CLASSES= (
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication'
+),
+
 ROOT_URLCONF = 'vuedj.urls'
 
 TEMPLATES = [

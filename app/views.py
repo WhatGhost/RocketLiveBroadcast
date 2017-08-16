@@ -16,6 +16,15 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_p
 from django.utils.decorators import method_decorator
 
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
+
+
+
 def index(request):
     return render(request, 'index.html')
 
@@ -53,6 +62,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = MyUser.objects.all()
     serializer_class = UserSerializer
 
@@ -70,7 +80,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return HttpResponse(status=200)
         else:
             return Response('验证码不存在', status=422)
-
+    # @ensure_csrf_cookie
     @list_route(methods=['post'])
     def current_user(self,request):
         user = request.user
@@ -96,8 +106,8 @@ class UserViewSet(viewsets.ModelViewSet):
                 return HttpResponse(status=200)
         else:
             return HttpResponse(status=422)
-
-    @method_decorator(csrf_protect)
+   
+    # @method_decorator(csrf_protect)
     @list_route(methods=['post'])
     def login_users(self, request):
         print(request.user)
