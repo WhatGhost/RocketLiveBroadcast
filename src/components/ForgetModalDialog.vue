@@ -4,7 +4,7 @@
             <div class="modal-mask" v-if="this.$store.state.showForget">
                 <div class="modal-wrapper">
                     <div class="container">
-                        <img class="side-img" src="../assets/dialog-side-register.svg">
+                        <img class="side-img" src="../assets/forget-password-image.svg">
                         <div class="right-side">
                             <div class="header">
                                 <p class="title">Find Password</p>
@@ -150,8 +150,8 @@ export default {
     color: #cacaca;
     font-size: 30px;
     position: relative;
-    left: 110px;
-    top: -14px;
+    left: 100px;
+    top: -13px;
 }
 
 .dialog-body {
@@ -175,7 +175,7 @@ input {
 .sure-btn {
     color: white;
     font-size: 17px;
-    background-color: #00af50;
+    background-color: #269a77;
     border-radius: 20px;
     margin-top: 15px;
     padding: 12px;

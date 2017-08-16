@@ -17,13 +17,11 @@
 </template>
 
 <script>
-import Chat from './Chat'
 import ChatItem from './ChatItem'
 
 export default {
     props: ['httpServer', 'roomInfo', 'userInfo'],
     components: {
-        Chat,
         ChatItem
     },
     data: function () {

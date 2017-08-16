@@ -2,7 +2,7 @@
     <div>
         <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
             <el-button type="text" id="open-room-btn" v-if="$store.state.isTeacher"
-                       @click="showCreateRoom">开房
+                       @click="openCreateRoomDialog">开房
             </el-button>
             <el-button class="home-btn" type="text" @click="showRoomList">主页</el-button>
             <div id="blank"></div>
@@ -25,6 +25,7 @@
         <login-modal-dialog></login-modal-dialog>
         <info-modal-dialog></info-modal-dialog>
         <forget-modal-dialog></forget-modal-dialog>
+        <create-room-modal-dialog></create-room-modal-dialog>
     </div>
 </template>
 
@@ -33,13 +34,15 @@ import RegisterModalDialog from './RegisterModalDialog.vue'
 import LoginModalDialog from './LoginModalDialog'
 import InfoModalDialog from './InfoModalDialog'
 import ForgetModalDialog from './ForgetModalDialog'
+import CreateRoomModalDialog from './CreateRoomModalDialog'
 
 export default {
     components: {
         RegisterModalDialog,
         LoginModalDialog,
         InfoModalDialog,
-        ForgetModalDialog
+        ForgetModalDialog,
+        CreateRoomModalDialog
     },
     data: function () {
         return {
@@ -86,6 +89,9 @@ export default {
         },
         openLoginDialog: function () {
             this.$store.dispatch('openLoginDialog')
+        },
+        openCreateRoomDialog: function () {
+            this.$store.dispatch('openCreateRoomDialog')
         }
     }
 }

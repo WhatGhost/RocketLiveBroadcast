@@ -20,7 +20,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       extract: true
     })
   },
+<<<<<<< HEAD
   devtool: config.build.productionSourceMap ? '#source-map' : true,  // Modified to support vue develop extension on Chrome
+=======
+  devtool: config.build.productionSourceMap ? '#source-map' : true,
+>>>>>>> leto/create_room_dialog
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].js'),

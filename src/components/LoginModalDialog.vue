@@ -32,137 +32,116 @@
 </template>
 
 <script>
-    import Forget from './Forget'
+import Forget from './Forget'
 
-    export default {
-        components: {
-            Forget,
+export default {
+    components: {
+        Forget,
+    },
+    data: function () {
+        return {
+            account: '',
+            password: ''
+        }
+    },
+    methods: {
+        closeDialog: function () {
+            this.$store.dispatch('closeLoginDialog')
+            this.errorMes = ''
         },
-        data: function () {
-            return {
-                account: '',
-                password: ''
-            }
+        showErrorMes: function (mes) {
+            this.$message({
+                message: mes,
+                type: 'warning'
+            })
         },
-        methods: {
-            closeDialog: function () {
-                this.$store.dispatch('closeLoginDialog')
-                this.errorMes = ''
-            },
-            showErrorMes: function (mes) {
-                this.$message({
-                    message: mes,
-                    type: 'warning'
-                })
-            },
-            sendVerificationCode: function () {
-            },
-            isRightPhoneNum() {
-                let phone = this.account
-                return /^1[3|4|5|7|8]\d{9}$/.test(phone)
-            },
-            isRightEmail() {
-                let re = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
-                return re.test(this.account)
-            },
-            isPassword() {
-                let patrn = /^(\w){8,20}$/
-                return patrn.test(this.password)
-            },
-            loginButtonClick: function () {
-                if (this.account === '') {
-                    this.showErrorMes('请填写电子邮箱或手机号码')
-                    return
-                }
-                this.$store.dispatch('loginUser', {
-                    account: this.account,
-                    password: this.password
-                })
-            },
-            showForget: function () {
-                this.$store.dispatch('closeLoginDialog')
-                this.$store.dispatch('openForgetDialog')
+        loginButtonClick: function () {
+            if (this.account === '') {
+                this.showErrorMes('请填写电子邮箱或手机号码')
+                return
             }
+            this.$store.dispatch('loginUser', {
+                account: this.account,
+                password: this.password
+            })
+        },
+        showForget: function () {
+            this.$store.dispatch('closeLoginDialog')
+            this.$store.dispatch('openForgetDialog')
         }
     }
+}
 </script>
 
 <style scoped>
-    .alert {
-        width: 500px;
-        margin: 20px auto 0 auto;
-        border-radius: 10px;
-        transition: opacity .4s ease;
-    }
+.container {
+    width: 480px;
+    height: 460px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 12px 25px -6px rgba(0, 0, 0, .35);
+    transition: all .3s ease;
+    display: flex;
+}
 
-    .container {
-        width: 480px;
-        height: 460px;
-        margin: 0 auto;
-        background-color: #fff;
-        border-radius: 20px;
-        box-shadow: 0 12px 25px -6px rgba(0, 0, 0, .35);
-        transition: all .3s ease;
-        display: flex;
-    }
+.left-side {
+    margin-top: 15px;
+}
 
-    .left-side {
-        margin-top: 15px;
-    }
+.header {
+    color: #42b983;
+    display: flex;
+    justify-content: space-around;
+}
 
-    .header {
-        color: #42b983;
-        display: flex;
-        justify-content: space-around;
-    }
+.title {
+    font-size: 20px;
+    text-align: left;
+    color: #808080;
+}
 
-    .title {
-        font-size: 20px;
-        text-align: left;
-        color: #808080;
-    }
+.close-btn {
+    color: #cacaca;
+    font-size: 30px;
+    position: relative;
+    left: 70px;
+    top: -14px;
+}
 
-    .close-btn {
-        color: #cacaca;
-        font-size: 30px;
-        position: relative;
-        left: 70px;
-        top: -14px;
-    }
+.dialog-body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-left: 60px;
+}
 
-    .dialog-body {
-        display: flex;
-        flex-direction: column;
-        margin-top: 70px;
-        margin-left: 60px;
-    }
+input {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline: none;
+    font-size: 13px;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    padding-left: 0.2em;
+}
 
-    input {
-        border-left: none;
-        border-right: none;
-        border-top: none;
-        outline: none;
-        font-size: 13px;
-        margin-bottom: 20px;
-        padding-bottom: 8px;
-        padding-left: 0.2em;
-    }
+.sure-btn {
+    font-size: 20px;
+    background-color: #FF8C85;
+    border-radius: 20px;
+    margin-top: 25px;
+}
 
-    .sure-btn {
-        font-size: 20px;
-        background-color: #00af50;
-        border-radius: 20px;
-        margin-top: 25px;
-    }
+.to-forget {
+    margin-top: 15px;
+    font-weight: bold;
+}
 
-    .to-forget {
-        margin-top: 15px;
-        font-weight: bold;
-    }
-
-    .side-img {
-        height: 460px;
-        margin-left: auto;
-        margin-right: -1px;
-    }
+.side-img {
+    height: 460px;
+    margin-left: auto;
+    margin-right: -1px;
+}
 </style>

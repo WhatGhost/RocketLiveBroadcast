@@ -43,7 +43,7 @@ h1 {
     margin-left: 20px;
     margin-top: 25px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.15);
     padding: 20px;
     /*margin-left: 0;*/
 }
