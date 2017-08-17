@@ -12,7 +12,8 @@ io.on('connection', function (socket) {
         if (!ROOMDATA.hasOwnProperty(obj.roomId)) {
             ROOMDATA[obj.roomId] = {
                 page: 1,
-                code: ''
+                code: '',
+                showingComponent: 'codeEditor'
             }
         }
     })
@@ -27,7 +28,12 @@ io.on('connection', function (socket) {
         this.to(obj.roomId).emit('changeCode', obj)
         ROOMDATA[obj.roomId].code = obj.code
     })
+    socket.on('switchPane', function(obj) {
+        this.to(obj.roomId).emit('switchPane', obj)
+        ROOMDATA[obj.roomId].showingComponent = obj.showingComponent
+    })
     socket.on('getCurrentData', function(obj) {
+        io.in(socket.id).emit('switchPane', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('changePage', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('changeCode', ROOMDATA[obj.roomId])
     })
