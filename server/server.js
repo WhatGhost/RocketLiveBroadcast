@@ -33,9 +33,9 @@ io.on('connection', function (socket) {
         ROOMDATA[obj.roomId].showingComponent = obj.showingComponent
     })
     socket.on('getCurrentData', function(obj) {
-        io.in(socket.id).emit('switchPane', ROOMDATA[obj.roomId])
-        io.in(socket.id).emit('changePage', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('changeCode', ROOMDATA[obj.roomId])
+        io.in(socket.id).emit('changePage', ROOMDATA[obj.roomId])
+        io.in(socket.id).emit('switchPane', ROOMDATA[obj.roomId])
     })
 })
 
