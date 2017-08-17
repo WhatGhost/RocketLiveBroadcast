@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/store.js'
 import RoomList from '../components/RoomList'
 import LiveRoom from '../components/LiveRoom'
-import Forget from '../components/Forget'
 
 Vue.use(VueRouter)
 
@@ -12,15 +12,25 @@ const router = new VueRouter({
         {
             path: '/roomList',
             name: 'RoomList',
-            component: RoomList
+            component: RoomList,
         },
         {
             path: '/room/:id',
-            component: LiveRoom
-        },
-        {
-            path: '/forget',
-            component: Forget
+            component: LiveRoom,
+            beforeEnter: function(to, from, next) {
+                if (store.state.account === null) {
+                    next(false)
+                    return
+                }
+                let roomId = parseInt(to.params['id'])
+                for (let room of store.state.rooms) {
+                    if (room.id === roomId) {
+                        next()
+                        return
+                    }
+                }
+                next(false)
+            }
         }
     ]
 })
