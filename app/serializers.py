@@ -1,4 +1,4 @@
-from .models import Room, MyUser, LiveRoom
+from .models import Room, MyUser, LiveRoom, Slide
 from rest_framework import serializers
 
 
@@ -33,6 +33,10 @@ class LiveRoomSerializer(serializers.ModelSerializer):
                             'room_creater',
                             )
 
+class SlideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Slide
+        fields = ('converted_pdf',)
 
 class LiveRoomIdSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)

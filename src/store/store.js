@@ -20,8 +20,8 @@ const store = new Vuex.Store({
         showForget: false,
         showInfo: false,
         showCreateRoom: false,
-        // 完成幻灯片上传
-        finishSlideUpload: false,
+        // 完成幻灯片转换
+        finishSlide: false,
         // 上传凭证
         token: '',
         // 服务端文件名称
@@ -110,9 +110,6 @@ const store = new Vuex.Store({
         falseCreateRoom: function (state) {
             state.showCreateRoom = false
         },
-        finishSlideUpload: function (state) {
-            state.finishSlideUpload = true
-        },
         getUser: function (state, response) {
             if (response.body.account) {
                 state.account = response.body['account']
@@ -140,6 +137,9 @@ const store = new Vuex.Store({
         },
         refreshNickname: function (state, nickname) {
             state.nickname = nickname
+        },
+        trueFinishSlide: function (state) {
+            state.finishSlide = true
         }
     },
     actions: {
@@ -259,6 +259,9 @@ const store = new Vuex.Store({
         },
         closeInfoDialog: function () {
             store.commit('falseInfo')
+        },
+        showPdfView: function () {
+            store.commit('trueFinishSlide')
         }
     }
 })

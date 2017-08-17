@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import SlidePage from './SlidePage'
 import WhiteBoardPage from './WhiteboardPage'
 import CodeEditorPage from './CodeEditorPage'
 import RecordVideo from './RecordVideo'
@@ -33,7 +32,6 @@ import io from '../../lib/socket.io'
 
 export default {
     components: {
-        SlidePage,
         WhiteBoardPage,
         CodeEditorPage,
         RecordVideo,

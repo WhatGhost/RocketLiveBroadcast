@@ -88,6 +88,13 @@ class LiveRoom(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
 
 
+class Slide(models.Model):
+    room_slide = models.FileField(upload_to='slide/orginal', null=False)
+    converted_pdf = models.FileField(upload_to='slide/pdf', null=True)
+    live_room = models.ForeignKey(LiveRoom)
+    created_time = models.DateTimeField(auto_now_add=True)
+
+
 class VideoRoom(models.Model):
     room_id = models.IntegerField(primary_key=True)
     room_name = models.CharField(max_length=100)
