@@ -32,11 +32,6 @@ export default {
             this.displayStu = 'display'
         }
     },
-    // beforeDestroy: function () {
-    //     // easyrtc.clearMediaStream( document.getElementById('self'));
-    //     // easyrtc.clearMediaStream( document.getElementById('caller'));
-    //     disconnect()
-    // },
     methods: {
         // init: function () {
         //     if (this.userInfo.isRoomCreator) {
