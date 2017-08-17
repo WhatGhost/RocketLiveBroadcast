@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
+    "easyrtc": "^1.1.0",
     "element-ui": "^1.4.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
@@ -56,7 +57,7 @@
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.11.1",
     "friendly-errors-webpack-plugin": "^1.1.3",
-    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.3",
     "inject-loader": "^3.0.0",
     "karma": "^1.4.1",
