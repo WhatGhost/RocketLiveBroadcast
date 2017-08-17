@@ -5,7 +5,7 @@
         </div>
         <div class="room">
             <div class='left shadow-fixed'>
-                <div class="top-btn-div">
+                <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
                     <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
                     <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
@@ -194,5 +194,9 @@ export default {
     padding-left: 8px;
     margin-top: -5px;
     white-space: nowrap;
+}
+
+.hiding {
+    display: none;
 }
 </style>
