@@ -17,9 +17,6 @@ export default {
             this.syncCode = obj.code
             this.code = obj.code
         })
-        this.httpServer.emit('getCurrentData', {
-            roomId: this.roomInfo.roomId
-        })
         this.editorOptions['readOnly'] = !this.userInfo.isRoomCreator
     },
     data() {

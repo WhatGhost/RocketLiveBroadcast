@@ -26,9 +26,6 @@
             this.httpServer.on('changePage', (obj) => {
                 this.page = obj.page
             })
-            this.httpServer.emit('getCurrentData', {
-                roomId: this.roomInfo.roomId
-            })
         },
         methods: {
             pgup() {

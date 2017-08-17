@@ -5,7 +5,7 @@
         </div>
         <div class="room">
             <div class='left shadow-fixed'>
-                <div class="top-btn-div">
+                <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
                     <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
                     <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
@@ -97,7 +97,7 @@ export default {
             }
             this.roomInfo.roomId = this.$route.params['id']
         },
-        getUserInfo: function() {
+        getUserInfo: function () {
             this.userInfo.nickname = this.$store.state.nickname
             this.userInfo.isTeacher = this.$store.state.isTeacher
             this.userInfo.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
@@ -107,10 +107,19 @@ export default {
             this.httpServer.emit('init', {
                 roomId: this.roomInfo.roomId
             })
-            console.log('main connected')
+            this.httpServer.on('switchPane', (obj) => {
+                this.showingComponent = obj.showingComponent
+            })
+            this.httpServer.emit('getCurrentData', {
+                roomId: this.roomInfo.roomId
+            })
         },
-        switchPane: function(pane) {
+        switchPane: function (pane) {
             this.showingComponent = pane
+            this.httpServer.emit('switchPane', {
+                roomId: this.roomInfo.roomId,
+                showingComponent: this.showingComponent
+            })
         }
     }
 }
@@ -185,5 +194,9 @@ export default {
     padding-left: 8px;
     margin-top: -5px;
     white-space: nowrap;
+}
+
+.hiding {
+    display: none;
 }
 </style>
