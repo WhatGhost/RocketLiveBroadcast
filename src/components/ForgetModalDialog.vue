@@ -58,6 +58,10 @@ export default {
                 type: 'warning'
             })
         },
+        isPassword () {
+            let patrn = /^(\w){8,20}$/
+            return patrn.test(this.password)
+        },
         isRightPhoneNum () {
             let phone = this.account
             return /^1[3|4|5|7|8]\d{9}$/.test(phone)
@@ -90,16 +94,16 @@ export default {
             }
             this.$store.dispatch('forgetPassword', {
                 account: this.account,
-                password: this.password,
+                password: new window.Hashes.SHA256().hex(this.password),
                 vertificateCode: this.vertificateCode
             })
         },
         sendVertificateCode () {
-            if (this.account === '' || this.nickname === '' || this.password === '' || this.confirmPassword === '') {
-                this.showErrorMes('以上信息未完成输入')
+            if (this.account === '') {
+                window.alert('请输入用户名')
                 return
             }
-            this.showErrorMes('sendVertificateCode click')
+            window.alert('sendVertificateCode click')
             this.$store.dispatch('sendVertificateCode', {
                 account: this.account,
                 mode: 'forget'

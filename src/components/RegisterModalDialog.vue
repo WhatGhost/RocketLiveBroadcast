@@ -42,7 +42,6 @@
 
 <script>
 import LoginModalDialog from './LoginModalDialog'
-
 export default {
     components: {
         LoginModalDialog,
@@ -111,11 +110,12 @@ export default {
                 return
             }
             console.log('got dispatch before')
+            // console.log(new window.Hashes.SHA256().hex(this.password))
             this.$store.dispatch('registerUser', {
                 account: this.account,
                 nickname: this.nickname,
                 is_student: true,
-                password: this.password,
+                password: new window.Hashes.SHA256().hex(this.password),
                 vertificateCode: this.vertificateCode
             })
         },

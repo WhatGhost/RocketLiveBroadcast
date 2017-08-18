@@ -60,9 +60,10 @@ export default {
                 this.showErrorMes('请填写电子邮箱或手机号码')
                 return
             }
+            // console.log(new window.Hashes.SHA256().hex(this.password))
             this.$store.dispatch('loginUser', {
                 account: this.account,
-                password: this.password
+                password: new window.Hashes.SHA256().hex(this.password)
             })
         },
         showForget: function () {
