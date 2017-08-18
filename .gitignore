@@ -10,6 +10,7 @@ db.sqlite3
 .venv/
 static/
 staticfiles/
+.idea/
 
 
 

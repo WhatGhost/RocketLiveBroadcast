@@ -67,15 +67,15 @@ export default {
                 type: 'warning'
             })
         },
-        isRightPhoneNum() {
+        isRightPhoneNum () {
             let phone = this.account
             return /^1[3|4|5|7|8]\d{9}$/.test(phone)
         },
-        isRightEmail() {
-            let re = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+        isRightEmail () {
+            let re = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
             return re.test(this.account)
         },
-        isPassword() {
+        isPassword () {
             let patrn = /^(\w){8,20}$/
             return patrn.test(this.password)
         },
@@ -85,32 +85,9 @@ export default {
             this.errorMes = ''
         },
         registerBtnClick: function () {
-            if (this.account === '') {
-                this.showErrorMes('请填写电子邮箱或手机号码')
+            if (!this.checkInput()) {
                 return
             }
-            if (!(this.isRightEmail() || this.isRightPhoneNum())) {
-                this.showErrorMes('不是有效的电子邮箱或手机号码')
-                return
-            }
-            if (this.nickname === '') {
-                this.showErrorMes('未填写昵称')
-                return
-            }
-            // todo: make sure password's format
-            if (this.password !== this.confirmPassword) {
-                this.showErrorMes('两次密码不一致')
-                return
-            }
-            if (!this.isPassword()) {
-                this.showErrorMes('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
-                return
-            }
-            if (this.vertificateCode === '') {
-                this.showErrorMes('请填写验证码')
-                return
-            }
-            console.log('got dispatch before')
             this.$store.dispatch('registerUser', {
                 account: this.account,
                 nickname: this.nickname,
@@ -119,7 +96,35 @@ export default {
                 vertificateCode: this.vertificateCode
             })
         },
-        sendVertificateCode() {
+        checkInput: function () {
+            if (this.account === '') {
+                this.showErrorMes('请填写电子邮箱或手机号码')
+                return false
+            }
+            if (!(this.isRightEmail() || this.isRightPhoneNum())) {
+                this.showErrorMes('不是有效的电子邮箱或手机号码')
+                return false
+            }
+            if (this.nickname === '') {
+                this.showErrorMes('未填写昵称')
+                return false
+            }
+            // todo: make sure password's format
+            if (this.password !== this.confirmPassword) {
+                this.showErrorMes('两次密码不一致')
+                return false
+            }
+            if (!this.isPassword()) {
+                this.showErrorMes('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
+                return false
+            }
+            if (this.vertificateCode === '') {
+                this.showErrorMes('请填写验证码')
+                return false
+            }
+            return true
+        },
+        sendVertificateCode () {
             if (this.account === '' || this.nickname === '' || this.password === '' || this.confirmPassword === '') {
                 this.showErrorMes('以上信息未完成输入')
                 return

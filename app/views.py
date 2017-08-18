@@ -198,21 +198,25 @@ class SlideViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['patch'])
     def get_pdf(self, request):
-        print(request.data)
+        print('sending pdf...')
+        s = Slide.objects.filter(live_room__id=request.data['roomId'])
+        if not s.exists():
+            return Response('no pdf')
         s = Slide.objects.filter(live_room__id=request.data['roomId'])[0]
         serializer = SlideSerializer(s)
-        print('草泥马')
-        print(serializer.data)
         return Response(serializer.data)
 
     @list_route(methods=['patch'])
     def convert(self, request):
-        print('bbbb')
+        print('start converting...')
         # get the first pdf of the same room
         s = Slide.objects.filter(live_room__id=request.data['roomId'])[0]
-        pdf_name = convert_and_download(s.room_slide)
-        s.converted_pdf.name = pdf_name
-        print(pdf_name)
-        s.save()
-        serializer = SlideSerializer(s)
+        try:
+            pdf_name = convert_and_download(s.room_slide)
+            s.converted_pdf.name = pdf_name
+            print('got pdf...')
+            s.save()
+            serializer = SlideSerializer(s)
+        except Exception:
+            s.delete()
         return Response(serializer.data)

@@ -63,7 +63,7 @@ body {
     flex-direction: column;
     border: 0;
     margin: 0;
-    background-color: #f1dfdd;
+    background-color: #f9fbff;
     height: 85%;
 }
 

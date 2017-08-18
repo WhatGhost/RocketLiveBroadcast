@@ -20,12 +20,6 @@ const store = new Vuex.Store({
         showForget: false,
         showInfo: false,
         showCreateRoom: false,
-        // 完成幻灯片转换
-        finishSlide: false,
-        // 上传凭证
-        token: '',
-        // 服务端文件名称
-        slideKey: ''
     },
     mutations: {
         // Keep in mind that response is an HTTP response
@@ -121,14 +115,6 @@ const store = new Vuex.Store({
                 state.isTeacher = false
             }
         },
-        gotToken: function (state, response) {
-            state.token = response.body['token']
-            state.slideKey = response.body['key']
-        },
-        gotTokenFail: function (state, response) {
-            state.token = ''
-            state.slideKey = ''
-        },
         trueInfo: function (state) {
             state.showInfo = true
         },
@@ -137,41 +123,38 @@ const store = new Vuex.Store({
         },
         refreshNickname: function (state, nickname) {
             state.nickname = nickname
-        },
-        trueFinishSlide: function (state) {
-            state.finishSlide = true
         }
     },
     actions: {
         // We added a getRooms action for the initial load from the server
         // These URLs come straight from the Django URL router we did in Part 3
-        getRooms(store) {
+        getRooms (store) {
             return api.get(apiRoot + '/liveroom/')
                 .then((response) => store.commit('GET_ROOMS', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        addRoom(store, room) {
+        addRoom (store, room) {
             return api.post(apiRoot + '/rooms/', room)
                 .then((response) => store.commit('ADD_ROOM', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        clearRooms(store) {
+        clearRooms (store) {
             return api.delete(apiRoot + '/rooms/clear_rooms/')
                 .then((response) => store.commit('CLEAR_ROOMS'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        loginUser(store, userinfo) {
+        loginUser (store, userinfo) {
             return api.post(apiRoot + '/users/login_users/', userinfo)
                 .then((response) => store.commit('SUCC_LOGIN', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        registerUser(store, userinfo) {
+        registerUser (store, userinfo) {
             console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('Register_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        changeNick(store, userinfo) {
+        changeNick (store, userinfo) {
             userinfo.account = store.state.account
             return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => {
@@ -180,38 +163,33 @@ const store = new Vuex.Store({
                 })
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        changePasswd(store, userinfo) {
+        changePasswd (store, userinfo) {
             return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        createRoom(store, formData) {
+        createRoom (store, formData) {
             return api.post(apiRoot + '/liveroom/', formData)
                 .then((response) => store.commit('GET_ROOM_ID', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        sendVertificateCode(store, vertificateInfo) {
+        sendVertificateCode (store, vertificateInfo) {
             console.log('dispatched')
             return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        forgetPassword(store, info) {
+        forgetPassword (store, info) {
             console.log('dispathed')
             return api.patch(apiRoot + '/users/forget_info/', info)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        logout(store) {
+        logout (store) {
             console.log('dispathed')
             return api.post(apiRoot + '/users/logout_user/')
                 .then((response) => store.commit('LOGOUT_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
-        },
-        askToken(store, fileName) {
-            return api.post(apiRoot + '/slide/askToken', fileName)
-                .then((response) => store.commit('gotToken', response))
-                .catch((error) => store.commit('gotTokenFail', error))
         },
         openRegisterDialog: function () {
             store.commit('trueRegister')
@@ -246,9 +224,6 @@ const store = new Vuex.Store({
             store.commit('falseCreateRoom')
             store.commit('falseBlur')
         },
-        endUploadingSlide: function () {
-            store.commit('finshSlideUpload')
-        },
         getUserFromDjango: function () {
             return api.post(apiRoot + '/users/current_user/')
                 .then((response) => store.commit('getUser', response))
@@ -259,9 +234,6 @@ const store = new Vuex.Store({
         },
         closeInfoDialog: function () {
             store.commit('falseInfo')
-        },
-        showPdfView: function () {
-            store.commit('trueFinishSlide')
         }
     }
 })
