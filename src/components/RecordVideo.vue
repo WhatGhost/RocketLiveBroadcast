@@ -21,7 +21,7 @@ easyrtc.setOnStreamClosed(function (callerEasyrtcid) {
 });
 
 
-function teacherInit() {
+function teacherInit(roomId) {
     console.log('123')
     easyrtc.setRoomOccupantListener(loggedInListener);
     var connectSuccess = function (myId) {
@@ -30,17 +30,17 @@ function teacherInit() {
     var connectFailure = function (errorCode, errText) {
         console.log(errText);
     }
-    easyrtc.enableAudioReceive(false)
     easyrtc.initMediaSource(
         function () { // success callback
             var selfVideo = document.getElementById("self");
             easyrtc.setVideoObjectSrc(selfVideo, easyrtc.getLocalStream());
-            easyrtc.connect("Company_Chat_Line", connectSuccess, connectFailure);
+            easyrtc.connect(roomId, connectSuccess, connectFailure);
         },
         connectFailure
     );
+    
 }
-function studentInit() {
+function studentInit(roomId) {
     console.log('123')
     easyrtc.setRoomOccupantListener(loggedInListener);
     var connectSuccess = function (myId) {
@@ -55,10 +55,11 @@ function studentInit() {
         function () { // success callback
             var selfVideo = document.getElementById("self");
             easyrtc.setVideoObjectSrc(selfVideo, easyrtc.getLocalStream());
-            easyrtc.connect("Company_Chat_Line", connectSuccess, connectFailure);
+            easyrtc.connect(roomId, connectSuccess, connectFailure);
         },
         connectFailure
     );
+    MediaStream.getTracks()[1].stop();
 }
 
 
@@ -100,6 +101,7 @@ function disconnect() {
     easyrtc.clearMediaStream( document.getElementById('self'));
     easyrtc.clearMediaStream( document.getElementById('caller'));
     easyrtc.disconnect()
+    MediaStream.getTracks()[1].stop();
     
 }
 // import {disconnect, studentInit, teacherInit} from '../../static/rtclogic.js'
@@ -126,9 +128,9 @@ export default {
     methods: {
         init: function () {
             if (this.userInfo.isRoomCreator) {
-                teacherInit()
+                teacherInit(this.roomInfo.roomId.toString())
             } else {
-                studentInit()
+                studentInit(this.roomInfo.roomId.toString())
             }
         }
     }
