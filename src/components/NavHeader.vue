@@ -102,23 +102,22 @@ export default {
     display: flex;
     align-items: center;
     border: none;
-    background-color: #172645;
+    position: fixed;
     /*background: -webkit-linear-gradient(left, red , blue); !* Safari 5.1 - 6.0 *!*/
     /*background: -o-linear-gradient(right, red, blue); !* Opera 11.1 - 12.0 *!*/
     /*background: -moz-linear-gradient(right, red, blue); !* Firefox 3.6 - 15 *!*/
-    /*background: linear-gradient(to bottom, #29323c , #485563); !* 标准的语法 *!*/
-    position: fixed;
+    background: linear-gradient(to right, #01c3fe , #f8fd22); /* 标准的语法 */
     width: 100%;
     z-index: 100;
 }
 
 .home-btn {
-    color: white;
+    color: black;
 }
 
 .right-text-btn {
     font-size: 16px;
-    color: white;
+    color: black;
     margin-left: 0;
 }
 
@@ -132,8 +131,8 @@ button {
 }
 
 #open-room-btn {
-    background-color: #81cdc6;
-    color: white;
+    background-color: #ffc935;
+    color: black;
 }
 </style>
 

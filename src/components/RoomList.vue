@@ -1,12 +1,10 @@
 <template>
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
-        <!--<hr>-->
         <div class="live-rooms">
             <room class="room" v-for="room in rooms" v-bind:room="room" v-bind:key="count"></room>
         </div>
-        <h1>History</h1>
-        <!--<hr>-->
+        <h1 class="history-title">History</h1>
     </div>
 </template>
 
@@ -43,9 +41,15 @@ h1 {
     margin-left: 20px;
     margin-top: 25px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.15);
     padding: 20px;
-    /*margin-left: 0;*/
+}
+
+.live-title {
+    background-color: rgba(29, 161, 242, 0.5);
+}
+
+.history-title {
+    background-color: rgba(68, 41, 91, 0.4);
 }
 
 .live-rooms {
@@ -56,14 +60,5 @@ h1 {
 .room {
     width: 290px;
     overflow: hidden;
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
 }
 </style>

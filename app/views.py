@@ -4,19 +4,19 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route, api_view
-from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
-from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer
+from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd, Slide
+from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer, SlideSerializer
 from .send_verification import sendMail
 import json
-from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
+from .utils.slide_convert import convert_and_download
 
 
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
@@ -107,7 +107,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 return HttpResponse(status=200)
         else:
             return HttpResponse(status=422)
-   
+
     # @method_decorator(csrf_protect)
     @list_route(methods=['post'])
     def login_users(self, request):
@@ -182,5 +182,41 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response('请先登录',status=422)
 
 
+class SlideViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    queryset = Slide.objects.all()
+    serializer_class = SlideSerializer
 
+    def create(self, request):
+        room = LiveRoom.objects.get(id=request.data['roomId'])
+        s = Slide(
+            live_room=room,
+            room_slide=request.FILES['slide']
+        )
+        s.save()
+        return Response(s.id)
 
+    @list_route(methods=['patch'])
+    def get_pdf(self, request):
+        print('sending pdf...')
+        s = Slide.objects.filter(live_room__id=request.data['roomId'])
+        if not s.exists():
+            return Response('no pdf')
+        s = Slide.objects.filter(live_room__id=request.data['roomId'])[0]
+        serializer = SlideSerializer(s)
+        return Response(serializer.data)
+
+    @list_route(methods=['patch'])
+    def convert(self, request):
+        print('start converting...')
+        # get the first pdf of the same room
+        s = Slide.objects.filter(live_room__id=request.data['roomId'])[0]
+        try:
+            pdf_name = convert_and_download(s.room_slide)
+            s.converted_pdf.name = pdf_name
+            print('got pdf...')
+            s.save()
+            serializer = SlideSerializer(s)
+        except Exception:
+            s.delete()
+        return Response(serializer.data)

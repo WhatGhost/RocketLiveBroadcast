@@ -1,7 +1,7 @@
 <template>
     <div class="card shadow-l" @click="enterRoom">
-         <!-- <img src="../assets/vue.png" class="video-image">  -->
-        <img :src="room.room_img" class="video-image"> 
+        <!-- <img src="../assets/vue.png" class="video-image">  -->
+        <img :src="room.room_img" class="video-image">
         <div class="text">
             <label>{{ room.room_name }}</label>
             <label class="intro">　id：{{ room.id }}</label>
@@ -16,7 +16,7 @@
 <script>
 export default {
     props: ['room'],
-    data() {
+    data () {
         return {
             currentDate: new Date()
         }
@@ -56,21 +56,27 @@ export default {
     background-image: url("http://okonvxmbq.bkt.clouddn.com/never/delete/play.gif");
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 0;
+    /*z-index: 100;*/
 }
 
 .video-image {
-    width: 100px;
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .text {
-    margin: 10px;
+    position: relative;
+    height: 100%;
+    bottom: 120px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 10px;
 }
 
 .intro {
     font-size: 13px;
-    color: #999;
+    color: rgba(255, 255,255, 0.7);
     line-height: 1.3em;
     margin: auto;
     text-align: left;

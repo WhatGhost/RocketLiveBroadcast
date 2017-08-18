@@ -6,4 +6,4 @@ Pillow==4.2.1
 PyMySQL==0.7.11
 pytz==2017.2
 django_nose==1.4.4
-qiniu==7.1.4
+cloudconvert==1.0.0
