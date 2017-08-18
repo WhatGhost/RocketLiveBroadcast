@@ -1,6 +1,6 @@
 <template>
     <div :class="{ hiding: hide }">
-        <button @click="mountlc">create</button>
+        <!--<button @click="mountlc">create</button>-->
         <div class="fs-container">
             <div id="lc" ref="lcanvas"></div>
         </div>
@@ -12,34 +12,16 @@ export default {
     props: {
         hide: true,
     },
-    // mounted() {
-    //     this.lc = window.LC.init(document.getElementById('lc'), {
-    //         imageURLPrefix: 'static/static/canvas/_assets/lc-images',
-    //         toolbarPosition: 'bottom',
-    //         defaultStrokeWidth: 2,
-    //         strokeWidths: [1, 2, 3, 5, 30],
-    //         imageSize: {
-    //             width: 500,
-    //             height: null
-    //         }
-    //     })
-    // },
     data: function () {
         return {
             lc: null
         }
     },
-    mounted() {
-        this.lc = window.LC.init(this.$refs.lcanvas, {
-            imageURLPrefix: 'static/static/canvas/_assets/lc-images',
-            toolbarPosition: 'bottom',
-            defaultStrokeWidth: 2,
-            strokeWidths: [1, 2, 3, 5, 30],
-            imageSize: {
-                width: 500,
-                height: null
-            }
-        })
+    updated () {
+        if (!this.lc) {
+            console.log('updated--lc:' + this.lc)
+            this.mountlc()
+        }
     },
     methods: {
         out: function () {
