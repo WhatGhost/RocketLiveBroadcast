@@ -60,8 +60,35 @@ python manage.py migrate
 npm run build
 python manage.py runserver
 ```
+**3.Config the video server**
+find file ```easyrtc.js```and ```easyrtc_int.js```in ./node_moudles/easyrtc/api , then open them and search **serverPath** in them 
+then replace 
+```javascript
+var serverPath = null
+```
+to
+```javascript
+var serverPath = 'http://localhost:8080;'
+```
+and
+replace
+```javascript
+serverPath = socketUrl;
+```
+to
+```javascript
+serverPath  = 'http://localhost:8080;'
+```
+**if you change the port in video server , you need to change the above code too**
 
-
+After doing that above , you need to run the server before you visit the website
+you need to run
+```
+node node_modules/easyrtc/server_example/server.js 
+```
+This command will open a server on port 8080
+<br>
+<br>
 ### old README
 >### To init the project
 After clone the project from git, use command below to init  your project:
