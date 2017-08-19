@@ -13,16 +13,13 @@
                             </div>
                             <div class="dialog-body">
                                 <!--<el-tooltip placement="bottom">-->
-                                <input type="text" placeholder="E-MAIL OR PHONE NUM" class="input account"
-                                       v-model="account">
+                                <input type="text" placeholder="E-MAIL OR PHONE NUM" class="input account" v-model="account">
                                 <!--</el-tooltip>-->
                                 <input type="text" placeholder="NICKNAME" class="input name" v-model="nickname">
                                 <input type="password" placeholder="PASSWORD" class="input password" v-model="password">
-                                <input type="password" placeholder="CONFIRM PASSWORD" class="input sure-password"
-                                       v-model="confirmPassword">
+                                <input type="password" placeholder="CONFIRM PASSWORD" class="input sure-password" v-model="confirmPassword">
                                 <div class="vertificate">
-                                    <input type="text" placeholder="VERIFICATION CODE" class="vertificate-input input"
-                                           v-model="vertificateCode">
+                                    <input type="text" placeholder="VERIFICATION CODE" class="vertificate-input input" v-model="vertificateCode">
                                     <el-button type="text" class="send-code-btn" @click="sendVertificateCode">send
                                     </el-button>
                                 </div>
@@ -66,15 +63,15 @@ export default {
                 type: 'warning'
             })
         },
-        isRightPhoneNum () {
+        isRightPhoneNum() {
             let phone = this.account
             return /^1[3|4|5|7|8]\d{9}$/.test(phone)
         },
-        isRightEmail () {
+        isRightEmail() {
             let re = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
             return re.test(this.account)
         },
-        isPassword () {
+        isPassword() {
             let patrn = /^(\w){8,20}$/
             return patrn.test(this.password)
         },
@@ -125,16 +122,27 @@ export default {
             }
             return true
         },
-        sendVertificateCode () {
+        sendVertificateCode() {
             if (this.account === '' || this.nickname === '' || this.password === '' || this.confirmPassword === '') {
                 this.showErrorMes('以上信息未完成输入')
                 return
             }
-            this.showErrorMes('sendVertificateCode click')
-            this.$store.dispatch('sendVertificateCode', {
-                account: this.account,
-                mode: 'register'
-            })
+            if (this.isRightPhoneNum()) {
+                this.showErrorMes('sendVertificateCode for phone click')
+                this.$store.dispatch('sendVertificateCode', {
+                    account: this.account,
+                    mode: 'register',
+                    type: 'phone'
+                })
+            }
+            if (this.isRightEmail()) {
+                this.showErrorMes('sendVertificateCode for email click')
+                this.$store.dispatch('sendVertificateCode', {
+                    account: this.account,
+                    mode: 'register',
+                    type: 'email'
+                })
+            }
         },
     }
 }
@@ -215,8 +223,7 @@ export default {
     justify-content: space-around;
 }
 
-.vertificate-input {
-}
+.vertificate-input {}
 
 .send-code-btn {
     font-size: 18px;
