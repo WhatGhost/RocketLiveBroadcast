@@ -27,7 +27,6 @@
                     this.$message.error('请完成输入')
                     return
                 }
-                // console.log(new window.Hashes.SHA256().hex(this.password))
                 this.useraccount = this.$store.state.account
                 this.$store.dispatch('changePasswd', {
                     oldpassword: new window.Hashes.SHA256().hex(this.oldpassword),

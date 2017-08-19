@@ -99,7 +99,6 @@
                     this.showErrorMes('请填写验证码')
                     return
                 }
-                console.log('got dispatch before')
                 this.$store.dispatch('registerUser', {
                     account: this.account,
                     nickname: this.nickname,

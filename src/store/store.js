@@ -8,13 +8,15 @@ const apiRoot = 'http://localhost:8000' // This will change if you deploy later
 
 const store = new Vuex.Store({
     state: {
+        // 所有房间列表
         rooms: [],
-        live_room_id: -1,
+        // 当前用户身份信息
         account: null,
         nickname: null,
         isTeacher: false,
-        // background blur flag
+        // 控制背景虚化，用于配合弹出窗口
         background_blur: false,
+        // 五种弹出模式窗口
         showRegister: false,
         showLogin: false,
         showForget: false,
@@ -22,9 +24,6 @@ const store = new Vuex.Store({
         showCreateRoom: false,
     },
     mutations: {
-        // Keep in mind that response is an HTTP response
-        // returned by the Promise.
-        // The mutations are in charge of updating the client state.
         'GET_ROOMS': function (state, response) {
             state.rooms = response.body
         },
@@ -37,26 +36,21 @@ const store = new Vuex.Store({
         },
         // Note that we added one more for logging out errors.
         'GET_ROOM_ID': function (state, response) {
-            console.log(response.body)
             state.live_room_id = response.body.id
-            console.log(state.live_room_id)
         },
         'API_FAIL': function (state, error) {
             window.alert('失败')
             console.error(error)
         },
         'Register_SUCC': function (state) {
-            console.log(state)
             window.alert('成功！')
             state.showLogin = true
             state.showRegister = false
         },
         'API_SUCC': function (state) {
-            console.log(state)
             window.alert('成功！')
         },
         'LOGOUT_SUCC': function (state) {
-            console.log(state)
             window.alert('登出成功！')
             state.account = null
             state.nickname = null
@@ -149,7 +143,6 @@ const store = new Vuex.Store({
                 .catch((error) => store.commit('API_FAIL', error))
         },
         registerUser (store, userinfo) {
-            console.log(userinfo)
             return api.post(apiRoot + '/users/', userinfo)
                 .then((response) => store.commit('Register_SUCC', userinfo))
                 .catch((error) => store.commit('API_FAIL', error))
@@ -168,25 +161,17 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        createRoom (store, formData) {
-            return api.post(apiRoot + '/liveroom/', formData)
-                .then((response) => store.commit('GET_ROOM_ID', response))
-                .catch((error) => store.commit('API_FAIL', error))
-        },
         sendVertificateCode (store, vertificateInfo) {
-            console.log('dispatched')
             return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         forgetPassword (store, info) {
-            console.log('dispathed')
             return api.patch(apiRoot + '/users/forget_info/', info)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         logout (store) {
-            console.log('dispathed')
             return api.post(apiRoot + '/users/logout_user/')
                 .then((response) => store.commit('LOGOUT_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))
@@ -212,7 +197,6 @@ const store = new Vuex.Store({
             store.commit('falseBlur')
         },
         closeLoginDialog: function () {
-            console.log('commiting')
             store.commit('falseLogin')
             store.commit('falseBlur')
         },

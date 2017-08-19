@@ -67,7 +67,6 @@ export default {
         }
     },
     created () {
-        console.log(this.roomInfo.roomId)
         // 发出获取PDF的请求， 尝试加载PDF资源
         this.getPdf()
         this.httpServer.on('changePage', (obj) => {
@@ -112,7 +111,6 @@ export default {
             api.patch('http://localhost:8000/slide/convert/', {
                 roomId: this.roomInfo.roomId
             }).then((response) => {
-                console.log('教师端进行到了获取PDF资源前一步')
                 // 教师端获取PDF
                 this.getPdf()
             }).catch((error) => this.convertError(error))
@@ -123,11 +121,9 @@ export default {
         },
         // 获取PDF资源，如果没有得到仍未''
         getPdf: function () {
-            console.log('getPdf, 房间号——' + this.roomInfo.roomId)
             api.patch('http://localhost:8000/slide/get_pdf/', {
                 roomId: this.roomInfo.roomId
             }).then((response) => {
-                console.log('正在获取PDF资源和显示viewer')
                 if (response.data === 'no pdf') {
                     this.pdfSource = ''
                 } else {
