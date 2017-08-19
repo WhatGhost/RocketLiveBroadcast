@@ -52,7 +52,6 @@ export default {
     },
     computed: {
         userName: function () {
-            console.log(this.$store.state.nickname)
             return this.$store.state.nickname
         },
         logged: function () {

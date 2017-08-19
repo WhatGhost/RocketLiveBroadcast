@@ -15,6 +15,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_p
 from django.utils.decorators import method_decorator
 from .utils.slide_convert import convert_and_download
 from .sendText import sendText
+import base64
+from django.core.files.base import ContentFile
+
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
@@ -51,10 +54,14 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             return Response("您未登录", status=400)
         if request.user.is_student:
             return Response("您不是教师，没有创建房间的权限", status=400)
+        data = request.data['file-upload']
+        format, imgstr = data.split(';base64,') 
+        ext = format.split('/')[-1] 
+        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
         r = LiveRoom(
             room_name=request.data["room-name"],
             room_introduction=request.data["room-introduction"],
-            room_img=request.FILES['file-upload'],
+            room_img=data,
             room_creater=request.user
         )
         r.save()

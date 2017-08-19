@@ -22,13 +22,10 @@ easyrtc.setOnStreamClosed(function (callerEasyrtcid) {
 
 
 function teacherInit(roomId) {
-    console.log('123')
     easyrtc.setRoomOccupantListener(loggedInListener);
     var connectSuccess = function (myId) {
-        console.log("My easyrtcid is " + myId);
     }
     var connectFailure = function (errorCode, errText) {
-        console.log(errText);
     }
     easyrtc.initMediaSource(
         function () { // success callback
@@ -38,16 +35,13 @@ function teacherInit(roomId) {
         },
         connectFailure
     );
-    
+
 }
 function studentInit(roomId) {
-    console.log('123')
     easyrtc.setRoomOccupantListener(loggedInListener);
     var connectSuccess = function (myId) {
-        console.log("My easyrtcid is " + myId);
     }
     var connectFailure = function (errorCode, errText) {
-        console.log(errText);
     }
     easyrtc.enableAudio(false);
     // easyrtc.enableVideo(false);
@@ -87,13 +81,10 @@ function performCall(easyrtcid) {
     easyrtc.call(
         easyrtcid,
         function (easyrtcid) {
-            console.log("completed call to " + easyrtcid);
         },
         function (errorCode, errorText) {
-            console.log("err:" + errorText);
         },
         function (accepted, bywho) {
-            console.log((accepted ? "accepted" : "rejected") + " by " + bywho);
         }
     );
 }
@@ -102,7 +93,7 @@ function disconnect() {
     easyrtc.clearMediaStream( document.getElementById('caller'));
     easyrtc.disconnect()
     MediaStream.getTracks()[1].stop();
-    
+
 }
 // import {disconnect, studentInit, teacherInit} from '../../static/rtclogic.js'
 // import teacherInit from '../../static/rtclogic.js'

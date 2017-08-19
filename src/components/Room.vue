@@ -1,6 +1,5 @@
 <template>
     <div class="card shadow-l" @click="enterRoom">
-        <!-- <img src="../assets/vue.png" class="video-image">  -->
         <img :src="room.room_img" class="video-image">
         <div class="text">
             <label>{{ room.room_name }}</label>
@@ -29,7 +28,6 @@ export default {
             })
         },
         enterRoom: function () {
-            console.log(this.room.room_img)
             if (this.$store.state.account !== null) {
                 this.$router.push('/room/' + this.room.id)
             } else {

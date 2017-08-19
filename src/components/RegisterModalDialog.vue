@@ -84,8 +84,6 @@ export default {
             if (!this.checkInput()) {
                 return
             }
-            console.log('got dispatch before')
-            // console.log(new window.Hashes.SHA256().hex(this.password))
             this.$store.dispatch('registerUser', {
                 account: this.account,
                 nickname: this.nickname,

@@ -13,14 +13,12 @@
 <script>
 import NavHeader from './components/NavHeader'
 import RoomList from './components/RoomList'
-import Forget from './components/Forget'
 import LiveRoom from './components/LiveRoom'
 
 export default {
     components: {
         NavHeader,
         RoomList,
-        Forget,
         LiveRoom
     },
     data: function () {
@@ -35,14 +33,12 @@ export default {
             this.$store.dispatch('getRooms')
         },
         changePage: function (page) {
-            console.log('切换')
             if (page === 'RoomList') {
                 this.showRooms()
             }
             this.currentView = page
         },
         doShowDialog: function () {
-            console.log('准备dispatch')
             this.$store.dispatch('openRegisterDialog')
         }
     }

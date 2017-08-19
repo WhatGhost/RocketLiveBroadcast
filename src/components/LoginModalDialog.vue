@@ -32,11 +32,8 @@
 </template>
 
 <script>
-import Forget from './Forget'
-
 export default {
     components: {
-        Forget,
     },
     data: function () {
         return {
@@ -60,7 +57,6 @@ export default {
                 this.showErrorMes('请填写电子邮箱或手机号码')
                 return
             }
-            // console.log(new window.Hashes.SHA256().hex(this.password))
             this.$store.dispatch('loginUser', {
                 account: this.account,
                 password: new window.Hashes.SHA256().hex(this.password)

@@ -14,11 +14,9 @@
     export default {
         computed: {
             userName: function () {
-                console.log(this.$store.state.nickname)
                 return this.$store.state.nickname
             },
             userAccount: function () {
-                console.log(this.$store.state.account)
                 return this.$store.state.account
             },
             accountType: function () {
