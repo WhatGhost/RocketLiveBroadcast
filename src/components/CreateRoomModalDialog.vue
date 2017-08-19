@@ -6,14 +6,15 @@
                     <div class="container">
                         <div class="header">
                             <p class="title">Create Room</p>
-                            <el-button type="text" class="close-btn" @click="closeDialog" v-if="this.nowView !== 2">×
+                            <el-button type="text" class="close-btn" @click="closeDialog"
+                                       v-bind:class="{ disvisible: hideCloseButton }">×
                             </el-button>
                         </div>
                         <form class="form" @submit.prevent="createBtnClick" enctype="multipart/form-data">
                             <div class="function-panel">
                                 <div class="upload-page" v-if="showUploadImage">
-                                    <croppa class="cropper"
-                                            v-modal="myCroppa"
+                                    <croppa v-model="myCroppa"
+                                            class="cropper"
                                             canvas-color="#e8e8e8"
                                             :width="290"
                                             :height="220"
@@ -28,7 +29,7 @@
                                 <div class="form-page" v-if="showFillForm">
                                     <input class="name" placeholder="Room Name " v-model="roomName"/>
                                     <textarea class="introduction"
-                                              placeholder="Room Introduce (within 60 word) " v-model="roomIntroduction">
+                                              placeholder="Room Introduce (optional)" v-model="roomIntroduction">
                                     </textarea>
                                 </div>
                                 <div class="result-page" v-if="showGetId">
@@ -91,6 +92,9 @@ export default {
         },
         canGoBack: function () {
             return this.nowView === FormPage
+        },
+        hideCloseButton: function () {
+            return this.nowView === 2
         },
         openRoomResult: function () {
             if (this.openFail) {
@@ -212,6 +216,8 @@ export default {
     transition: all .3s ease;
     display: flex;
     flex-direction: column;
+    /*成为包含块：用于子元素的绝对定位*/
+    position: relative;
 }
 
 .header {
@@ -245,22 +251,18 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: -10px;
 }
 
-/*.cropper {*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-/*}*/
+.cropper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-input {
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    outline: none;
-    font-size: 13px;
-    margin-bottom: 20px;
-    padding-bottom: 8px;
-    padding-left: 0.2em;
+.croppa-container {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .upload-page {
@@ -282,13 +284,35 @@ input {
     justify-content: center;
 }
 
-textarea {
+input {
+    border-left: none;
+    border-right: none;
+    border-top: none;
     outline: none;
-    border: 1px solid silver;
+    font-size: 15px;
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding-left: 0.2em;
+}
+
+.introduction {
+    width: 340px;
+    height: 196px;
+    resize: none;
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #eeeeee;
 }
 
 .result-page {
-
+    text-align: center;
+    color: #f4c20b;
+    margin-top: 80px;
 }
 
 .back-next-btns {
@@ -309,8 +333,12 @@ textarea {
 }
 
 .progress {
-    position: relative;
-    left: 45px;
-    bottom: 20px;
+    position: absolute;
+    left: 50px;
+    bottom: 15px;
+}
+
+.disvisible {
+    opacity: 0;
 }
 </style>
