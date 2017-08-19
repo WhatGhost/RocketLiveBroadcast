@@ -1,9 +1,12 @@
 <template>
-    <div class="live-room" v-bind:class="{ blur: $store.state.background_blur }">
+    <div class="live-room" v-bind:class="{ blur: $store.state.background_blur }" id='elementToShare'>
         <div class="message">
             <p>{{ roomMessage }}</p>
         </div>
-        <div class="room">
+        <div ref="recordArea" class="room">
+            <button @click="createCanvas" >CreateCanvas</button>
+            <button id="start" @click="startRecord" contenteditable="false">Start Canvas Recording</button>
+            <button id="stop" @click="stopRecord" disabled contenteditable="false">Stop</button>
             <div class='left shadow-fixed'>
                 <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
@@ -40,6 +43,8 @@ export default {
     },
     data: function () {
         return {
+            isRecordingStarted: false,
+            isStoppedRecording: false,
             showMessageMenu: false,
             showingComponent: 'codeEditor',
             roomInfo: {
@@ -55,7 +60,11 @@ export default {
                 nickname: '',
                 isTeacher: false,
                 isRoomCreator: false
-            }
+            },
+            canvas2d: null,
+            recorder: null,
+            context: null,
+            elementToShare: null
         }
     },
     computed: {
@@ -78,6 +87,25 @@ export default {
         this.connect()
     },
     methods: {
+        createCanvas: function () {
+            this.appendCanvas()
+            this.recorder = new window.RecordRTC(this.canvas2d, {
+                type: 'canvas'
+            })
+        },
+        appendCanvas: function () {
+            this.elementToShare = document.getElementById('elementToShare')
+            this.canvas2d = document.createElement('canvas')
+            this.context = this.canvas2d.getContext('2d')
+            this.canvas2d.width = this.elementToShare.clientWidth
+            this.canvas2d.height = this.elementToShare.clientHeight
+            this.canvas2d.style.top = 0
+            this.canvas2d.style.left = 0
+            this.canvas2d.style.zIndex = -1
+            this.canvas2d.style.display = 'none'
+            let el = (document.body || document.documentElement)
+            el.appendChild(this.canvas2d)
+        },
         switchMessageMenu: function () {
             this.showMessageMenu = !this.showMessageMenu
         },
@@ -117,6 +145,41 @@ export default {
             this.httpServer.emit('switchPane', {
                 roomId: this.roomInfo.roomId,
                 showingComponent: this.showingComponent
+            })
+        },
+        startRecord: function () {
+            document.getElementById('start').disabled = true
+            this.isStoppedRecording = false
+            this.isRecordingStarted = true
+            this.recorder.startRecording()
+            window.setTimeout(function () {
+                let stopButton = document.getElementById('stop')
+                stopButton.disabled = false
+            }, 10)
+            this.looper()
+        },
+        stopRecord: function () {
+            this.disabled = true
+            this.isStoppedRecording = true
+            this.recorder.stopRecording(function () {
+                window.invokeSaveAsDialog(this.getBlob(), 'filename.webm')
+            })
+        },
+        looper: function () {
+            if (!this.isRecordingStarted) {
+                return window.setTimeout(this.looper, 500)
+            }
+            let that = this
+            window.html2canvas(that.elementToShare, {
+                grabMouse: true,
+                onrendered: function (canvas) {
+                    that.context.clearRect(0, 0, that.canvas2d.width, that.canvas2d.height)
+                    that.context.drawImage(canvas, 0, 0, that.canvas2d.width, that.canvas2d.height)
+                    if (that.isStoppedRecording) {
+                        return
+                    }
+                    window.setTimeout(that.looper, 40)
+                }
             })
         }
     }
