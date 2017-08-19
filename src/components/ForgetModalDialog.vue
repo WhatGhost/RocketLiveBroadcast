@@ -103,11 +103,22 @@ export default {
                 window.alert('请输入用户名')
                 return
             }
-            window.alert('sendVertificateCode click')
-            this.$store.dispatch('sendVertificateCode', {
-                account: this.account,
-                mode: 'forget'
-            })
+            if (this.isRightPhoneNum()) {
+                this.showErrorMes('sendVertificateCode for phone click')
+                this.$store.dispatch('sendVertificateCode', {
+                    account: this.account,
+                    mode: 'forget',
+                    type: 'phone'
+                })
+            }
+            if (this.isRightEmail()) {
+                this.showErrorMes('sendVertificateCode for email click')
+                this.$store.dispatch('sendVertificateCode', {
+                    account: this.account,
+                    mode: 'forget',
+                    type: 'email'
+                })
+            }
         },
     }
 }

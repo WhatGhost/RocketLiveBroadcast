@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
 from .utils.slide_convert import convert_and_download
-
+from .sendText import sendText
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
@@ -96,7 +96,13 @@ class UserViewSet(viewsets.ModelViewSet):
         account = request.data.get('account')
         #account = json.loads(str(request.body, encoding='utf-8'))['account']
         print(account)
-        vertification = sendMail(account)
+        if(request.data.get('type')=='phone'):
+            print('phone')
+            vertification = sendText(account)
+        else:
+            print('email')
+            vertification = sendMail(account)
+
         if vertification != -1 :
             if(request.data.get('mode') == 'register'):
                 VertifyRegister.objects.create(
