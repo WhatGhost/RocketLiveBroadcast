@@ -15,7 +15,7 @@
                 </div>
                 <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></pdf-viewer>
                 <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></code-editor-page>
-                <white-board-page :hide="hideWhiteBoard"></white-board-page>
+                <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
             </div>
             <div class='right'>
                 <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo"></record-video>
