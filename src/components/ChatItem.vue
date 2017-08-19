@@ -1,9 +1,10 @@
 <template>
     <div class="main-div">
         <label class="currentTime">{{ currentTime }}</label>
-        <div class="message-div" v-bind:class="{ highlight: message.highlight }">
-            <label>{{ message.nickname }}</label>
+        <div class="message-div" v-bind:class="{ highlight: message.userInfo.isRoomCreator }">
+            <label>{{ message.userInfo.nickname }}</label>
             <span class="mes-body shadow-s">{{ message.content }}</span>
+            <button @click="ban">ban</button>
         </div>
     </div>
 </template>
@@ -19,6 +20,13 @@ export default {
     computed: {
         currentTime: function () {
             return '10:20'
+        }
+    },
+    methods: {
+        ban: function () {
+            if (this.message.status === 200) {
+                this.$emit('ban', this.message)
+            }
         }
     }
 }

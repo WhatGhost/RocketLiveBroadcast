@@ -59,7 +59,8 @@ export default {
             userInfo: {
                 nickname: '',
                 isTeacher: false,
-                isRoomCreator: false
+                isRoomCreator: false,
+                account: ''
             },
             canvas2d: null,
             recorder: null,
@@ -127,6 +128,7 @@ export default {
             this.userInfo.nickname = this.$store.state.nickname
             this.userInfo.isTeacher = this.$store.state.isTeacher
             this.userInfo.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
+            this.userInfo.account = this.$store.state.account
         },
         connect: function () {
             this.httpServer = io.connect('http://127.0.0.1:3000')
