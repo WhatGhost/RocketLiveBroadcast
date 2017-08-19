@@ -137,7 +137,7 @@ class VisitHistory(models.Model):
 class VertifyRegister(models.Model):
     account = models.CharField(max_length=100)
     vertifycode = models.CharField(max_length=100)
-    vertifytime = models.DateTimeField(default=datetime.now())
+    vertifytime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         print(self.vertifytime)
@@ -148,4 +148,4 @@ class VertifyRegister(models.Model):
 class VertifyForgetpasswd(models.Model):
     account = models.CharField(max_length=100)
     vertifycode = models.CharField(max_length=100)
-    vertifytime = models.DateTimeField(default=datetime.now())
+    vertifytime = models.DateTimeField(auto_now=True)
