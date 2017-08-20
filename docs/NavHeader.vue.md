@@ -5,7 +5,7 @@
 
 ### ```isTeacher```
 Boolean
-由vuex store中的isTeacher决定，控制导航栏中的“创建房间”按钮显示
+由 vuex store 中的 isTeacher 决定，控制导航栏中的“创建房间”按钮显示
 
 ## component
 ### ```RegisterModalDialog```
@@ -28,5 +28,5 @@ Boolean
 向服务器发送退出登录的请求
 
 ### ```showRoomList```
-重新获取房间列表，并由vue router路由至房间列表主页
+重新获取房间列表，并由 vue router 路由至房间列表主页
 

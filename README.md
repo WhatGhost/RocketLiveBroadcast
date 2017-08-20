@@ -1,3 +1,5 @@
+## Visit [online docs](https://wangleto.github.io/Rocket.github.io/#/)
+
 # Quick start - English
 
 **1. Set Your Database And Start**
@@ -26,7 +28,7 @@ Start your mysql or MariaDB,
 create database live default character set utf8 collate utf8_unicode_ci; 
 ```
 
-**2. View the doc page**
+**2. View the doc page Locally**
  - You need to run this command to start a server for doc visiting:
  
   ```bash
