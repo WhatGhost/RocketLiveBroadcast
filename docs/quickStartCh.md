@@ -34,7 +34,7 @@ var serverPath = null
 ```
 为
 ```javascript
-var serverPath = 'http://localhost:8080;'
+var serverPath = 'http://localhost:8080'
 ```
 ，修改
 ```javascript
@@ -42,7 +42,7 @@ serverPath = socketUrl;
 ```
 为
 ```javascript
-serverPath  = 'http://localhost:8080;'
+serverPath  = 'http://localhost:8080'
 ```
  **如果你更改了你的视频服务器端口，请一同更改以上的端口**  
 

@@ -47,16 +47,16 @@ var serverPath = null
 ```
 to
 ```javascript
-var serverPath = 'http://localhost:8080;'
+var serverPath = 'http://localhost:8080'
 ```
 and
 replace
 ```javascript
-serverPath = socketUrl;
+serverPath = socketUrl
 ```
 to
 ```javascript
-serverPath  = 'http://localhost:8080;'
+serverPath  = 'http://localhost:8080'
 ```
  **if you change the port in video server , you need to change the above code too**  
 
@@ -127,15 +127,15 @@ var serverPath = null
 ```
 为
 ```javascript
-var serverPath = 'http://localhost:8080;'
+var serverPath = 'http://localhost:8080'
 ```
 ，修改
 ```javascript
-serverPath = socketUrl;
+serverPath = socketUrl
 ```
 为
 ```javascript
-serverPath  = 'http://localhost:8080;'
+serverPath  = 'http://localhost:8080'
 ```
  **如果你更改了你的视频服务器端口，请一同更改以上的端口**  
 

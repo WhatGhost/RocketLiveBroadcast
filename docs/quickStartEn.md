@@ -34,7 +34,7 @@ var serverPath = null
 ```
 to
 ```javascript
-var serverPath = 'http://localhost:8080;'
+var serverPath = 'http://localhost:8080'
 ```
 and
 replace
@@ -43,7 +43,7 @@ serverPath = socketUrl;
 ```
 to
 ```javascript
-serverPath  = 'http://localhost:8080;'
+serverPath  = 'http://localhost:8080'
 ```
  **if you change the port in video server , you need to change the above code too**  
 
