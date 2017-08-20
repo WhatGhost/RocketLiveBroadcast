@@ -1,10 +1,10 @@
 <template>
     <div class="live-room" v-bind:class="{ blur: $store.state.background_blur }" id='elementToShare'>
         <div class="message">
-            <p>{{ roomMessage }}</p>
+            <p>房间人数： {{ userCount }}</p>
         </div>
         <div ref="recordArea" class="room">
-            <button @click="createCanvas" >CreateCanvas</button>
+            <button @click="createCanvas">CreateCanvas</button>
             <button id="start" @click="startRecord" contenteditable="false">Start Canvas Recording</button>
             <button id="stop" @click="stopRecord" disabled contenteditable="false">Stop</button>
             <div class='left shadow-fixed'>
@@ -47,6 +47,7 @@ export default {
             isStoppedRecording: false,
             showMessageMenu: false,
             showingComponent: 'codeEditor',
+            userCount: 0,
             roomInfo: {
                 roomId: -1,
                 roomName: '',
@@ -79,13 +80,16 @@ export default {
             return this.showingComponent !== 'whiteBoard'
         },
         roomMessage: function () {
-            return '房间名：如何构建单页面应用　　房间号：10010　　主讲教师：诸葛亮'
+            return '房间人数' + this.usersCount
         }
     },
     created() {
         this.getRoomInfo()
         this.getUserInfo()
         this.connect()
+    },
+    beforeDestroy() {
+        this.httpServer.disconnect()
     },
     methods: {
         createCanvas: function () {
@@ -132,8 +136,12 @@ export default {
         },
         connect: function () {
             this.httpServer = io.connect('http://127.0.0.1:3000')
+            this.httpServer.on('userCountChange', (count) => {
+                this.userCount = count
+            })
             this.httpServer.emit('init', {
-                roomId: this.roomInfo.roomId
+                roomId: this.roomInfo.roomId,
+                userInfo: this.userInfo
             })
             this.httpServer.on('switchPane', (obj) => {
                 this.showingComponent = obj.showingComponent
