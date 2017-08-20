@@ -29,6 +29,8 @@ def convert_and_download(input_file):
     print('waiting')
     process.wait()
     print('downloading')
+    if not os.path.exists(dist_path):
+        os.makedirs(dist_path)
     process.download(store_path)
-    # pdf = open(store_path) 
+    # pdf = open(store_path)
     return 'slide/pdf/' + whole_filename + '.pdf'
