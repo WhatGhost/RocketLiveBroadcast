@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>frontend - Live education frontend</title>
+  <meta name="description" content="Live education frontend">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./vue.css">
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js')
+  }
+  window.$docsify = {
+    name: 'Live education boardcast',
+    repo: '',
+    loadSidebar: true,
+    subMaxLevel: 2,
+    coverpage: true
+  }
+</script>
+<script src="./docsify.min.js"></script>
+</html>
