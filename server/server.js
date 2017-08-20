@@ -68,12 +68,9 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         let socketInfo = SOCKETINFO[socket.id]
-        console.log(socket.id + ' disconnect')
         let userIndex = findUser(ROOMDATA[socketInfo.roomId].users, socketInfo.userInfo)
-        console.log('userIndex:' + userIndex)
         if (userIndex !== -1) {
             let socketIndex = ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.indexOf(socket.id)
-            console.log('socketIndex:' + socketIndex)
             if (socketIndex !== -1) {
                 ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.splice(socketIndex, 1)
                 if (ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.length === 0) {
