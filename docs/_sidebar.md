@@ -5,6 +5,7 @@
   - [ChatArea.vue](ChatArea.vue.md)
   - [CreateRoomDialog.vue](CreateRoomDialog.vue.md)
   - [ForgetModalDialog.vue](ForgetModalDialog.vue.md)
+  - [InfoModalDialog.vue](InfoModalDialog.vue.md)
   - [LoginModalDialog.vue](LoginModalDialog.vue.md)
   - [NavHeader.vue](NavHeader.vue.md)
   - [PdfViewer.vue](PdfViewer.vue.md)

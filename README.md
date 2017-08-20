@@ -1,17 +1,6 @@
 # Quick start - English
 
-**1. View the doc page**
- - You need to run this command to start a server for doc visiting:
- 
-  ```bash
-  docsify serve ./docs
-  ```
- then visit all the doc web pages at:
- ```
- http://localhost:3000
- ```
-
-**2. Set Your Database**
+**1. Set Your Database And Start**
 
 Whatever, here are tips to get your Django connect with database.
 
@@ -36,6 +25,17 @@ Start your mysql or MariaDB,
 ```sql
 create database live default character set utf8 collate utf8_unicode_ci; 
 ```
+
+**2. View the doc page**
+ - You need to run this command to start a server for doc visiting:
+ 
+  ```bash
+  docsify serve ./docs
+  ```
+ then visit all the doc web pages at:
+ ```
+ http://localhost:3000
+ ```
 
 **3. Config the video server**
  - find file ```easyrtc.js```and ```easyrtc_int.js```in ./node_moudles/easyrtc/api , then open them and search **serverPath** in them 
@@ -79,18 +79,7 @@ http://localhost:8000
 ```
 
 # 快速上手 - 中文
-**1. 访问文档网页**
- - 在bash中运行以下命令以启动文档网站:
- 
-  ```bash
-  docsify serve ./docs
-  ```
- 让后访问以下网址来查看全部文档
- ```
- http://localhost:3000
- ```
- 
-**2. 设置数据库**
+**1. 设置数据库与其他**
  - 首先，安装包依赖：  
 
      ```bash
@@ -116,6 +105,17 @@ mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');
      ```sql
 create database live default character set utf8 collate utf8_unicode_ci; 
 ```
+
+**2. 访问文档网页**
+ - 在bash中运行以下命令以启动文档网站:
+ 
+  ```bash
+  docsify serve ./docs
+  ```
+ 让后访问以下网址来查看全部文档
+ ```
+ http://localhost:3000
+ ```
 
 **3. 配置视频服务器**  
  - 找到 node_moudles/easyrtc/api 目录里的文件 ```easyrtc.js```和 ```easyrtc_int.js``` , 打开并搜索 **"serverPath"**   

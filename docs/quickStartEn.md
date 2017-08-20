@@ -1,6 +1,6 @@
 # Quick Start
 
-## Set Your Database
+## Set Your Database And Start
 
 Whatever, here are tips to get your Django connect with database.
 
