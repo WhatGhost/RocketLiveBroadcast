@@ -67,6 +67,17 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
         r.save()
         serializer = LiveRoomIdSerializer(r)
         return Response(serializer.data)
+    
+    @list_route(methods=['patch'])
+    def start_live(self, request):
+        print('start live')
+        roomInfo = request.data
+        print(roomInfo)
+        room = LiveRoom.objects.get(id=roomInfo['roomId'])
+        print(room)
+        room.is_active = True
+        room.save()
+        return Response("开始直播成功", status=200)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -233,3 +244,6 @@ class SlideViewSet(viewsets.ModelViewSet):
         except Exception:
             s.delete()
         return Response(serializer.data)
+
+
+
