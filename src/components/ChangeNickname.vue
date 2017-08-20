@@ -1,38 +1,66 @@
 <template>
-    <div>
-        <div id="title2">用户昵称</div>
-        <el-input name="key" type="text" id="key" value="Leto" size="30" v-model="newnickname"></el-input>
-        <el-button id="change" @click="changeNickname">确认修改</el-button>
+    <div class="main-div">
+        <h1>输入昵称</h1>
+        <input type="text" v-model="newnickname" autofocus>
+        <el-button class="sure-btn shadow-m" @click="changeNickname">change nickname</el-button>
     </div>
 </template>
 <script>
-    export default {
-        data: function () {
-            return {
-                newnickname: '',
-                account: ''
-            }
-        },
-        methods: {
-            changeNickname() {
-                this.$store.dispatch('changeNick', {
-                    nickname: this.newnickname,
-                    account: this.account,
-                    is_password: false
+export default {
+    data: function () {
+        return {
+            newnickname: '',
+            account: ''
+        }
+    },
+    methods: {
+        changeNickname () {
+            if (this.newnickname === '') {
+                this.$message({
+                    message: '昵称不能为空',
+                    type: 'warning'
                 })
+                return
             }
+            this.$store.dispatch('changeNick', {
+                nickname: this.newnickname,
+                account: this.account,
+                is_password: false
+            })
         }
     }
+}
 </script>
 <style scoped>
-    .main {
-        margin: 40px;
-    }
+.main-div {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+}
 
-    #tip {
-        text-align: left;
-    }
+h1 {
+    color: #888888;
+    font-size: 24px;
+    height: 35px;
+    margin-top: -4px;
+}
 
-    #change {
-    }
+input {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline: none;
+    font-size: 13px;
+    margin: 30px 20px 20px 20px;
+    padding-left: 0.2em;
+}
+
+.sure-btn {
+    color: #2a2a2a;
+    font-size: 18px;
+    background-color: #fafd4a;
+    border-radius: 20px;
+    width: 200px;
+    margin-top: 26px;
+}
 </style>

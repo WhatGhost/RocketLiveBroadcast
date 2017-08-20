@@ -215,9 +215,11 @@ const store = new Vuex.Store({
         },
         openInfoDialog: function () {
             store.commit('trueInfo')
+            store.commit('trueBlur')
         },
         closeInfoDialog: function () {
             store.commit('falseInfo')
+            store.commit('falseBlur')
         }
     }
 })
