@@ -548,6 +548,7 @@ const store = new Vuex.Store({
          */
         openInfoDialog: function () {
             store.commit('trueInfo')
+            store.commit('trueBlur')
         },
         /**
          * 关闭个人信息窗口
@@ -557,6 +558,7 @@ const store = new Vuex.Store({
          */
         closeInfoDialog: function () {
             store.commit('falseInfo')
+            store.commit('falseBlur')
         }
     }
 })
