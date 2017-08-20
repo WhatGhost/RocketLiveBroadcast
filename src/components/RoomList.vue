@@ -2,7 +2,7 @@
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
         <div class="live-rooms">
-            <room class="room" v-for="room in rooms" v-bind:room="room" v-bind:key="count"></room>
+            <room class="room" v-for="room in rooms" v-show="room.is_active" v-bind:room="room" v-bind:key="count"></room>
         </div>
         <h1 class="history-title">History</h1>
     </div>
