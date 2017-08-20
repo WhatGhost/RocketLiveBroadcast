@@ -35,7 +35,8 @@ io.on('connection', function (socket) {
                 code: '',
                 showingComponent: 'codeEditor',
                 bannedUsers: [],
-                allBanned: false
+                allBanned: false,
+                drawing: null
             }
         }
     })
@@ -132,10 +133,15 @@ io.on('connection', function (socket) {
         }
         io.in(socket.id).emit('getBannedStatus', ROOMDATA[obj.roomId].allBanned)
     })
-    socket.on('getCurrentData', function (obj) {
+    socket.on('changeDrawing', function(obj) {
+        this.to(obj.roomId).emit('changeDrawing', obj)
+        ROOMDATA[obj.roomId].drawing = obj.drawing
+    })
+    socket.on('getCurrentData', function(obj) {
         io.in(socket.id).emit('changeCode', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('changePage', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('switchPane', ROOMDATA[obj.roomId])
+        io.in(socket.id).emit('changeDrawing', ROOMDATA[obj.roomId])
     })
 })
 

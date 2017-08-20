@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Literally Canvas</title>
+    <link href="./_assets/literallycanvas.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+    <style type="text/css">
+      .fs-container {
+        width: 320px;
+        margin: auto;
+      }
+
+      .literally {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="fs-container">
+      <div id="lc"></div>
+      <button onclick="store()">jj</button>
+    </div>
+
+    <!-- you really ought to include react-dom, but for react 0.14 you don't strictly have to. -->
+    <script src="./_js_libs/react-0.14.3.js"></script>
+    <script src="./_js_libs/literallycanvas.js"></script>
+
+    <script type="text/javascript">
+      var lc = LC.init(document.getElementById("lc"), {
+        imageURLPrefix: './_assets/lc-images',
+        toolbarPosition: 'bottom',
+        defaultStrokeWidth: 2,
+        strokeWidths: [1, 2, 3, 5, 30]
+      });
+      function store () {
+        let j = JSON.stringify(lc.getSnapshot())
+        console.log(j)
+      }
+    </script>
+  </body>
+</html>
