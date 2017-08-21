@@ -45,7 +45,6 @@ const kickoutUser = (roomId, user) => {
     for (let i = ROOMDATA[roomId].users[userIndex].socketIds.length - 1; i >= 0; i = i - 1) {
         io.in(ROOMDATA[roomId].users[userIndex].socketIds[i]).emit('kickout')
     }
-    console.log(ROOMDATA)
 }
 
 const addUser = (roomId, user, socketId) => {
@@ -73,6 +72,10 @@ io.on('connection', function (socket) {
         SOCKETINFO[socket.id] = {
             roomId: obj.roomId,
             userInfo: obj.userInfo
+        }
+        if (findUser(ROOMDATA[obj.roomId].kickedoutUsers, obj.userInfo) !== -1) {
+            kickoutUser(obj.roomId, obj.userInfo)
+            return
         }
         io.in(obj.roomId).emit('userCountChange', ROOMDATA[obj.roomId].users.length)
     })
@@ -163,8 +166,8 @@ io.on('connection', function (socket) {
     socket.on('kickout', function (obj) {
         let i = findUser(ROOMDATA[obj.roomId].users, obj.userInfo)
         if (i !== -1) {
-            // ROOMDATA[obj.roomId].bannedUsers.splice(i, 1)
             kickoutUser(obj.roomId, obj.userInfo)
+            ROOMDATA[obj.roomId].kickedoutUsers.push(obj.userInfo)
             let kickoutMessage = sysMessageTemplate
             kickoutMessage.content = '用户' + obj.userInfo.nickname + '已被房主踢出'
             kickoutMessage.roomId = obj.roomId

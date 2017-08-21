@@ -158,8 +158,6 @@ export default {
                 roomId: this.roomInfo.roomId
             })
             this.httpServer.on('kickout', () => {
-                // this.httpServer.disconnect()
-                // window.alert('您已被踢出')
                 this.showErrorMes('您已被踢出')
                 this.$router.push('/')
             })
