@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, LiveRoom, VideoRoom, AllSilent, OneSilent, ChatHistory, VisitHistory
+from .models import Room, LiveRoom, History, AllSilent, OneSilent, ChatHistory, VisitHistory
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
@@ -89,7 +89,7 @@ admin.site.register(MyUser, MyUserAdmin)
 admin.site.unregister(Group)
 admin.site.register(Room)
 admin.site.register(LiveRoom)
-admin.site.register(VideoRoom)
+admin.site.register(History)
 admin.site.register(AllSilent)
 admin.site.register(OneSilent)
 admin.site.register(ChatHistory)

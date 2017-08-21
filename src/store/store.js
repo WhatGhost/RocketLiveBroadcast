@@ -21,6 +21,8 @@ const store = new Vuex.Store({
          * @type Object
          */
         rooms: [],
+        // 所有历史记录
+        history: [],
         // 当前用户身份信息
         /**
          * @property account
@@ -149,7 +151,7 @@ const store = new Vuex.Store({
         'API_SUCC': function (state) {
             window.alert('成功！')
         },
-         /**
+        /**
          *  处理成功登出的函数
          *
          *
@@ -164,7 +166,7 @@ const store = new Vuex.Store({
             state.isTeacher = false
             router.push('/roomList')
         },
-         /**
+        /**
          *  处理成功登录的函数，获取账户以及用户昵称
          *
          *
@@ -321,6 +323,12 @@ const store = new Vuex.Store({
         refreshNickname: function (state, nickname) {
             state.nickname = nickname
         },
+        getHistory: function (state, response) {
+            state.history = response.body
+        },
+        getHistoryFail: function (state) {
+            // this.$message('fff') ???
+        }
     },
     actions: {
         // We added a getRooms action for the initial load from the server
@@ -333,17 +341,22 @@ const store = new Vuex.Store({
          * @param store {Object} An `store` Object
          * @return {Object} The liveroom
          */
-        getRooms(store) {
+        getRooms (store) {
             return api.get(apiRoot + '/liveroom/')
                 .then((response) => store.commit('GET_ROOMS', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        addRoom(store, room) {
+        getHistory (state) {
+            return api.get(apiRoot + '/history/')
+                .then((response) => store.commit('getHistory', response))
+                .catch((error) => store.commit('getHistoryFail', error))
+        },
+        addRoom (store, room) {
             return api.post(apiRoot + '/rooms/', room)
                 .then((response) => store.commit('ADD_ROOM', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
-        clearRooms(store) {
+        clearRooms (store) {
             return api.delete(apiRoot + '/rooms/clear_rooms/')
                 .then((response) => store.commit('CLEAR_ROOMS'))
                 .catch((error) => store.commit('API_FAIL', error))
@@ -357,7 +370,7 @@ const store = new Vuex.Store({
          * @param userinfo {Object} An `userinfo` Object
          * @return {Object} The result
          */
-        loginUser(store, userinfo) {
+        loginUser (store, userinfo) {
             return api.post(apiRoot + '/users/login_users/', userinfo)
                 .then((response) => store.commit('SUCC_LOGIN', response))
                 .catch((error) => store.commit('API_FAIL', error))
@@ -385,7 +398,7 @@ const store = new Vuex.Store({
          * @param userinfo {Object} An `userinfo` Object
          * @return {Object} The result
          */
-        changeNick(store, userinfo) {
+        changeNick (store, userinfo) {
             userinfo.account = store.state.account
             return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => {
@@ -403,7 +416,7 @@ const store = new Vuex.Store({
          * @param userinfo {Object} An `userinfo` Object
          * @return {Object} The result
          */
-        changePasswd(store, userinfo) {
+        changePasswd (store, userinfo) {
             return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => store.commit('API_SUCC'))
                 .catch((error) => store.commit('API_FAIL', error))

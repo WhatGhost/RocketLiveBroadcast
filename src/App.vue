@@ -19,7 +19,7 @@ export default {
     components: {
         NavHeader,
         RoomList,
-        LiveRoom
+        LiveRoom,
     },
     data: function () {
         return {

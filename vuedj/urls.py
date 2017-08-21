@@ -10,6 +10,7 @@ router.register(r'rooms', views.RoomViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'liveroom', views.LiveRoomViewSet)
 router.register(r'slide', views.SlideViewSet)
+router.register(r'history', views.HistoryViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
