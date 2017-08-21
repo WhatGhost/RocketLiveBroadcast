@@ -44,19 +44,17 @@ export default {
 <style scoped>
 .card {
     height: 220px;
-    margin: 20px;
     display: inline-block;
     border-radius: 7px;
     transition: background 0.5s ease-in-out;
     background-color: white;
+    margin-bottom: 30px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
 .card:hover {
     cursor: pointer;
-    background-color: rgb(232, 232, 232);
-    background-image: url("http://okonvxmbq.bkt.clouddn.com/never/delete/play.gif");
-    background-repeat: no-repeat;
-    background-position: center;
     /*z-index: 100;*/
 }
 
