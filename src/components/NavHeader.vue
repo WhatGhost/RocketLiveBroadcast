@@ -2,7 +2,7 @@
     <div>
         <div class="whole-div" v-bind:class="{ blur: $store.state.background_blur }">
             <el-button type="text" id="open-room-btn" v-if="$store.state.isTeacher && $route.path === '/roomList'"
-                       @click="openCreateRoomDialog">开房
+                       @click="openCreateRoomDialog">创建房间
             </el-button>
             <el-button class="home-btn" type="text" @click="showRoomList">主页</el-button>
             <div id="blank"></div>
