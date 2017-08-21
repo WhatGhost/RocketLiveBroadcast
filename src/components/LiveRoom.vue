@@ -66,6 +66,7 @@ export default {
             canvas2d: null,
             recorder: null,
             context: null,
+            recordAudio: null,
             elementToShare: null
         }
     },
@@ -158,6 +159,24 @@ export default {
             })
         },
         startRecord: function () {
+            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+                let audio = document.createElement('audio')
+                audio.muted = true
+                audio.volume = 0
+                audio.src = window.URL.createObjectURL(stream)
+                console.log(audio)
+                this.recordAudio = new window.RecordRTC(stream, {
+                    type: 'audio',
+                    recorderType: window.StereoAudioRecorder
+                })
+                // this.isStoppedRecording = false
+                // this.isStartedRecording = true
+                // console.log(hereStoppedRecording)
+                // console.log(hereStartedRecording)
+                // this.recorder.startRecording()
+                this.recordAudio.startRecording()
+                document.getElementById('stop').disabled = false
+            })
             document.getElementById('start').disabled = true
             this.isStoppedRecording = false
             this.isRecordingStarted = true
@@ -171,9 +190,13 @@ export default {
         stopRecord: function () {
             this.disabled = true
             this.isStoppedRecording = true
+            this.recordAudio.stopRecording(function () {
+                window.invokeSaveAsDialog(this.getBlob(), 'filename.wav')
+            })
             this.recorder.stopRecording(function () {
                 window.invokeSaveAsDialog(this.getBlob(), 'filename.webm')
             })
+            document.getElementById('start').disabled = false
         },
         looper: function () {
             if (!this.isRecordingStarted) {
