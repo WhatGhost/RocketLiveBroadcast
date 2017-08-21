@@ -44,26 +44,39 @@ export default {
 </script>
 
 <style scoped>
+.main-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 h1 {
     font-size: 20px;
-    text-align: left;
+    text-align: center;
     margin-left: 20px;
     margin-top: 25px;
     color: white;
     padding: 20px;
+    width: 140px;
 }
 
 .live-title {
-    background-color: rgba(29, 161, 242, 0.5);
+    background-color: rgba(255, 211, 124, 0.5);
 }
 
 .history-title {
-    background-color: rgba(68, 41, 91, 0.4);
+    background-color: rgba(125, 188, 169, 0.4);
 }
 
 .live-rooms {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+    /*align-content: flex-start;*/
+    /*align-content: space-around;*/
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .room {

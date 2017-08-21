@@ -6,7 +6,6 @@
         <transition name="fade">
             <router-view></router-view>
         </transition>
-        <img class="footer-img" v-bind:class="{ blur: $store.state.background_blur }" src="./assets/footer-img.gif"/>
     </div>
 </template>
 
