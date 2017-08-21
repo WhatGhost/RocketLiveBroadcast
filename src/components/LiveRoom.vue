@@ -94,6 +94,12 @@ export default {
         this.httpServer.disconnect()
     },
     methods: {
+        showErrorMes: function (mes) {
+            this.$message({
+                message: mes,
+                type: 'error'
+            })
+        },
         createCanvas: function () {
             this.appendCanvas()
             this.recorder = new window.RecordRTC(this.canvas2d, {
@@ -150,6 +156,12 @@ export default {
             })
             this.httpServer.emit('getCurrentData', {
                 roomId: this.roomInfo.roomId
+            })
+            this.httpServer.on('kickout', () => {
+                // this.httpServer.disconnect()
+                // window.alert('您已被踢出')
+                this.showErrorMes('您已被踢出')
+                this.$router.push('/')
             })
         },
         switchPane: function (pane) {

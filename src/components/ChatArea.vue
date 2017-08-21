@@ -2,7 +2,7 @@
     <div class="main-div shadow-fixed">
         <div class="above-div">
             <transition-group name="itemlist" tag="div">
-                <chat-item @ban="ban" v-for="(msg, key) in messageList" v-bind:message="msg" :key="key">
+                <chat-item @ban="ban" @kickout="kickout" v-for="(msg, key) in messageList" v-bind:message="msg" :key="key">
                 </chat-item>
             </transition-group>
             <banned-list :bannedUsers="bannedUsers" :roomInfo="roomInfo" @unban="unban"></banned-list>
@@ -64,14 +64,19 @@ export default {
                 this.message = ''
             }
         },
-        ban: function(obj) {
+        ban: function (obj) {
             if (this.userInfo.isRoomCreator) {
                 this.httpServer.emit('ban', obj)
             }
         },
-        unban: function(obj) {
+        unban: function (obj) {
             if (this.userInfo.isRoomCreator) {
                 this.httpServer.emit('unban', obj)
+            }
+        },
+        kickout: function (obj) {
+            if (this.userInfo.isRoomCreator) {
+                this.httpServer.emit('kickout', obj)
             }
         },
         showBannedUsers: function () {

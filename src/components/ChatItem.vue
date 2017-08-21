@@ -5,6 +5,7 @@
             <label>{{ message.userInfo.nickname }}</label>
             <span class="mes-body shadow-s">{{ message.content }}</span>
             <button @click="ban">ban</button>
+            <button @click="kickout">kickout</button>
         </div>
     </div>
 </template>
@@ -26,6 +27,11 @@ export default {
         ban: function () {
             if (this.message.status === 200) {
                 this.$emit('ban', this.message)
+            }
+        },
+        kickout: function () {
+            if (this.message.status === 200) {
+                this.$emit('kickout', this.message)
             }
         }
     }
