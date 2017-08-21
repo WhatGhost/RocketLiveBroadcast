@@ -1,4 +1,4 @@
-from .models import Room, MyUser, LiveRoom, Slide
+from .models import Room, MyUser, LiveRoom, Slide, History
 from rest_framework import serializers
 
 
@@ -34,6 +34,28 @@ class LiveRoomSerializer(serializers.ModelSerializer):
                             'room_creater',
                             'active_mode',
                             )
+
+
+class HistorySerializer(serializers.ModelSerializer):
+    room_creater = UserSerializer()
+
+    class Meta:
+        model = History
+        fields = ('room_id',
+                  'room_name',
+                  'room_introduction',
+                  'room_img',
+                  'room_creater',
+                  'history_source'
+                  )
+        read_only_fields = ('room_id',
+                            'room_name',
+                            'room_introduction',
+                            'room_img',
+                            'room_creater',
+                            'history_source'
+                            )
+
 
 class SlideSerializer(serializers.ModelSerializer):
     class Meta:

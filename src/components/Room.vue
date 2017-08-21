@@ -29,6 +29,9 @@ export default {
         },
         enterRoom: function () {
             if (this.$store.state.account !== null) {
+                if (this.room.history_source !== null) {
+                    this.$router.push('/history/' + this.room.room_id)
+                }
                 this.$router.push('/room/' + this.room.id)
             } else {
                 this.showErrorMes('请您先登录')

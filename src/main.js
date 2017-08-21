@@ -24,3 +24,4 @@ const v = new Vue({
 
 v.$store.dispatch('getUserFromDjango')
 v.$store.dispatch('getRooms')
+v.$store.dispatch('getHistory')

@@ -5,12 +5,14 @@
             <room class="room" v-for="room in rooms" v-show="room.active_mode === 'START'" v-bind:room="room" v-bind:key="count"></room>
         </div>
         <h1 class="history-title">History</h1>
+        <div class="live-rooms">
+            <room class="room" v-for="room in history" v-bind:room="room" v-bind:key="count"></room>
+        </div>
     </div>
 </template>
 
 <script>
 import Room from './Room.vue'
-//    import Velocity from 'velocity-animate'
 
 export default {
     components: {
@@ -22,15 +24,22 @@ export default {
         }
     },
     computed: {
-        rooms() {
+        rooms: function () {
             return this.$store.state.rooms
         },
-        count() {
+        history: function () {
+            return this.$store.state.history
+        },
+        count: function () {
             this.num += 1
             return this.num
         }
     },
-    methods: {}
+    methods: {
+        goHistory: function () {
+            this.$router.push('/history')
+        }
+    }
 }
 </script>
 

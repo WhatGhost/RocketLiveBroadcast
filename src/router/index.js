@@ -3,12 +3,13 @@ import VueRouter from 'vue-router'
 import store from '../store/store.js'
 import RoomList from '../components/RoomList'
 import LiveRoom from '../components/LiveRoom'
+import HistoryVideo from '../components/HistoryVideo'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
     routes: [
-        { path: '/', redirect: '/roomList' },
+        {path: '/', redirect: '/roomList'},
         {
             path: '/roomList',
             name: 'RoomList',
@@ -17,7 +18,7 @@ const router = new VueRouter({
         {
             path: '/room/:id',
             component: LiveRoom,
-            beforeEnter: function(to, from, next) {
+            beforeEnter: function (to, from, next) {
                 if (store.state.account === null) {
                     next(false)
                     return
@@ -30,6 +31,17 @@ const router = new VueRouter({
                     }
                 }
                 next(false)
+            }
+        },
+        {
+            path: '/history/:id',
+            component: HistoryVideo,
+            beforeEnter: function (to, from, next) {
+                if (store.state.account === null) {
+                    next(false)
+                    return
+                }
+                next()
             }
         }
     ]

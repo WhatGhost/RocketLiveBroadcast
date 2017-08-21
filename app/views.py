@@ -4,8 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import list_route, api_view
-from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd, Slide
-from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer, SlideSerializer
+from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd, Slide, History
+from .serializers import RoomSerializer, LiveRoomSerializer, UserSerializer, LiveRoomIdSerializer, SlideSerializer, HistorySerializer
 from .send_verification import sendMail
 import json
 from datetime import datetime, timedelta
@@ -97,6 +97,12 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
         room.active_mode = 'CLOSE'
         room.save()
         return Response("结束直播成功", status=200)
+
+
+class HistoryViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    queryset = History.objects.all()
+    serializer_class = HistorySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

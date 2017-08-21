@@ -95,15 +95,15 @@ class Slide(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
 
 
-class VideoRoom(models.Model):
+class History(models.Model):
     room_id = models.IntegerField(primary_key=True)
     room_name = models.CharField(max_length=100)
     room_introduction = models.TextField(null=True)
-    room_img = models.ImageField(upload_to='videoroomimg', null=True)
+    room_img = models.ImageField(upload_to='img/covers', null=False)
     room_creater = models.CharField(max_length=100)
-    created_time = models.DateTimeField()
-    videofile = models.FileField()
-    time_length = models.IntegerField()
+    history_source = models.FileField(upload_to='video')
+    created_time = models.DateTimeField(auto_now_add=True)
+    time_length = models.IntegerField(null=True)
 
 
 class AllSilent(models.Model):
