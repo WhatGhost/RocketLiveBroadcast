@@ -2,7 +2,7 @@
     <div class="main-div shadow-fixed">
         <div class="above-div">
             <transition-group name="itemlist" tag="div">
-                <chat-item @ban="ban" @kickout="kickout" v-for="(msg, key) in messageList" v-bind:message="msg" :key="key">
+                <chat-item @ban="ban" @kickout="kickout" v-for="(msg, key) in messageList" :message="msg" :isRoomCreator="userInfo.isRoomCreator" :key="key">
                 </chat-item>
             </transition-group>
             <banned-list :bannedUsers="bannedUsers" :roomInfo="roomInfo" @unban="unban"></banned-list>
@@ -14,8 +14,8 @@
             <el-input class="mes-input bottom" v-model="message" autoComplete="" omplete="off"></el-input>
             <el-button class="bottom" @click='sendMessage'>send</el-button>
             <el-button class="bottom" @click='showBannedUsers' v-show="userInfo.isRoomCreator">showBannedUsers</el-button>
-            <el-button class="bottom" @click='banAll' v-show="!bannedStatus">banAll</el-button>
-            <el-button class="bottom" @click='unbanAll' v-show="bannedStatus">undo banAll</el-button>
+            <el-button class="bottom" @click='banAll' v-show="userInfo.isRoomCreator && !bannedStatus">banAll</el-button>
+            <el-button class="bottom" @click='unbanAll' v-show="userInfo.isRoomCreator && bannedStatus">undo banAll</el-button>
         </div>
     </div>
 </template>

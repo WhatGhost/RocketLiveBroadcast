@@ -4,8 +4,10 @@
         <div class="message-div" v-bind:class="{ highlight: message.userInfo.isRoomCreator }">
             <label>{{ message.userInfo.nickname }}</label>
             <span class="mes-body shadow-s">{{ message.content }}</span>
-            <button @click="ban">ban</button>
-            <button @click="kickout">kickout</button>
+            <div v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403">
+                <button @click="ban">ban</button>
+                <button @click="kickout">kickout</button>
+            </div>
         </div>
     </div>
 </template>
@@ -13,7 +15,8 @@
 <script>
 export default {
     props: [
-        'message'
+        'message',
+        'isRoomCreator'
     ],
     data() {
         return {}
