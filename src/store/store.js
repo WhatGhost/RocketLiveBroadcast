@@ -565,6 +565,11 @@ const store = new Vuex.Store({
                 .then((response) => store.commit('API_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
+        stopLive: function (store, roomInfo) {
+            return api.patch(apiRoot + '/liveroom/stop_live/', roomInfo)
+                .then((response) => store.commit('API_SUCC', response))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
     }
 })
 
