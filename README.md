@@ -72,7 +72,7 @@ serverPath  = 'http://localhost:8080'
 you need to run
 
 ```bash
-node node_modules/easyrtc/server_example/server.js 
+node server/rtcserver.js 
 ```
 This command will open a server on port 8080
 
@@ -157,7 +157,7 @@ serverPath  = 'http://localhost:8080'
  完成上述步骤后，你还需要运行以下命令以启动服务器
 
 ```bash
-node node_modules/easyrtc/server_example/server.js 
+node server/rtcserver.js 
 ```
 这个命令将启动一个位于8000端口的服务
 
