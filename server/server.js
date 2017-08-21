@@ -1,7 +1,7 @@
 'use strict'
-var app = require('express')()
-var http = require('http').Server(app)
-var io = require('socket.io')(http)
+const app = require('express')()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 
 let ROOMDATA = {}
 let SOCKETINFO = {}
@@ -32,9 +32,18 @@ const initRoom = (roomId) => {
         code: '',
         showingComponent: 'codeEditor',
         bannedUsers: [],
+        kickedoutUsers: [],
         allBanned: false,
         drawing: null,
         users: []
+    }
+}
+
+const kickoutUser = (roomId, user) => {
+    let userIndex = findUser(ROOMDATA[roomId].users, user)
+    // 倒序踢出 防止奇怪的事情发生
+    for (let i = ROOMDATA[roomId].users[userIndex].socketIds.length - 1; i >= 0; i = i - 1) {
+        io.in(ROOMDATA[roomId].users[userIndex].socketIds[i]).emit('kickout')
     }
 }
 
@@ -54,7 +63,7 @@ io.on('connection', function (socket) {
     console.log('新连接已创建 !')
 
     socket.on('init', function (obj) {
-        console.log(obj.userInfo.nickname + ' enter room ' + obj.roomId)
+        console.log(socket.id + ' ' + obj.userInfo.account + ' enter room ' + obj.roomId)
         socket.join(obj.roomId)
         if (!ROOMDATA.hasOwnProperty(obj.roomId)) {
             initRoom(obj.roomId)
@@ -63,6 +72,10 @@ io.on('connection', function (socket) {
         SOCKETINFO[socket.id] = {
             roomId: obj.roomId,
             userInfo: obj.userInfo
+        }
+        if (findUser(ROOMDATA[obj.roomId].kickedoutUsers, obj.userInfo) !== -1) {
+            kickoutUser(obj.roomId, obj.userInfo)
+            return
         }
         io.in(obj.roomId).emit('userCountChange', ROOMDATA[obj.roomId].users.length)
     })
@@ -73,8 +86,10 @@ io.on('connection', function (socket) {
         if (userIndex !== -1) {
             let socketIndex = ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.indexOf(socket.id)
             if (socketIndex !== -1) {
+                // remove socketId from socketIds
                 ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.splice(socketIndex, 1)
                 if (ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.length === 0) {
+                    // remove user if there is no socket for him
                     ROOMDATA[socketInfo.roomId].users.splice(userIndex, 1)
                 }
             }
@@ -144,6 +159,24 @@ io.on('connection', function (socket) {
             bannedMessage.content = '用户' + obj.userInfo.nickname + '未被禁言'
             bannedMessage.roomId = obj.roomId
             io.in(socket.id).emit('message', bannedMessage)
+        }
+        io.in(socket.id).emit('getBannedList', ROOMDATA[obj.roomId].bannedUsers)
+    })
+
+    socket.on('kickout', function (obj) {
+        let i = findUser(ROOMDATA[obj.roomId].users, obj.userInfo)
+        if (i !== -1) {
+            kickoutUser(obj.roomId, obj.userInfo)
+            ROOMDATA[obj.roomId].kickedoutUsers.push(obj.userInfo)
+            let kickoutMessage = sysMessageTemplate
+            kickoutMessage.content = '用户' + obj.userInfo.nickname + '已被房主踢出'
+            kickoutMessage.roomId = obj.roomId
+            io.in(obj.roomId).emit('message', kickoutMessage)
+        } else {
+            let kickoutMessage = sysMessageTemplate
+            kickoutMessage.content = '用户' + obj.userInfo.nickname + '不在房间内'
+            kickoutMessage.roomId = obj.roomId
+            io.in(socket.id).emit('message', kickoutMessage)
         }
         io.in(socket.id).emit('getBannedList', ROOMDATA[obj.roomId].bannedUsers)
     })

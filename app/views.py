@@ -162,7 +162,7 @@ class UserViewSet(viewsets.ModelViewSet):
             auth.login(request, user)
             backInfo = {
                 'account': request.data.get('account', ''),
-                'is_student': True,
+                'is_student': user.is_student,
                 'nickname': user.nickname
             }
             return Response(backInfo, status=200)
