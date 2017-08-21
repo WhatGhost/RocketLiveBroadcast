@@ -182,8 +182,10 @@ export default {
                 this.nowView += 1
                 this.step += 1
             } else {
-                this.closeDialog()
-                this.$router.push('/room/' + this.roomId)
+                this.$store.dispatch('getRooms').then(() => {
+                    this.closeDialog()
+                    this.$router.push('/room/' + this.roomId)
+                })
             }
         },
         goBack: function () {
