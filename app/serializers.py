@@ -25,14 +25,14 @@ class LiveRoomSerializer(serializers.ModelSerializer):
                   'room_introduction',
                   'room_img',
                   'room_creater',
-                  'is_active',
+                  'active_mode',
                   )
         read_only_fields = ('id',
                             'room_name',
                             'room_introduction',
                             'room_img',
                             'room_creater',
-                            'is_active',
+                            'active_mode',
                             )
 
 class SlideSerializer(serializers.ModelSerializer):

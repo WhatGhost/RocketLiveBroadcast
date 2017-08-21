@@ -86,7 +86,7 @@ class LiveRoom(models.Model):
     room_img = models.ImageField(upload_to='img/covers', null=True)
     room_creater = models.ForeignKey(MyUser)
     created_time = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default = False)
+    active_mode = models.CharField(max_length=10,default='READY')
 
 class Slide(models.Model):
     room_slide = models.FileField(upload_to='slide/orginal', null=False)
