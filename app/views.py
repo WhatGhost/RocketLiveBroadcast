@@ -75,9 +75,28 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
         print(roomInfo)
         room = LiveRoom.objects.get(id=roomInfo['roomId'])
         print(room)
-        room.is_active = True
+        if room.active_mode == 'CLOSE':
+            return Response("房间已关闭，若要开始直播请新建房间", status=422)
+        if room.active_mode == 'START':
+            return Response("直播已经开始", status=422)
+        room.active_mode = 'START'
         room.save()
         return Response("开始直播成功", status=200)
+
+    @list_route(methods=['patch'])
+    def stop_live(self, request):
+        print('stop live')
+        roomInfo = request.data
+        print(roomInfo)
+        room = LiveRoom.objects.get(id=roomInfo['roomId'])
+        print(room)
+        if room.active_mode == 'CLOSE':
+            return Response("房间已关闭", status=422)
+        if room.active_mode == 'READY':
+            return Response("直播未开始", status=422)
+        room.active_mode = 'CLOSE'
+        room.save()
+        return Response("结束直播成功", status=200)
 
 
 class UserViewSet(viewsets.ModelViewSet):
