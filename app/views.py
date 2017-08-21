@@ -96,6 +96,13 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             return Response("直播未开始", status=422)
         room.active_mode = 'CLOSE'
         room.save()
+        History.objects.create(
+            room_id = room.id,
+            room_name = room.room_name,
+            room_introduction = room.room_introduction,
+            room_img = room.room_img,
+            room_creater = room.room_creater
+        )
         return Response("结束直播成功", status=200)
 
 
