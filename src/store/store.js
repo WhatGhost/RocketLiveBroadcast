@@ -319,7 +319,7 @@ const store = new Vuex.Store({
          */
         refreshNickname: function (state, nickname) {
             state.nickname = nickname
-        }
+        },
     },
     actions: {
         // We added a getRooms action for the initial load from the server
@@ -559,7 +559,12 @@ const store = new Vuex.Store({
         closeInfoDialog: function () {
             store.commit('falseInfo')
             store.commit('falseBlur')
-        }
+        },
+        startLive: function (store, roomInfo) {
+            return api.patch(apiRoot + '/liveroom/start_live/', roomInfo)
+                .then((response) => store.commit('API_SUCC', response))
+                .catch((error) => store.commit('API_FAIL', error))
+        },
     }
 })
 

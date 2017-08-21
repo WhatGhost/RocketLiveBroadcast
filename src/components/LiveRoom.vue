@@ -7,6 +7,7 @@
             <button @click="createCanvas">CreateCanvas</button>
             <button id="start" @click="startRecord" contenteditable="false">Start Canvas Recording</button>
             <button id="stop" @click="stopRecord" disabled contenteditable="false">Stop</button>
+            <el-button @click="startLive">开始直播</el-button>
             <div class='left shadow-fixed'>
                 <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
@@ -213,6 +214,11 @@ export default {
                     }
                     window.setTimeout(that.looper, 40)
                 }
+            })
+        },
+        startLive: function() {
+            this.$store.dispatch('startLive', {
+                roomId: this.roomInfo.roomId
             })
         }
     }
