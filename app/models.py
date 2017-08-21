@@ -88,6 +88,7 @@ class LiveRoom(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     active_mode = models.CharField(max_length=10,default='READY')
 
+
 class Slide(models.Model):
     room_slide = models.FileField(upload_to='slide/orginal', null=False)
     converted_pdf = models.FileField(upload_to='slide/pdf', null=True)
@@ -101,7 +102,7 @@ class History(models.Model):
     room_introduction = models.TextField(null=True)
     room_img = models.ImageField(upload_to='img/covers', null=False)
     room_creater = models.CharField(max_length=100)
-    history_source = models.FileField(upload_to='video')
+    history_source = models.FileField(upload_to='video', null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     time_length = models.IntegerField(null=True)
 
