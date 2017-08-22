@@ -145,7 +145,6 @@ export default {
                 })
             } else {
                 this.showErrorMes('不是有效的电子邮箱或手机号码')
-                return
             }
         },
     }
