@@ -1,7 +1,7 @@
 <template>
     <div :class="{ hiding: hide }">
         <div class="fs-container">
-            <div id="lc" ref="lcanvas"></div>
+            <div id="lc" class="inner" ref="lcanvas"></div>
         </div>
     </div>
 </template>
@@ -42,8 +42,8 @@ export default {
                 defaultStrokeWidth: 2,
                 strokeWidths: [1, 2, 3, 5, 30],
                 imageSize: {
-                    width: 580,
-                    height: null
+                    width: 1920,
+                    height: 1080
                 }
             })
             if (this.userInfo.isRoomCreator) {
@@ -66,7 +66,8 @@ export default {
 }
 
 .fs-container {
-    width: 580px;
+    width: 100%;
+    height: 100%;
     margin: auto;
 }
 
@@ -74,5 +75,9 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
+}
+
+.inner {
+    height: 100%;
 }
 </style>

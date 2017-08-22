@@ -15,7 +15,7 @@
             </div>
             <div class='left shadow-fixed' v-show="eduArea">
                 <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
-                    <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
+                    <el-button class="top-btn" @click="switchPane('pdfViewer')">Slide</el-button>
                     <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
                     <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
                 </div>
@@ -293,7 +293,7 @@ export default {
 
 .left {
     float: left;
-    width: 48%;
+    width: 63%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -317,7 +317,7 @@ export default {
 }
 
 .right {
-    width: 50%;
+    width: 35%;
     float: right;
     height: 75%;
 }

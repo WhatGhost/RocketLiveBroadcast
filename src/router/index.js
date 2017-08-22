@@ -19,18 +19,22 @@ const router = new VueRouter({
             path: '/room/:id',
             component: LiveRoom,
             beforeEnter: function (to, from, next) {
-                if (store.state.account === null) {
-                    next(false)
-                    return
-                }
-                let roomId = parseInt(to.params['id'])
-                for (let room of store.state.rooms) {
-                    if (room.id === roomId) {
-                        next()
-                        return
-                    }
-                }
-                next(false)
+                store.dispatch('getUserFromDjango').then(() => {
+                    store.dispatch('getRooms').then(() => {
+                        if (store.state.account === null) {
+                            next(false)
+                            return
+                        }
+                        let roomId = parseInt(to.params['id'])
+                        for (let room of store.state.rooms) {
+                            if (room.id === roomId) {
+                                next()
+                                return
+                            }
+                        }
+                        next(false)
+                    })
+                })
             }
         },
         {

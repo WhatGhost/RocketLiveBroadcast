@@ -5,7 +5,7 @@
                 <button id="join" :class="studentDisplay" @click="join">打开视频</button>
                 <button id="leave" :class="studentDisplay" @click="leave">关闭视频</button>
                 <button id="publish" :class="teacherDisplay" @click="publish">继续直播</button>
-                <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button> 
+                <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button>
             </div>
         </div>
         <div id="video" style="margin:0 auto;">
@@ -68,7 +68,7 @@ export default {
                         screen: false
                     });
                     console.log('设置清晰度')
-                    that.localStream.setVideoProfile('720p_3')
+                    that.localStream.setVideoProfile('480p_6')
                     that.localStream.init(function () {
                         console.log("getUserMedia successfully")
                         that.localStream.play('agora_teacher')
@@ -159,7 +159,7 @@ export default {
             } else {
                 document.getElementById("leave").disabled = true;
                 document.getElementById("join").disabled = false;
-            }  
+            }
             this.client.leave(function () {
                 console.log("Leavel channel successfully");
             }, function (err) {
