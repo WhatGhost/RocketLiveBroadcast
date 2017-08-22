@@ -20,13 +20,13 @@ class TestCreate(TestCase):
 
     def test_create(self):
         response = self.client.post('/liveroom/')
-        self.assertEqual(response.data, '您未登录')
+        self.assertEqual(response.data['detail'], '您未登录')
 
     def test_create_with_student(self):
         self.assertTrue(self.client.login(
             account='student@s.com', password='student'))
         response = self.client.post('/liveroom/')
-        self.assertEqual(response.data, '您不是教师，没有创建房间的权限')
+        self.assertEqual(response.data['detail'], '您不是教师，没有创建房间的权限')
     
     #却创建房间测试，文件传入出问题
 

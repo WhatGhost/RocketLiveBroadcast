@@ -183,13 +183,13 @@ class TestLogout(TestCase):
             '/users/login_users/', {'account': '123', 'password': '111'})
         logout = self.client.post('/users/logout_user/')
         self.assertEqual(logout.status_code, 200)
-        self.assertEqual(logout.data, '登出成功')
+        self.assertEqual(logout.data['detail'], '登出成功')
         currentUser = self.client.post('/users/current_user/')
         self.assertEqual(currentUser.data['account'], None)
 
     def test_logout_without_login(self):
         logout = self.client.post('/users/logout_user/')
-        self.assertEqual(logout.data, '请先登录')
+        self.assertEqual(logout.data['detail'], '请先登录')
 
     def tearDown(self):
         pass
