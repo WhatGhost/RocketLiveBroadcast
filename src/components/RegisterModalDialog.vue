@@ -125,6 +125,10 @@ export default {
                 this.showErrorMes('以上信息未完成输入')
                 return
             }
+            if (this.password !== this.confirmPassword) {
+                this.showErrorMes('两次密码不一致')
+                return
+            }
             if (this.isRightPhoneNum()) {
                 this.showErrorMes('sendVertificateCode for phone click')
                 this.$store.dispatch('sendVertificateCode', {
