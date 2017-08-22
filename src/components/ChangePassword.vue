@@ -27,6 +27,10 @@ export default {
                 this.$message.error('请完成输入')
                 return
             }
+            if (!this.isPassword()) {
+                this.$message.error('密码格式不正确，请使用8至16位的数字、字母和下划线组合')
+                return false
+            }
             this.useraccount = this.$store.state.account
             this.$store.dispatch('changePasswd', {
                 oldpassword: new window.Hashes.SHA256().hex(this.oldpassword),
@@ -34,7 +38,11 @@ export default {
                 account: this.useraccount,
                 is_password: true
             })
-        }
+        },
+        isPassword() {
+            let patrn = /^(\w){8,20}$/
+            return patrn.test(this.newpassword1)
+        },
     },
 }
 </script>
