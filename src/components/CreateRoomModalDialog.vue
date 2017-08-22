@@ -170,7 +170,7 @@ export default {
                 })
                 .catch((error) => {
                     this.$message({
-                        message: '房间创建失败' + error,
+                        message: '房间创建失败' + error.detail,
                         type: 'error'
                     })
                     this.openFail = true

@@ -51,9 +51,9 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
     # @api_view(['POST'])
     def create(self, request):
         if not request.user.is_authenticated():
-            return Response("您未登录", status=400)
+            return Response({'detail': "您未登录"}, status=400)
         if request.user.is_student:
-            return Response("您不是教师，没有创建房间的权限", status=400)
+            return Response({'detail': "您不是教师，没有创建房间的权限"}, status=400)
         data = request.data['file-upload']
         format, imgstr = data.split(';base64,') 
         ext = format.split('/')[-1] 
