@@ -17,15 +17,13 @@ from .utils.slide_convert import convert_and_download
 from .sendText import sendText
 import base64
 from django.core.files.base import ContentFile
-
-
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         return  # To not perform the csrf check previously happening
-
 
 
 def index(request):
@@ -44,19 +42,19 @@ class RoomViewSet(viewsets.ModelViewSet):
 
 
 class LiveRoomViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    authentication_classes = (
+        CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = LiveRoom.objects.all()
     serializer_class = LiveRoomSerializer
 
-    # @api_view(['POST'])
     def create(self, request):
         if not request.user.is_authenticated():
             return Response({'detail': "您未登录"}, status=400)
         if request.user.is_student:
             return Response({'detail': "您不是教师，没有创建房间的权限"}, status=400)
         data = request.data['file-upload']
-        format, imgstr = data.split(';base64,') 
-        ext = format.split('/')[-1] 
+        format, imgstr = data.split(';base64,')
+        ext = format.split('/')[-1]
         data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
         r = LiveRoom(
             room_name=request.data["room-name"],
@@ -67,7 +65,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
         r.save()
         serializer = LiveRoomIdSerializer(r)
         return Response(serializer.data)
-    
+
     @list_route(methods=['patch'])
     def start_live(self, request):
         print('start live')
@@ -97,33 +95,34 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
         room.active_mode = 'CLOSE'
         room.save()
         History.objects.create(
-            room_id = room.id,
-            room_name = room.room_name,
-            room_introduction = room.room_introduction,
-            room_img = room.room_img,
-            room_creater = room.room_creater
+            room_id=room.id,
+            room_name=room.room_name,
+            room_introduction=room.room_introduction,
+            room_img=room.room_img,
+            room_creater=room.room_creater
         )
         return Response({'detail': "结束直播成功"}, status=200)
 
 
 class HistoryViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    authentication_classes = (
+        CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = History.objects.all()
     serializer_class = HistorySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    authentication_classes = (
+        CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = MyUser.objects.all()
     serializer_class = UserSerializer
 
     def create(self, request):
         info = request.data
-        #info = json.loads(str(request.body, encoding='utf-8'))
         endTime = datetime.now()
         startTime = endTime + timedelta(minutes=-30)
         userSets = VertifyRegister.objects.filter(
-            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime,endTime))
+            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime, endTime))
         if userSets.exists():
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
             MyUser.objects.create_user(
@@ -131,9 +130,9 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'detail' :'注册成功'},status=200)
         else:
             return Response({'detail' :'验证码错误'}, status=422)
-    # @ensure_csrf_cookie
+
     @list_route(methods=['post'])
-    def current_user(self,request):
+    def current_user(self, request):
         user = request.user
         if request.user.is_authenticated():
             print("authenticated~")
@@ -144,16 +143,15 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['post'])
     def sendVertificateCode(self, request):
         account = request.data.get('account')
-        #account = json.loads(str(request.body, encoding='utf-8'))['account']
         print(account)
-        if(request.data.get('type')=='phone'):
+        if(request.data.get('type') == 'phone'):
             print('phone')
             vertification = sendText(account)
         else:
             print('email')
             vertification = sendMail(account)
 
-        if vertification != -1 :
+        if vertification != -1:
             if(request.data.get('mode') == 'register'):
                 VertifyRegister.objects.create(
                     account=account, vertifycode=vertification)
@@ -164,7 +162,6 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             return Response({'detail': '发送验证码失败'}, status=422)
 
-    # @method_decorator(csrf_protect)
     @list_route(methods=['post'])
     def login_users(self, request):
         print(request.user)
@@ -185,41 +182,39 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'detail': '登录失败'}, status=422)
 
     @list_route(methods=['patch'])
-    def change_info(self,request):
+    def change_info(self, request):
         info = request.data
-        #info=json.loads(str(request.body,encoding='utf-8'))
-        #user=MyUser.objects.get(account=info['account'])
         print(111)
         print(info['is_password'])
         if info['is_password']:
             print(info['account'])
             print(info['oldpassword'])
-            user =auth.authenticate(account=info['account'],password=info['oldpassword'])
-            if user is not None :
-                #user.check_password(info['password'])
+            user = auth.authenticate(
+                account=info['account'], password=info['oldpassword'])
+            if user is not None:
                 user.set_password(info['newpassword'])
                 user.save()
                 return Response({'detail': '更改密码成功'}, status=200)
             else:
                 return Response({'detail': '原密码错误'},status=422)
         else:
-            user=MyUser.objects.get(account=info['account'])
-            user.nickname=info['nickname']
+            user = MyUser.objects.get(account=info['account'])
+            user.nickname = info['nickname']
             user.save()
             return Response({'detail': '更改昵称成功'},status=200)
 
     @list_route(methods=['patch'])
-    def forget_info(self,request):
+    def forget_info(self, request):
         info = request.data
         endTime = datetime.now()
         startTime = endTime + timedelta(minutes=-30)
         print(info['account'])
         userSets = VertifyForgetpasswd.objects.filter(
-            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime,endTime))
+            account=info['account'], vertifycode=info['vertificateCode'], vertifytime__range=(startTime, endTime))
         print(userSets)
         if userSets.exists():
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
-            user=MyUser.objects.get(account=info['account'])
+            user = MyUser.objects.get(account=info['account'])
             print(user.password)
             user.set_password(info['password'])
             print(user.password)
@@ -229,7 +224,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'detail': '重置密码失败'}, status=422)
 
     @list_route(methods=['post'])
-    def logout_user(self,request):
+    def logout_user(self, request):
         user = request.user
         print(user)
         if request.user.is_authenticated():
@@ -240,7 +235,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class SlideViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    authentication_classes = (
+        CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = Slide.objects.all()
     serializer_class = SlideSerializer
 
@@ -277,6 +273,3 @@ class SlideViewSet(viewsets.ModelViewSet):
         except Exception:
             s.delete()
         return Response(serializer.data)
-
-
-

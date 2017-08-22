@@ -5,6 +5,7 @@ from .views import LiveRoomViewSet, UserViewSet
 from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
 from .views import index
 
+
 class TestCreate(TestCase):
 
     def setUp(self):
@@ -27,15 +28,6 @@ class TestCreate(TestCase):
             account='student@s.com', password='student'))
         response = self.client.post('/liveroom/')
         self.assertEqual(response.data['detail'], '您不是教师，没有创建房间的权限')
-    
-    #却创建房间测试，文件传入出问题
-
-    # def test_create_with_teacher(self):
-    #     self.assertTrue(self.client.login(account='teacher@t.com', password='teacher'))
-    #     response = self.client.post(
-    #         '/liveroom/', {'room-name': 'testrooom', 'room-introduction': 'nothing', })
-    #     self.assertEqual(response.data['room_nmea'], 'testrooom')
 
     def tearDown(self):
         pass
-

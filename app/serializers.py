@@ -62,5 +62,6 @@ class SlideSerializer(serializers.ModelSerializer):
         model = Slide
         fields = ('converted_pdf',)
 
+
 class LiveRoomIdSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)

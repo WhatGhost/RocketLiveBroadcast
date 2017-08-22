@@ -27,7 +27,7 @@ def sendMail(to_addr, message="您的验证码为： ", mode='plain', encode='ut
     encode    否        编码方式，默认为utf-8
     ========  ========  ==========================================
 
- 
+
     '''
     # 输入Email地址和口令:
     from_addr = 'HJDLive@163.com'
@@ -57,7 +57,7 @@ def sendMail(to_addr, message="您的验证码为： ", mode='plain', encode='ut
 def generate_verification_code(len=6):
     ''' 
     随机生成六位邮箱验证码，包含数字字母
-    
+
     ========  ========  ==========================================
     参数      是否必选  描述
     ========  ========  ==========================================
