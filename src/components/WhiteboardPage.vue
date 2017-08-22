@@ -42,7 +42,7 @@ export default {
                 defaultStrokeWidth: 2,
                 strokeWidths: [1, 2, 3, 5, 30],
                 imageSize: {
-                    width: 500,
+                    width: 580,
                     height: null
                 }
             })
@@ -66,7 +66,7 @@ export default {
 }
 
 .fs-container {
-    width: 320px;
+    width: 580px;
     margin: auto;
 }
 
