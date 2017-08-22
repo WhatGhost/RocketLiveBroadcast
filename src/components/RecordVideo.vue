@@ -1,9 +1,5 @@
 <template>
     <div class="main-div">
-        <div>
-            巴拉拉能量
-            <a>古娜拉黑暗之神</a>
-        </div>
         <div id="div_join" class="panel panel-default">
             <div class="panel-body">
                 <button id="join" :class="studentDisplay" @click="join">打开视频</button>
@@ -157,6 +153,10 @@ export default {
             }
         },
         leave: function () {
+            if (this.userInfo.isRoomCreator) {
+                this.localStream.disableVideo()
+                this.localStream.close()
+            }
             document.getElementById("leave").disabled = true;
             this.client.leave(function () {
                 console.log("Leavel channel successfully");
@@ -166,6 +166,9 @@ export default {
         },
 
         publish: function () {
+            if (this.userInfo.isRoomCreator) {
+                this.localStream.enableVideo()
+            }
             document.getElementById("publish").disabled = true;
             document.getElementById("unpublish").disabled = false;
             this.client.publish(this.localStream, function (err) {
@@ -174,6 +177,9 @@ export default {
         },
 
         unpublish: function () {
+            if (this.userInfo.isRoomCreator) {
+                this.localStream.disableVideo()
+            }
             document.getElementById("publish").disabled = false;
             document.getElementById("unpublish").disabled = true;
             this.client.unpublish(this.localStream, function (err) {
