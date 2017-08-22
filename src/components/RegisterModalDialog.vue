@@ -125,6 +125,10 @@ export default {
                 this.showErrorMes('以上信息未完成输入')
                 return
             }
+            if (this.password !== this.confirmPassword) {
+                this.showErrorMes('两次密码不一致')
+                return
+            }
             if (this.isRightPhoneNum()) {
                 this.showErrorMes('sendVertificateCode for phone click')
                 this.$store.dispatch('sendVertificateCode', {
@@ -132,14 +136,16 @@ export default {
                     mode: 'register',
                     type: 'phone'
                 })
-            }
-            if (this.isRightEmail()) {
+            } else if (this.isRightEmail()) {
                 this.showErrorMes('sendVertificateCode for email click')
                 this.$store.dispatch('sendVertificateCode', {
                     account: this.account,
                     mode: 'register',
                     type: 'email'
                 })
+            } else {
+                this.showErrorMes('不是有效的电子邮箱或手机号码')
+                return
             }
         },
     }

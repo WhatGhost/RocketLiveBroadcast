@@ -204,6 +204,17 @@ const store = new Vuex.Store({
                 type: 'error',
             })
         },
+        'CHANGE_PASSWORD_SUCC': function (state, response) {
+            Vue.prototype.$message({
+                message: response.body.detail,
+                type: 'success',
+            })
+            state.showInfo = false
+            state.account = null
+            state.nickname = null
+            state.isTeacher = false
+            router.push('/roomList')
+        },
         /**
          *
          * @method trueBlur
@@ -440,7 +451,7 @@ const store = new Vuex.Store({
          */
         changePasswd (store, userinfo) {
             return api.patch(apiRoot + '/users/change_info/', userinfo)
-                .then((response) => store.commit('API_SUCC', response))
+                .then((response) => store.commit('CHANGE_PASSWORD_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         /**
