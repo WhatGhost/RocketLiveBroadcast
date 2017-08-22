@@ -6,10 +6,10 @@
         </div>
         <div id="div_join" class="panel panel-default">
             <div class="panel-body">
-                <button id="join" class="btn btn-primary" @click="join">Join</button>
-                <button id="leave" class="btn btn-primary" @click="leave">Leave</button>
-                <button id="publish" class="btn btn-primary" @click="publish">Publish</button>
-                <button id="unpublish" class="btn btn-primary" @click="unpublish">Unpublish</button> 
+                <button id="join" :class="studentDisplay" @click="join">打开视频</button>
+                <button id="leave" :class="studentDisplay" @click="leave">关闭视频</button>
+                <button id="publish" :class="teacherDisplay" @click="publish">继续直播</button>
+                <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button> 
             </div>
         </div>
         <div id="video" style="margin:0 auto;">
@@ -35,11 +35,12 @@ export default {
             studentDisplay: '',
         }
     },
-    created: function () {
+    mounted: function () {
         if (this.userInfo.isRoomCreator) {
             this.studentDisplay = 'hidden'
         } else {
             this.teacherDisplay = 'hidden'
+            this.studentJoin()
         }
     },
     methods: {
@@ -157,7 +158,7 @@ export default {
         },
         leave: function () {
             document.getElementById("leave").disabled = true;
-            client.leave(function () {
+            this.client.leave(function () {
                 console.log("Leavel channel successfully");
             }, function (err) {
                 console.log("Leave channel failed");
@@ -167,7 +168,7 @@ export default {
         publish: function () {
             document.getElementById("publish").disabled = true;
             document.getElementById("unpublish").disabled = false;
-            client.publish(localStream, function (err) {
+            this.client.publish(this.localStream, function (err) {
                 console.log("Publish local stream error: " + err);
             });
         },
@@ -175,7 +176,7 @@ export default {
         unpublish: function () {
             document.getElementById("publish").disabled = false;
             document.getElementById("unpublish").disabled = true;
-            client.unpublish(localStream, function (err) {
+            this.client.unpublish(this.localStream, function (err) {
                 console.log("Unpublish local stream failed" + err);
             });
         },
