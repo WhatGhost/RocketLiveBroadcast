@@ -4,28 +4,38 @@
             <p>房间人数： {{ userCount }}</p>
         </div>
         <div ref="recordArea" class="room">
-            <button @click="createCanvas" class='hiding'>CreateCanvas</button>
-            <button id="start" @click="startRecord" contenteditable="false" class='hiding'>Start Canvas Recording</button>
-            <button id="stop" @click="stopRecord" disabled contenteditable="false" class='hiding'>Stop</button>
-            <el-button @click="startLive">开始直播</el-button>
-            <el-button @click="stopLive">停止直播</el-button>
-            <div v-if="userInfo.isRoomCreator">
-                <button @click="controlEduArea">教学区域</button>
-                <button @click="controlVideoArea">视频区域</button>
-            </div>
-            <div class='left shadow-fixed' v-show="eduArea">
-                <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
-                    <el-button class="top-btn" @click="switchPane('pdfViewer')">Slide</el-button>
-                    <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
-                    <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
+            <div class="outer-left">
+                <div class="buttons">
+                    <el-button @click="createCanvas">Create Canvas</el-button>
+                    <el-button id="start" @click="startRecord"
+                               contenteditable="false" class='hiding'>Start Recording
+                    </el-button>
+                    <el-button id="stop" @click="stopRecord" disabled
+                               contenteditable="false" class='hiding'>Stop</el-button>
+                    <el-button @click="startLive">开始直播</el-button>
+                    <el-button @click="stopLive">停止直播</el-button>
+                    <el-button @click="controlEduArea" v-if="userInfo.isRoomCreator">教学区域</el-button>
+                    <el-button @click="controlVideoArea" v-if="userInfo.isRoomCreator">视频区域</el-button>
                 </div>
-                <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></pdf-viewer>
-                <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></code-editor-page>
-                <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
+                <div class='left shadow-fixed' v-show="eduArea">
+                    <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
+                        <el-button class="top-btn" @click="switchPane('pdfViewer')">Slide</el-button>
+                        <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
+                        <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
+                    </div>
+                    <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer"
+                                :userInfo="userInfo"></pdf-viewer>
+                    <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer"
+                                      :userInfo="userInfo"></code-editor-page>
+                    <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer"
+                                      :userInfo="userInfo"></white-board-page>
+                </div>
             </div>
             <div class='right'>
-                <record-video ref="recordVideo" class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-show="videoArea"></record-video>
-                <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
+                <record-video ref="recordVideo" class="video-area" :userInfo="userInfo" :roomInfo="roomInfo"
+                              v-show="videoArea"></record-video>
+                <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer"
+                           :userInfo="userInfo"></chat-area>
             </div>
         </div>
     </div>
@@ -45,7 +55,7 @@ export default {
         CodeEditorPage,
         RecordVideo,
         ChatArea,
-        PdfViewer
+        PdfViewer,
     },
     data: function () {
         return {
@@ -93,12 +103,12 @@ export default {
             return '房间人数' + this.usersCount
         }
     },
-    created() {
+    created () {
         this.getRoomInfo()
         this.getUserInfo()
         this.connect()
     },
-    beforeDestroy() {
+    beforeDestroy () {
         this.httpServer.disconnect()
     },
     methods: {
@@ -201,10 +211,10 @@ export default {
                 this.canvasStream = this.canvas2d.captureStream()
 
                 var finalStream = new window.MediaStream()
-                audioStream.getAudioTracks().forEach(function(track) {
+                audioStream.getAudioTracks().forEach(function (track) {
                     finalStream.addTrack(track)
                 })
-                this.canvasStream.getVideoTracks().forEach(function(track) {
+                this.canvasStream.getVideoTracks().forEach(function (track) {
                     finalStream.addTrack(track)
                 })
 
@@ -286,15 +296,28 @@ export default {
 
 .room {
     top: 80px;
-    flex-direction: column;
-    padding: 10px;
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.outer-left {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.buttons {
+    height: 5%;
+    z-index: 100;
 }
 
 .left {
+    height: 94%;
     float: left;
-    width: 63%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -307,6 +330,8 @@ export default {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    z-index: 100;
+    min-height: 36px;
 }
 
 .top-btn {
@@ -317,20 +342,22 @@ export default {
 }
 
 .right {
-    width: 35%;
-    float: right;
-    height: 75%;
+    width: 28%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .video-area {
-    height: 80%;
+    height: 70%;
     border-radius: 3px;
     border: 1px solid #e5e5e5;
     background-color: lightseagreen;
 }
 
 .chat-area {
-    height: 50%;
+    height: 29%;
     margin-top: 1%;
     border-radius: 5px;
     border: 1px solid #e5e5e5;

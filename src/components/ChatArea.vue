@@ -36,6 +36,7 @@
             </el-button>
             <el-button type="primary"
                        :icon="optionIcon"
+                       v-bind:class="{ orange:isShowOptions }"
                        @click="switchShowOptions"
                        v-show="userInfo.isRoomCreator">
             </el-button>
@@ -157,11 +158,11 @@ export default {
 .main-div {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .above-div {
-    height: 78%;
+    height: 82%;
     margin-top: 0;
     overflow-y: auto;
     background-color: lightcyan;
@@ -174,7 +175,9 @@ export default {
 .bottom-bar {
     display: flex;
     flex-direction: row;
-    height: 20%;
+    height: 17%;
+    margin-bottom: 1%;
+    min-height: 36px;
 }
 
 .mes-input {
@@ -182,6 +185,11 @@ export default {
     height: 100%;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.orange {
+    border: orange;
+    background-color: orange;
 }
 
 .itemlist-enter-active,
