@@ -26,34 +26,8 @@ mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');
 create database live default character set utf8 collate utf8_unicode_ci; 
 ```
 
-## 配置视频服务器
- - 找到 node_moudles/easyrtc/api 目录里的文件 ```easyrtc.js```和 ```easyrtc_int.js``` , 打开并搜索 **"serverPath"**   
- 修改
-```javascript
-var serverPath = null
-```
-为
-```javascript
-var serverPath = 'http://localhost:8080'
-```
-，修改
-```javascript
-serverPath = socketUrl;
-```
-为
-```javascript
-serverPath  = 'http://localhost:8080'
-```
- **如果你更改了你的视频服务器端口，请一同更改以上的端口**  
-
- 完成上述步骤后，你还需要运行以下命令以启动服务器
-```bash
-node node_modules/easyrtc/server_example/server.js 
-```
-这个命令将启动一个位于8000端口的服务
-
-## 运行其他服务器
- - 你还需要运行最后一个服务器：
+## 运行服务器
+ - 你还需要运行一个服务器：
  ```bash
  node server/server.js
  ```

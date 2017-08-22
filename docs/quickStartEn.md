@@ -26,35 +26,7 @@ Start your mysql or MariaDB,
 create database live default character set utf8 collate utf8_unicode_ci; 
 ```
 
-## Config the video server
- - find file ```easyrtc.js```and ```easyrtc_int.js```in ./node_moudles/easyrtc/api , then open them and search **serverPath** in them 
-then replace 
-```javascript
-var serverPath = null
-```
-to
-```javascript
-var serverPath = 'http://localhost:8080'
-```
-and
-replace
-```javascript
-serverPath = socketUrl;
-```
-to
-```javascript
-serverPath  = 'http://localhost:8080'
-```
- **if you change the port in video server , you need to change the above code too**  
-
- After doing that above , you need to run the server before you visit the website
-you need to run
-```bash
-node node_modules/easyrtc/server_example/server.js 
-```
-This command will open a server on port 8080
-
-## another server
+## start a server
  - you only need another server to run：
  ```bash
  node server/server.js
