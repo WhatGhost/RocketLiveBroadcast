@@ -124,7 +124,10 @@ const store = new Vuex.Store({
          * @chainable
          */
         'API_FAIL': function (state, error) {
-            window.alert('失败')
+            Vue.prototype.$message({
+                message: error.body.detail,
+                type: 'error',
+            })
             console.error(error)
         },
         /**
@@ -194,6 +197,12 @@ const store = new Vuex.Store({
             state.background_blur = false
             state.showLogin = false
             router.push('/roomList')
+        },
+        'GET_ROOMS_FAIL': function (state, err) {
+            Vue.prototype.$message({
+                message: '获取直播房间失败',
+                type: 'error',
+            })
         },
         /**
          *
@@ -336,6 +345,10 @@ const store = new Vuex.Store({
             state.history = response.body
         },
         getHistoryFail: function (state) {
+            Vue.prototype.$message({
+                message: '获取录播房间失败',
+                type: 'error',
+            })
             // this.$message('fff') ???
         }
     },
@@ -353,7 +366,7 @@ const store = new Vuex.Store({
         getRooms (store) {
             return api.get(apiRoot + '/liveroom/')
                 .then((response) => store.commit('GET_ROOMS', response))
-                .catch((error) => store.commit('API_FAIL', error))
+                .catch((error) => store.commit('GET_ROOMS_FAIL', error))
         },
         getHistory (state) {
             return api.get(apiRoot + '/history/')

@@ -128,9 +128,9 @@ class UserViewSet(viewsets.ModelViewSet):
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
             MyUser.objects.create_user(
                 info['account'], info['nickname'], info['is_student'], info['password'])
-            return HttpResponse(status=200)
+            return Response({'detail' :'注册成功'},status=200)
         else:
-            return Response('验证码不存在', status=422)
+            return Response({'detail' :'验证码错误'}, status=422)
     # @ensure_csrf_cookie
     @list_route(methods=['post'])
     def current_user(self,request):
@@ -176,12 +176,13 @@ class UserViewSet(viewsets.ModelViewSet):
             backInfo = {
                 'account': request.data.get('account', ''),
                 'is_teacher': not user.is_student,
-                'nickname': user.nickname
+                'nickname': user.nickname,
+                'detail': '登录成功'
             }
             return Response(backInfo, status=200)
         else:
             print('验证失败')
-            return HttpResponse(status=422)
+            return Response({'detail': '登录失败'}, status=422)
 
     @list_route(methods=['patch'])
     def change_info(self,request):
@@ -233,9 +234,9 @@ class UserViewSet(viewsets.ModelViewSet):
         print(user)
         if request.user.is_authenticated():
             auth.logout(request)
-            return Response('登出成功',status=200)
+            return Response({'detail': '登出成功'},status=200)
         else:
-            return Response('请先登录',status=422)
+            return Response({'detail': '请先登录'}, status=422)
 
 
 class SlideViewSet(viewsets.ModelViewSet):
