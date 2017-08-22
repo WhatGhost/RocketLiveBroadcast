@@ -74,8 +74,9 @@ export default {
             canvas2d: null,
             recorder: null,
             context: null,
-            recordAudio: null,
-            elementToShare: null
+            elementToShare: null,
+            audioStream: null,
+            canvasStream: null
         }
     },
     computed: {
@@ -195,28 +196,27 @@ export default {
             })
         },
         startRecord: function () {
-            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-                let audio = document.createElement('audio')
-                audio.muted = true
-                audio.volume = 0
-                audio.src = window.URL.createObjectURL(stream)
-                console.log(audio)
-                this.recordAudio = new window.RecordRTC(stream, {
-                    type: 'audio',
-                    recorderType: window.StereoAudioRecorder
+            window.navigator.mediaDevices.getUserMedia({audio: true}).then((audioStream) => {
+                this.audioStream = audioStream
+                this.canvasStream = this.canvas2d.captureStream()
+
+                var finalStream = new window.MediaStream()
+                audioStream.getAudioTracks().forEach(function(track) {
+                    finalStream.addTrack(track)
                 })
-                // this.isStoppedRecording = false
-                // this.isStartedRecording = true
-                // console.log(hereStoppedRecording)
-                // console.log(hereStartedRecording)
-                // this.recorder.startRecording()
-                this.recordAudio.startRecording()
+                this.canvasStream.getVideoTracks().forEach(function(track) {
+                    finalStream.addTrack(track)
+                })
+
+                this.recorder = window.RecordRTC(finalStream, {
+                    type: 'video'
+                })
                 document.getElementById('stop').disabled = false
+                document.getElementById('start').disabled = true
+                this.isStoppedRecording = false
+                this.isRecordingStarted = true
+                this.recorder.startRecording()
             })
-            document.getElementById('start').disabled = true
-            this.isStoppedRecording = false
-            this.isRecordingStarted = true
-            this.recorder.startRecording()
             window.setTimeout(function () {
                 let stopButton = document.getElementById('stop')
                 stopButton.disabled = false
@@ -224,17 +224,16 @@ export default {
             this.looper()
         },
         stopRecord: function () {
-            this.disabled = true
             this.isStoppedRecording = true
-            this.recordAudio.stopRecording(function () {
-                window.invokeSaveAsDialog(this.getBlob(), 'filename.wav')
-            })
-            this.recorder.stopRecording(function () {
-                window.invokeSaveAsDialog(this.getBlob(), 'filename.webm')
+            this.recorder.stopRecording(() => {
+                window.invokeSaveAsDialog(this.recorder.getBlob(), 'filename.webm')
+                this.audioStream.stop()
+                this.canvasStream.stop()
             })
             document.getElementById('start').disabled = false
         },
         looper: function () {
+            console.log('looping')
             if (!this.isRecordingStarted) {
                 return window.setTimeout(this.looper, 500)
             }
@@ -247,7 +246,7 @@ export default {
                     if (that.isStoppedRecording) {
                         return
                     }
-                    window.setTimeout(that.looper, 40)
+                    window.setTimeout(that.looper, 20)
                 }
             })
         },
