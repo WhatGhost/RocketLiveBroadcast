@@ -136,7 +136,10 @@ const store = new Vuex.Store({
          * @chainable
          */
         'Register_SUCC': function (state) {
-            window.alert('成功！')
+            Vue.prototype.$message({
+                message: '注册成功！',
+                type: 'success',
+            })
             state.showLogin = true
             state.showRegister = false
         },
@@ -148,8 +151,11 @@ const store = new Vuex.Store({
          * @param state {Object} An `state` Object
          * @chainable
          */
-        'API_SUCC': function (state) {
-            window.alert('成功！')
+        'API_SUCC': function (state, response) {
+            Vue.prototype.$message({
+                message: response.body.detail,
+                type: 'success',
+            })
         },
         /**
          *  处理成功登出的函数
@@ -160,7 +166,10 @@ const store = new Vuex.Store({
          * @chainable
          */
         'LOGOUT_SUCC': function (state) {
-            window.alert('登出成功！')
+            Vue.prototype.$message({
+                message: '登出成功！',
+                type: 'success',
+            })
             state.account = null
             state.nickname = null
             state.isTeacher = false
@@ -402,7 +411,7 @@ const store = new Vuex.Store({
             userinfo.account = store.state.account
             return api.patch(apiRoot + '/users/change_info/', userinfo)
                 .then((response) => {
-                    store.commit('API_SUCC')
+                    store.commit('API_SUCC', response)
                     store.commit('refreshNickname', userinfo.nickname)
                 })
                 .catch((error) => store.commit('API_FAIL', error))
@@ -418,7 +427,7 @@ const store = new Vuex.Store({
          */
         changePasswd (store, userinfo) {
             return api.patch(apiRoot + '/users/change_info/', userinfo)
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => store.commit('API_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         /**
@@ -432,7 +441,7 @@ const store = new Vuex.Store({
          */
         sendVertificateCode (store, vertificateInfo) {
             return api.post(apiRoot + '/users/sendVertificateCode/', vertificateInfo)
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => store.commit('API_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         /**
@@ -446,7 +455,7 @@ const store = new Vuex.Store({
          */
         forgetPassword (store, info) {
             return api.patch(apiRoot + '/users/forget_info/', info)
-                .then((response) => store.commit('API_SUCC'))
+                .then((response) => store.commit('API_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         /**
