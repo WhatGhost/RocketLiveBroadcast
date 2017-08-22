@@ -15,9 +15,7 @@
                 <option value='text/css'>css</option>
                 <option value='text/x-go'>go</option>
             </select>
-            <button @click="set">javascript</button>
         </label>
-        <button @click="changeC">change</button>
         <codemirror ref="codemirror" v-model="code" :options="editorOptions" @change="emitCodeChange" v-if="langChanged" ></codemirror>
     </div>
 </template>
@@ -67,9 +65,6 @@ export default {
         this.selectLan = this.$refs.sel
     },
     methods: {
-        set() {
-            this.$refs.codemirror.editor.setOption('mode', 'text/javascript')
-        },
         emitCodeChange(event) {
             if (event === this.syncCode) {
                 return
@@ -80,13 +75,7 @@ export default {
             })
         },
         update(val) {
-            console.log(this.editorOptions['mode'])
-            console.log('hhh')
-            console.log(val)
             this.editorOptions['mode'] = val
-        },
-        changeC() {
-            this.langChanged = !this.langChanged
         }
     }
 }
