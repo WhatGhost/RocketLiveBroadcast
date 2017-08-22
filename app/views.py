@@ -273,4 +273,3 @@ class SlideViewSet(viewsets.ModelViewSet):
         except Exception:
             s.delete()
         return Response(serializer.data)
-
