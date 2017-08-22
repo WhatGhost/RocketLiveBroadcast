@@ -1,6 +1,6 @@
 <template>
     <div class="main-div">
-        <input type="text" placeholder="原始密码" v-model="oldpassword" autofocus>
+        <input type="password" placeholder="原始密码" v-model="oldpassword" autofocus>
         <input type="password" placeholder="新密码" v-model="newpassword1">
         <input type="password" placeholder="再次输入新密码" v-model="newpassword2">
         <el-button class="sure-btn shadow-m" @click='changepasswdClick'>change password</el-button>
