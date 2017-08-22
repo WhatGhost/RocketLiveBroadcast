@@ -8,6 +8,10 @@
             <label id="e-mail-label">{{ accountType }}</label>
             <label id="e-mail-value">{{ userAccount }}</label>
         </div>
+        <div class="line3">
+            <label id="permission-label">用户权限：</label>
+            <label id="permission-value">{{ userPermission }}</label>
+        </div>
     </div>
 </template>
 <script>
@@ -24,6 +28,12 @@ export default {
                 return '用户邮箱：'
             }
             return '手机号码：'
+        },
+        userPermission: function () {
+            if (this.$store.state.isTeacher === true) {
+                return '教师'
+            }
+            return '学生'
         }
     }
 }
@@ -48,6 +58,16 @@ export default {
 }
 
 .line2 {
+    margin-bottom: 10px;
+    text-align: left;
+    position: relative;
+    top: -20px;
+    left: 20px;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+.line3 {
     text-align: left;
     position: relative;
     top: -20px;

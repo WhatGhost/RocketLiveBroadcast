@@ -181,7 +181,7 @@ const store = new Vuex.Store({
             })
             state.account = response.body['account']
             state.nickname = response.body['nickname']
-            state.isTeacher = !response.body['is_student']
+            state.isTeacher = response.body['is_teacher']
             state.background_blur = false
             state.showLogin = false
             router.push('/roomList')
