@@ -1,3 +1,5 @@
+#！/usr/local/bin/python
+#-*- coding:utf-8 -*-
 import http.client
 import urllib.request
 import urllib.parse
