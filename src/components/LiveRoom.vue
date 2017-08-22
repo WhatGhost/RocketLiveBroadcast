@@ -13,7 +13,7 @@
                 <button @click="controlEduArea">教学区域</button>
                 <button @click="controlVideoArea">视频区域</button>
             </div>
-            <div class='left shadow-fixed' v-if="eduArea">
+            <div class='left shadow-fixed' v-show="eduArea">
                 <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
                     <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
@@ -24,7 +24,7 @@
                 <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
             </div>
             <div class='right'>
-                <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-if="videoArea"></record-video>
+                <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-show="videoArea"></record-video>
                 <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
             </div>
         </div>
