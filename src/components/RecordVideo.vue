@@ -156,8 +156,10 @@ export default {
             if (this.userInfo.isRoomCreator) {
                 this.localStream.disableVideo()
                 this.localStream.close()
-            }
-            document.getElementById("leave").disabled = true;
+            } else {
+                document.getElementById("leave").disabled = true;
+                document.getElementById("join").disabled = false;
+            }  
             this.client.leave(function () {
                 console.log("Leavel channel successfully");
             }, function (err) {
