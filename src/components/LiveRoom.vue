@@ -9,7 +9,11 @@
             <button id="stop" @click="stopRecord" disabled contenteditable="false">Stop</button>
             <el-button @click="startLive">开始直播</el-button>
             <el-button @click="stopLive">停止直播</el-button>
-            <div class='left shadow-fixed'>
+            <div v-if="userInfo.isRoomCreator">
+                <button @click="controlEduArea">教学区域</button>
+                <button @click="controlVideoArea">视频区域</button>
+            </div>
+            <div class='left shadow-fixed' v-if="eduArea">
                 <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
                     <el-button class="top-btn" @click="switchPane('pdfViewer')">PDF</el-button>
                     <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
@@ -20,7 +24,7 @@
                 <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
             </div>
             <div class='right'>
-                <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo"></record-video>
+                <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-if="videoArea"></record-video>
                 <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
             </div>
         </div>
@@ -45,6 +49,8 @@ export default {
     },
     data: function () {
         return {
+            eduArea: true,
+            videoArea: true,
             isRecordingStarted: false,
             isStoppedRecording: false,
             showMessageMenu: false,
@@ -95,6 +101,24 @@ export default {
         this.httpServer.disconnect()
     },
     methods: {
+        controlEduArea: function () {
+            if (this.eduArea === false) {
+                this.eduArea = true
+            } else {
+                if (this.videoArea === true) {
+                    this.eduArea = false
+                }
+            }
+        },
+        controlVideoArea: function () {
+            if (this.videoArea === false) {
+                this.videoArea = true
+            } else {
+                if (this.eduArea === true) {
+                    this.videoArea = false
+                }
+            }
+        },
         showErrorMes: function (mes) {
             this.$message({
                 message: mes,
@@ -227,12 +251,12 @@ export default {
                 }
             })
         },
-        startLive: function() {
+        startLive: function () {
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
         },
-        stopLive: function() {
+        stopLive: function () {
             this.$store.dispatch('stopLive', {
                 roomId: this.roomInfo.roomId
             })
