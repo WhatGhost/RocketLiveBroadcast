@@ -110,14 +110,16 @@ export default {
                     mode: 'forget',
                     type: 'phone'
                 })
-            }
-            if (this.isRightEmail()) {
+            } else if (this.isRightEmail()) {
                 this.showErrorMes('sendVertificateCode for email click')
                 this.$store.dispatch('sendVertificateCode', {
                     account: this.account,
                     mode: 'forget',
                     type: 'email'
                 })
+            } else {
+                this.showErrorMes('不是有效的电子邮箱或手机号码')
+                return
             }
         },
     }
