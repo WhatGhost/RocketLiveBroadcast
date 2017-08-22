@@ -1,18 +1,21 @@
-  
-#!/usr/local/bin/python
+#！/usr/local/bin/python
 #-*- coding:utf-8 -*-
 import http.client
-import urllib.request, urllib.parse, urllib.error
+import urllib.request
+import urllib.parse
+import urllib.error
 import random
 import json
 
-host  = "106.ihuyi.com"
+
+host = "106.ihuyi.com"
 sms_send_uri = "/webservice/sms.php?method=Submit"
 
-#用户名是登录用户中心->验证码短信->产品总览->APIID
-account  = "C70086602" 
-#密码 查看密码请登录用户中心->验证码短信->产品总览->APIKEY
+# 用户名是登录用户中心->验证码短信->产品总览->APIID
+account = "C70086602"
+# 密码 查看密码请登录用户中心->验证码短信->产品总览->APIKEY
 password = "804cb35277c025e7582f5e92fe25b30d"
+
 
 def sendText(mobile):
     '''
@@ -27,8 +30,10 @@ def sendText(mobile):
     '''
     verification_code = generate_verification_code()
     message = "您的验证码是：" + verification_code + "。请不要把验证码泄露给其他人。"
-    params = urllib.parse.urlencode({'account': account, 'password' : password, 'content': message, 'mobile':mobile,'format':'json' })
-    headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+    params = urllib.parse.urlencode(
+        {'account': account, 'password': password, 'content': message, 'mobile': mobile, 'format': 'json'})
+    headers = {"Content-type": "application/x-www-form-urlencoded",
+               "Accept": "text/plain"}
     conn = http.client.HTTPConnection(host, port=80, timeout=30)
     conn.request("POST", sms_send_uri, params, headers)
     response = conn.getresponse()
@@ -40,10 +45,11 @@ def sendText(mobile):
     else:
         return -1
 
+
 def generate_verification_code(len=6):
     ''' 
     随机生成6位的短信验证码，只包含数字
-    
+
     ========  ========  ==========================================
     参数      是否必选  描述
     ========  ========  ==========================================

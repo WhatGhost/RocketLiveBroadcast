@@ -3,8 +3,8 @@ from .models import Room, LiveRoom, History, AllSilent, OneSilent, ChatHistory, 
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField 
-from .models import MyUser,VertifyRegister,VertifyForgetpasswd
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from .models import MyUser, VertifyRegister, VertifyForgetpasswd
 
 
 class UserCreationForm(forms.ModelForm):

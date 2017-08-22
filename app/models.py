@@ -4,6 +4,7 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 
+
 class MyUserManager(BaseUserManager):
     def create_user(self, account, nickname, is_student=True, password=None):
         """
@@ -62,9 +63,7 @@ class MyUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-    # def set_password(self,raw_password):
-    #     self.password=make_password(raw_password, 'jisuanke', 'pbkdf2_sha256')
-    #     self._password=self.password
+
     @property
     def is_staff(self):
         "Is the user a member of staff?"
@@ -86,7 +85,7 @@ class LiveRoom(models.Model):
     room_img = models.ImageField(upload_to='img/covers', null=True)
     room_creater = models.ForeignKey(MyUser)
     created_time = models.DateTimeField(auto_now_add=True)
-    active_mode = models.CharField(max_length=10,default='READY')
+    active_mode = models.CharField(max_length=10, default='READY')
 
 
 class Slide(models.Model):
