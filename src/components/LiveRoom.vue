@@ -24,7 +24,7 @@
                 <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
             </div>
             <div class='right'>
-                <record-video class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-show="videoArea"></record-video>
+                <record-video ref="recordVideo" class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-show="videoArea"></record-video>
                 <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
             </div>
         </div>
@@ -255,11 +255,13 @@ export default {
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
+            this.$refs.recordVideo.join()
         },
         stopLive: function () {
             this.$store.dispatch('stopLive', {
                 roomId: this.roomInfo.roomId
             })
+            this.$refs.recordVideo.leave()
         },
     }
 }
