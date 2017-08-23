@@ -141,6 +141,9 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['post'])
     def sendVertificateCode(self, request):
         account = request.data.get('account')
+        user = MyUser.objects.filter(account=account)
+        if not user.exists():
+            return Response({'detail': '用户名不存在'}, status=400)
         print(account)
         if(request.data.get('type') == 'phone'):
             print('phone')
@@ -204,6 +207,9 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['patch'])
     def forget_info(self, request):
         info = request.data
+        user = MyUser.objects.filter(account=info['account'])
+        if not user.exists():
+            return Response({'detail': '用户名不存在'}, status=400)
         endTime = datetime.now()
         startTime = endTime + timedelta(minutes=-30)
         print(info['account'])
@@ -219,7 +225,7 @@ class UserViewSet(viewsets.ModelViewSet):
             user.save()
             return Response({'detail': '重置密码成功'}, status=200)
         else:
-            return Response({'detail': '重置密码失败'}, status=422)
+            return Response({'detail': '验证码错误'}, status=422)
 
     @list_route(methods=['post'])
     def logout_user(self, request):

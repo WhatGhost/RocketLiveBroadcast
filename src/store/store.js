@@ -215,6 +215,14 @@ const store = new Vuex.Store({
             state.isTeacher = false
             router.push('/roomList')
         },
+        'FORGET_SUCC': function (state, response) {
+            Vue.prototype.$message({
+                message: response.body.detail,
+                type: 'success',
+            })
+            state.showForget = false
+            state.showLogin = true
+        },
         /**
          *
          * @method trueBlur
@@ -479,7 +487,7 @@ const store = new Vuex.Store({
          */
         forgetPassword (store, info) {
             return api.patch(apiRoot + '/users/forget_info/', info)
-                .then((response) => store.commit('API_SUCC', response))
+                .then((response) => store.commit('FORGET_SUCC', response))
                 .catch((error) => store.commit('API_FAIL', error))
         },
         /**
