@@ -68,7 +68,7 @@ export default {
                         screen: false
                     });
                     console.log('设置清晰度')
-                    that.localStream.setVideoProfile('480P_6')
+                    that.localStream.setVideoProfile('480p_6')
                     that.localStream.init(function () {
                         console.log("getUserMedia successfully")
                         that.localStream.play('agora_teacher')

@@ -166,7 +166,7 @@ export default {
 .above-div {
     height: 82%;
     margin-top: 0;
-    overflow-y: auto;
+    overflow-y: scroll;
     background-color: lightcyan;
 }
 

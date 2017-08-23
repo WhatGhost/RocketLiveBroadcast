@@ -14,10 +14,21 @@
 
 <script>
 export default {
-    props: ['room'],
+    props: [
+        'room',
+        'isLive',
+    ],
     data () {
         return {
-            currentDate: new Date()
+            currentDate: new Date(),
+            id: -1
+        }
+    },
+    mounted: function () {
+        if (this.isLive) {
+            this.id = this.room.id
+        } else {
+            this.id = this.room.room_id
         }
     },
     methods: {
@@ -55,7 +66,6 @@ export default {
 
 .card:hover {
     cursor: pointer;
-    /*z-index: 100;*/
 }
 
 .video-image {
@@ -75,7 +85,7 @@ export default {
 
 .intro {
     font-size: 13px;
-    color: rgba(255, 255,255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.3em;
     margin: auto;
     text-align: left;

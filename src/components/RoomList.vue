@@ -1,13 +1,22 @@
 <template>
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
-        <div class="live-rooms">
-            <room class="room" v-for="room in rooms" v-show="room.active_mode === 'START'" v-bind:room="room" v-bind:key="count"></room>
-        </div>
+        <el-row>
+            <room v-for="(room, key) in rooms"
+                  class="room"
+                  v-show="room.active_mode === 'START'"
+                  v-bind:room="room"
+                  :isLive="true"
+                  v-bind:key="key"></room>
+        </el-row>
         <h1 class="history-title">History</h1>
-        <div class="live-rooms">
-            <room class="room" v-for="room in history" v-bind:room="room" v-bind:key="count"></room>
-        </div>
+        <el-row>
+            <room v-for="(room, key) in history"
+                  class="room"
+                  v-bind:room="room"
+                  :isLive="false"
+                  v-bind:key="key"></room>
+        </el-row>
     </div>
 </template>
 

@@ -1,12 +1,14 @@
 <template>
     <div class="main-div">
-        <div class="message-div" v-bind:class="{ highlight: message.userInfo.isRoomCreator, system: message.status === 403 }">
+        <div class="message-div"
+             v-bind:class="{ highlight: message.userInfo.isRoomCreator, system: message.status === 403 }">
             <div class="header">
                 <label class="name">{{ message.userInfo.nickname }}</label>
                 <label class="currentTime">{{ currentTime }}</label>
             </div>
             <span class="mes-body shadow-fixed">{{ message.content }}</span>
-            <div v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403 && showOpButton">
+            <div
+                v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403 && showOpButton">
                 <el-button type="text" class="ban-button" @click="ban">ban</el-button>
                 <el-button type="text" class="out-button" @click="kickout">kickout</el-button>
             </div>
@@ -21,7 +23,7 @@ export default {
         'isRoomCreator',
         'showOpButton'
     ],
-    data() {
+    data () {
         return {}
     },
     computed: {
