@@ -6,7 +6,9 @@
                            @kickout="kickout"
                            v-for="(msg, key) in messageList"
                            :message="msg"
-                           :isRoomCreator="userInfo.isRoomCreator" :key="key">
+                           :showOpButton="isShowOptions"
+                           :isRoomCreator="userInfo.isRoomCreator"
+                           :key="key">
                 </chat-item>
             </transition-group>
             <div v-if="isShowOptions" class="option-buttons">
