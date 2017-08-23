@@ -4,8 +4,8 @@
             <div class="panel-body">
                 <button id="join" :class="studentDisplay" @click="join">打开视频</button>
                 <button id="leave" :class="studentDisplay" @click="leave">关闭视频</button>
-                <button id="publish" :class="teacherDisplay" @click="publish">继续直播</button>
-                <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button>
+                <!-- <button id="publish" :class="teacherDisplay" @click="publish">继续直播</button>
+                <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button> -->
             </div>
         </div>
         <div id="video" style="margin:0 auto;">

@@ -123,9 +123,11 @@ export default {
         },
         controlVideoArea: function () {
             if (this.videoArea === false) {
+                this.$refs.recordVideo.publish()
                 this.videoArea = true
             } else {
                 if (this.eduArea === true) {
+                    this.$refs.recordVideo.unpublish()
                     this.videoArea = false
                 }
             }
