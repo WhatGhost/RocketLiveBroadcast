@@ -6,7 +6,7 @@
         <div ref="recordArea" class="room">
             <div class="outer-left">
                 <div class="buttons">
-                    <el-button @click="createCanvas">Create Canvas</el-button>
+                    <el-button @click="createCanvas" class="hiding">Create Canvas</el-button>
                     <el-button id="start" @click="startRecord"
                                contenteditable="false" class='hiding'>Start Recording
                     </el-button>
