@@ -101,6 +101,7 @@ export default {
                 this.showErrorMes('不是有效的电子邮箱或手机号码')
                 return false
             }
+            this.nickname = this.nickname.trim()
             if (this.nickname === '') {
                 this.showErrorMes('未填写昵称')
                 return false
