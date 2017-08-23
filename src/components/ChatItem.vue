@@ -1,9 +1,11 @@
 <template>
     <div class="main-div">
-        <label class="currentTime">{{ currentTime }}</label>
-        <div class="message-div" v-bind:class="{ highlight: message.userInfo.isRoomCreator }">
-            <label>{{ message.userInfo.nickname }}</label>
-            <span class="mes-body shadow-s">{{ message.content }}</span>
+        <div class="message-div" v-bind:class="{ highlight: message.userInfo.isRoomCreator, system: message.status === 403 }">
+            <div class="header">
+                <label class="name">{{ message.userInfo.nickname }}</label>
+                <label class="currentTime">{{ currentTime }}</label>
+            </div>
+            <span class="mes-body shadow-fixed">{{ message.content }}</span>
             <div v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403">
                 <button @click="ban">ban</button>
                 <button @click="kickout">kickout</button>
@@ -56,10 +58,26 @@ export default {
 .mes-body {
     background-color: white;
     border-radius: 5px;
-    padding: 10px 6px 6px 6px;
+    padding: 2px 3px 2px 4px;
+    margin-right: auto;
+    font-size: 12px;
+    margin-top: -2px;
 }
 
 .highlight span {
     background-color: yellow;
+}
+
+.system .name {
+    color: #253b76;
+}
+
+.system span {
+    color: white;
+    background-color: #01a0e4;
+}
+
+.name {
+    font-size: 8px;
 }
 </style>

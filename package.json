@@ -16,7 +16,7 @@
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "easyrtc": "^1.1.0",
-    "element-ui": "^1.4.1",
+    "element-ui": "^1.4.2",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",

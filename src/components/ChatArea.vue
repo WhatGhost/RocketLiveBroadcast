@@ -1,22 +1,51 @@
 <template>
     <div class="main-div shadow-fixed">
-        <div class="above-div">
+        <div class="above-div" id="scrolled">
             <transition-group name="itemlist" tag="div">
-                <chat-item @ban="ban" @kickout="kickout" v-for="(msg, key) in messageList" :message="msg" :isRoomCreator="userInfo.isRoomCreator" :key="key">
+                <chat-item @ban="ban"
+                           @kickout="kickout"
+                           v-for="(msg, key) in messageList"
+                           :message="msg"
+                           :isRoomCreator="userInfo.isRoomCreator" :key="key">
                 </chat-item>
             </transition-group>
-            <banned-list :bannedUsers="bannedUsers" :roomInfo="roomInfo" @unban="unban"></banned-list>
+            <div v-if="isShowOptions" class="option-buttons">
+                <el-button type="primary"
+                           @click="banAll"
+                           v-show="!bannedStatus">ban All
+                </el-button>
+                <el-button type="primary"
+                           @click="unbanAll"
+                           v-show="bannedStatus">unban All
+                </el-button>
+                <el-button type="primary"
+                           @click="showBannedUsers">banned list
+                </el-button>
+            </div>
         </div>
         <div class="emoji-div" v-if="showEmoji">
         </div>
         <div class="bottom-bar">
             <el-button class="bottom">😄</el-button>
-            <el-input class="mes-input bottom" v-model="message" autoComplete="" omplete="off"></el-input>
-            <el-button class="bottom" @click='sendMessage'>send</el-button>
-            <el-button class="bottom" @click='showBannedUsers' v-show="userInfo.isRoomCreator">showBannedUsers</el-button>
-            <el-button class="bottom" @click='banAll' v-show="userInfo.isRoomCreator && !bannedStatus">banAll</el-button>
-            <el-button class="bottom" @click='unbanAll' v-show="userInfo.isRoomCreator && bannedStatus">undo banAll</el-button>
+            <el-input class="mes-input"
+                      ref="input"
+                      v-model="message"
+                      autoComplete=""
+                      omplete="off"></el-input>
+            <el-button @click='sendMessage'>send
+            </el-button>
+            <el-button type="primary"
+                       :icon="optionIcon"
+                       v-bind:class="{ orange:isShowOptions }"
+                       @click="switchShowOptions"
+                       v-show="userInfo.isRoomCreator">
+            </el-button>
         </div>
+        <banned-list :bannedUsers="bannedUsers"
+                     v-if="showBannedList"
+                     @closeBannedList="showBannedList=false"
+                     :roomInfo="roomInfo"
+                     @unban="unban"></banned-list>
     </div>
 </template>
 
@@ -37,10 +66,13 @@ export default {
             bannedStatus: false, // 记录是否是全局禁言
             message: '',
             showEmoji: false,
-            emojis: ['😂', '🙏', '😄', '😏', '😇', '😅', '😌', '😘', '😍', '🤓', '😜', '😎', '😊', '😳', '🙄', '😱', '😒', '😔', '😷', '👿', '🤗', '😩', '😤', '😣', '😰', '😴', '😬', '😭', '👻', '👍', '✌️', '👉', '👀', '🐶', '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳']
+            emojis: ['😂', '🙏', '😄', '😏', '😇', '😅', '😌', '😘', '😍', '🤓', '😜', '😎', '😊', '😳', '🙄', '😱', '😒', '😔', '😷', '👿', '🤗', '😩', '😤', '😣', '😰', '😴', '😬', '😭', '👻', '👍', '✌️', '👉', '👀', '🐶', '🐷', '😹', '⚡️', '🔥', '🌈', '🍏', '⚽️', '❤️', '🇨🇳'],
+            isShowOptions: false,
+            showBannedList: false
         }
     },
-    created() {
+    created () {
+        this.showBannedList = false
         this.httpServer.on('message', (obj) => {
             this.messageList.push(obj)
         })
@@ -50,6 +82,22 @@ export default {
         this.httpServer.on('getBannedStatus', (obj) => {
             this.bannedStatus = obj
         })
+    },
+    mounted: function () {
+        document.querySelector('.el-input__inner').style.height = '100%'
+    },
+    updated: function () {
+        let objDiv = document.getElementById('scrolled')
+        objDiv.scrollTop = objDiv.scrollHeight
+    },
+    computed: {
+        optionIcon: function () {
+            if (!this.isShowOptions) {
+                return 'setting'
+            } else {
+                return 'close'
+            }
+        }
     },
     methods: {
         sendMessage: function () {
@@ -83,6 +131,7 @@ export default {
             this.httpServer.emit('getBannedList', {
                 roomId: this.roomInfo.roomId
             })
+            this.showBannedList = true
         },
         banAll: function () {
             if (this.userInfo.isRoomCreator) {
@@ -97,6 +146,9 @@ export default {
                     roomId: this.roomInfo.roomId
                 })
             }
+        },
+        switchShowOptions: function () {
+            this.isShowOptions = !this.isShowOptions
         }
     }
 }
@@ -106,29 +158,38 @@ export default {
 .main-div {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .above-div {
-    height: 78%;
+    height: 82%;
     margin-top: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: lightcyan;
+}
+
+.option-buttons {
+    float: right;
 }
 
 .bottom-bar {
     display: flex;
     flex-direction: row;
-    /*margin: 5px;*/
-    /*height: 18%;*/
+    height: 17%;
+    margin-bottom: 1%;
+    min-height: 36px;
 }
 
 .mes-input {
     padding: 0 5px 0 5px;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.bottom {
-    /*height: 100%;*/
+.orange {
+    border: orange;
+    background-color: orange;
 }
 
 .itemlist-enter-active,
