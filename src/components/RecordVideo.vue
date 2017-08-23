@@ -9,7 +9,9 @@
             </div>
         </div>
         <div id="video" style="margin:0 auto;">
-            <div id="agora_teacher" :class="teacherDisplay" style="float:left;width:300px;height:300px;"></div>
+            <div id="agora_teacher" class="hidden" style="float:left;width:300px;height:300px;"></div>
+            <!-- <video controls "width:33%;position:absolute;right:40%; background-color:black;" src="video.webm" loop autoplay></video> -->
+            <video id="camera" :class="teacherDisplay" style="width:100%;height:100%;background-color:black;"></video>
         </div>
         <div>
             <div id="agora_student" :class="studentDisplay" style="float:left; width:300px;height:300px;"></div>
@@ -29,6 +31,7 @@ export default {
             channelKey: '',
             teacherDisplay: '',
             studentDisplay: '',
+            videoElement: '',
         }
     },
     mounted: function () {
@@ -40,10 +43,30 @@ export default {
         }
     },
     methods: {
+        initLocal: function () {
+            this.videoElement = document.querySelector('#camera')
+            console.log("Init local camera")
+            let that = this
+            function successCallback(stream) {
+                that.videoElement.stream = stream;
+                that.videoElement.onloadedmetadata = function() {
+
+                };
+                that.videoElement.src = URL.createObjectURL(stream);
+                that.videoElement.play();
+            }
+            function errorCallback(error) {
+                console.error('get-user-media error', error);
+
+            }
+            var mediaConstraints = { video: true };
+            navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        },
         join: function () {
             if (this.userInfo.isRoomCreator) {
                 console.log(123123)
                 this.teacherJoin()
+                // this.initLocal()
             } else {
                 this.studentJoin()
             }
@@ -78,6 +101,7 @@ export default {
                         that.client.on('stream-published', function (evt) {
                             console.log("Publish local stream successfully")
                         });
+                        that.initLocal()
                     }, function (err) {
                         console.log("getUserMedia failed", err)
                     });
