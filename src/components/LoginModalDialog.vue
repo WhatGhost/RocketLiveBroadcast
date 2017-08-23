@@ -11,7 +11,7 @@
                                            @click="closeDialog">×
                                 </el-button>
                             </div>
-                            <div class="dialog-body">
+                            <div class="dialog-body" @keyup.enter="loginButtonClick">
                                 <input type="text" placeholder="E-MAIL OR PHONE NUM"
                                        v-model="account">
                                 <input type="password" placeholder="PASSWORD"

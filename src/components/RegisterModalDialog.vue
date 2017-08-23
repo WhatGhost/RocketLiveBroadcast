@@ -11,7 +11,7 @@
                                 <el-button type="text" class="close-btn" @click="closeDialog">×
                                 </el-button>
                             </div>
-                            <div class="dialog-body">
+                            <div class="dialog-body" @keyup.enter="registerBtnClick">
                                 <!--<el-tooltip placement="bottom">-->
                                 <input type="text" placeholder="E-MAIL OR PHONE NUM" class="input account" v-model="account">
                                 <!--</el-tooltip>-->
@@ -145,7 +145,6 @@ export default {
                 })
             } else {
                 this.showErrorMes('不是有效的电子邮箱或手机号码')
-                return
             }
         },
     }
