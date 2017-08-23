@@ -6,9 +6,9 @@
                 <label class="currentTime">{{ currentTime }}</label>
             </div>
             <span class="mes-body shadow-fixed">{{ message.content }}</span>
-            <div v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403">
-                <button @click="ban">ban</button>
-                <button @click="kickout">kickout</button>
+            <div v-if="isRoomCreator && !message.userInfo.isRoomCreator && message.status !== 403 && showOpButton">
+                <el-button type="text" class="ban-button" @click="ban">ban</el-button>
+                <el-button type="text" class="out-button" @click="kickout">kickout</el-button>
             </div>
         </div>
     </div>
@@ -18,7 +18,8 @@
 export default {
     props: [
         'message',
-        'isRoomCreator'
+        'isRoomCreator',
+        'showOpButton'
     ],
     data() {
         return {}
@@ -79,5 +80,19 @@ export default {
 
 .name {
     font-size: 8px;
+}
+
+.ban-button {
+    background-color: #f9c855;
+    border: none;
+    padding: 3px;
+    color: white;
+}
+
+.out-button {
+    background-color: red;
+    border: none;
+    padding: 3px;
+    color: white;
 }
 </style>
