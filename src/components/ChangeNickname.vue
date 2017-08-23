@@ -15,6 +15,7 @@ export default {
     },
     methods: {
         changeNickname () {
+            this.newnickname = this.newnickname.trim()
             if (this.newnickname === '') {
                 this.$message({
                     message: '昵称不能为空',
