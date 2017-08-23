@@ -70,9 +70,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
     def start_live(self, request):
         print('start live')
         roomInfo = request.data
-        print(roomInfo)
         room = LiveRoom.objects.get(id=roomInfo['roomId'])
-        print(room)
         if room.active_mode == 'CLOSE':
             return Response({'detail': "房间已关闭，若要开始直播请新建房间"}, status=422)
         if room.active_mode == 'START':
@@ -83,11 +81,10 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['patch'])
     def stop_live(self, request):
+        video = request.FILES['file']
         print('stop live')
-        roomInfo = request.data
-        print(roomInfo)
-        room = LiveRoom.objects.get(id=roomInfo['roomId'])
-        print(room)
+        roomId = request.data['roomId']
+        room = LiveRoom.objects.get(id=roomId)
         if room.active_mode == 'CLOSE':
             return Response({'detail': "房间已关闭"}, status=422)
         if room.active_mode == 'READY':
@@ -99,7 +96,8 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             room_name=room.room_name,
             room_introduction=room.room_introduction,
             room_img=room.room_img,
-            room_creater=room.room_creater
+            room_creater=room.room_creater,
+            history_source=video
         )
         return Response({'detail': "结束直播成功"}, status=200)
 

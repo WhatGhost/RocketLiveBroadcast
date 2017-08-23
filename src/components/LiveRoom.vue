@@ -4,9 +4,9 @@
             <p>房间人数： {{ userCount }}</p>
         </div>
         <div ref="recordArea" class="room">
-            <button @click="createCanvas">CreateCanvas</button>
-            <button id="start" @click="startRecord" contenteditable="false">Start Canvas Recording</button>
-            <button id="stop" @click="stopRecord" disabled contenteditable="false">Stop</button>
+            <button @click="createCanvas" class='hiding'>CreateCanvas</button>
+            <button id="start" @click="startRecord" contenteditable="false" class='hiding'>Start Canvas Recording</button>
+            <button id="stop" @click="stopRecord" disabled contenteditable="false" class='hiding'>Stop</button>
             <el-button @click="startLive">开始直播</el-button>
             <el-button @click="stopLive">停止直播</el-button>
             <div v-if="userInfo.isRoomCreator">
@@ -226,9 +226,16 @@ export default {
         stopRecord: function () {
             this.isStoppedRecording = true
             this.recorder.stopRecording(() => {
-                window.invokeSaveAsDialog(this.recorder.getBlob(), 'filename.webm')
+                // window.invokeSaveAsDialog(this.recorder.getBlob(), 'filename.webm')
+                let blob = this.recorder.getBlob()
+                let f = new window.File([blob], 'filename.webm')
+                let formdata = new window.FormData()
+                formdata.append('roomId', this.roomInfo.roomId)
+                formdata.append('file', f)
                 this.audioStream.stop()
                 this.canvasStream.stop()
+                this.$store.dispatch('stopLive', formdata)
+                this.$refs.recordVideo.leave()
             })
             document.getElementById('start').disabled = false
         },
@@ -251,16 +258,19 @@ export default {
             })
         },
         startLive: function () {
+            this.createCanvas()
+            this.startRecord(0)
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
             this.$refs.recordVideo.join()
         },
         stopLive: function () {
-            this.$store.dispatch('stopLive', {
-                roomId: this.roomInfo.roomId
-            })
-            this.$refs.recordVideo.leave()
+            this.stopRecord()
+            // this.$store.dispatch('stopLive', {
+            //     roomId: this.roomInfo.roomId
+            // })
+            // this.$refs.recordVideo.leave()
         },
     }
 }
