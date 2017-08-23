@@ -49,7 +49,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             room_name=request.data["room-name"],
             room_introduction=request.data["room-introduction"],
             room_img=data,
-            room_creater=request.user
+            room_creator=request.user
         )
         r.save()
         serializer = LiveRoomIdSerializer(r)
@@ -85,7 +85,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             room_name=room.room_name,
             room_introduction=room.room_introduction,
             room_img=room.room_img,
-            room_creater=room.room_creater,
+            room_creator=room.room_creator,
             history_source=video
         )
         return Response({'detail': "结束直播成功"}, status=200)
@@ -131,7 +131,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def sendVertificateCode(self, request):
         account = request.data.get('account')
         user = MyUser.objects.filter(account=account)
-        if not user.exists():
+        if (not user.exists()) and (request.data.get('mode')=='forget'):
             return Response({'detail': '用户名不存在'}, status=400)
         print(account)
         if(request.data.get('type') == 'phone'):

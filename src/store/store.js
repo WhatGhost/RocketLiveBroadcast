@@ -203,6 +203,7 @@ const store = new Vuex.Store({
                 type: 'success',
             })
             state.showInfo = false
+            state.background_blur = false
             state.account = null
             state.nickname = null
             state.isTeacher = false

@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LiveRoomSerializer(serializers.ModelSerializer):
-    room_creater = UserSerializer()
+    room_creator = UserSerializer()
 
     class Meta:
         model = LiveRoom
@@ -18,20 +18,20 @@ class LiveRoomSerializer(serializers.ModelSerializer):
                   'room_name',
                   'room_introduction',
                   'room_img',
-                  'room_creater',
+                  'room_creator',
                   'active_mode',
                   )
         read_only_fields = ('id',
                             'room_name',
                             'room_introduction',
                             'room_img',
-                            'room_creater',
+                            'room_creator',
                             'active_mode',
                             )
 
 
 class HistorySerializer(serializers.ModelSerializer):
-    room_creater = UserSerializer()
+    room_creator = UserSerializer()
 
     class Meta:
         model = History
@@ -39,14 +39,14 @@ class HistorySerializer(serializers.ModelSerializer):
                   'room_name',
                   'room_introduction',
                   'room_img',
-                  'room_creater',
+                  'room_creator',
                   'history_source'
                   )
         read_only_fields = ('room_id',
                             'room_name',
                             'room_introduction',
                             'room_img',
-                            'room_creater',
+                            'room_creator',
                             'history_source'
                             )
 
