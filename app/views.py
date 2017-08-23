@@ -215,6 +215,7 @@ class UserViewSet(viewsets.ModelViewSet):
         print(userSets)
         if userSets.exists():
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
+            user = MyUser.objects.get(account=info['account'])
             print(user.password)
             user.set_password(info['password'])
             print(user.password)
