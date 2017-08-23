@@ -12,7 +12,7 @@
                                            @click="closeForget">×
                                 </el-button>
                             </div>
-                            <div class="dialog-body">
+                            <div class="dialog-body" @keyup.enter="changePassword">
                                 <input type="text" placeholder="E-MAIL OR PHONE NUMBER" v-model="account">
                                 <div class="vertificate">
                                     <input type="text" placeholder="VERIFICATION CODE" class="vertificate-input input"
