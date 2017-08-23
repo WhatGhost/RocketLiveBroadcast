@@ -195,6 +195,10 @@ class TestLogout(TestCase):
 class TestRegisterVerification(TestCase):
     def setUp(self):
         print("=====Test Send Register Verification")
+        myuser = MyUser.objects.create(
+            account='register@r.com', nickname='gyybaba', is_student='True', is_active='True', is_admin='False')
+        myuser.set_password(111)
+        myuser.save()
         time.sleep(5)
 
     def test_send(self):
@@ -210,6 +214,10 @@ class TestRegisterVerification(TestCase):
 class TestForgetVerification(TestCase):
     def setUp(self):
         print("=====Test Send Forget Verification")
+        myuser = MyUser.objects.create(
+            account='forget@f.com', nickname='gyybaba', is_student='True', is_active='True', is_admin='False')
+        myuser.set_password(111)
+        myuser.save()
         time.sleep(5)
 
     def test_send(self):
