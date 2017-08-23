@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 router = routers.SimpleRouter()
-router.register(r'rooms', views.RoomViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'liveroom', views.LiveRoomViewSet)
 router.register(r'slide', views.SlideViewSet)

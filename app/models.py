@@ -72,13 +72,6 @@ class MyUser(AbstractBaseUser):
 # Create your models here.
 
 
-class Room(models.Model):
-    text = models.CharField(max_length=200)
-
-    def __str__(self):
-        return 'Room:' + self.text
-
-
 class LiveRoom(models.Model):
     room_name = models.CharField(max_length=100)
     room_introduction = models.TextField(null=True)

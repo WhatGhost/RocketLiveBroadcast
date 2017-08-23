@@ -1,11 +1,5 @@
-from .models import Room, MyUser, LiveRoom, Slide, History
+from .models import  MyUser, LiveRoom, Slide, History
 from rest_framework import serializers
-
-
-class RoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = ('text',)
 
 
 class UserSerializer(serializers.ModelSerializer):
