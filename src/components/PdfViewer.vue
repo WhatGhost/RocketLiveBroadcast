@@ -17,11 +17,12 @@
             </el-upload>
         </div>
         <div class="pdf-view" v-if="pdfSource !== ''">
-            <pdf :src="pdfSource" :page=page @numPages="numPages=$event"></pdf>
+            <pdf :src="pdfSource" :page=page @numPages="setAllPage"></pdf>
             <div :class="userInfo.isRoomCreator?'':'hiding'">
                 <button @click="pgup">Previous Page</button>
                 <button @click="pgdn">Next Page</button>
-                <input v-model.number="page" type="number" style="width: 5em"> /{{ numPages }}
+                <!-- <input v-model.number="page" type="number" style="width: 5em">  -->
+                <span> {{ page }} /{{ numpages }} </span>
             </div>
         </div>
         <div class="no-pdf" v-if="pdfSource === ''">
@@ -74,13 +75,20 @@ export default {
         })
     },
     methods: {
+        setAllPage: function (event) {
+            this.numpages = event
+        },
         pgup: function () {
-            this.page = this.page - 1
-            this.emitPageChange()
+            if (this.page > 1) {
+                this.page = this.page - 1
+                this.emitPageChange()
+            }
         },
         pgdn: function () {
-            this.page = this.page + 1
-            this.emitPageChange()
+            if (this.page < this.numpages) {
+                this.page = this.page + 1
+                this.emitPageChange()
+            }
         },
         emitPageChange: function () {
             this.httpServer.emit('changePage', {
