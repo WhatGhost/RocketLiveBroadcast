@@ -204,6 +204,9 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['patch'])
     def forget_info(self, request):
         info = request.data
+        user = MyUser.objects.filter(account=info['account'])
+        if not user.exists():
+            return Response({'detail': '用户名不存在'}, status=400)
         endTime = datetime.now()
         startTime = endTime + timedelta(minutes=-30)
         print(info['account'])
@@ -212,7 +215,6 @@ class UserViewSet(viewsets.ModelViewSet):
         print(userSets)
         if userSets.exists():
             print(endTime - userSets[0].vertifytime < timedelta(minutes=30))
-            user = MyUser.objects.get(account=info['account'])
             print(user.password)
             user.set_password(info['password'])
             print(user.password)
