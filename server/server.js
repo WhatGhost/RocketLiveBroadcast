@@ -39,11 +39,11 @@ const initRoom = (roomId) => {
     }
 }
 
-const kickoutUser = (roomId, user) => {
+const kickoutUser = (roomId, user, message) => {
     let userIndex = findUser(ROOMDATA[roomId].users, user)
     // 倒序踢出 防止奇怪的事情发生
     for (let i = ROOMDATA[roomId].users[userIndex].socketIds.length - 1; i >= 0; i = i - 1) {
-        io.in(ROOMDATA[roomId].users[userIndex].socketIds[i]).emit('kickout')
+        io.in(ROOMDATA[roomId].users[userIndex].socketIds[i]).emit('kickout', message)
     }
 }
 
@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
             userInfo: obj.userInfo
         }
         if (findUser(ROOMDATA[obj.roomId].kickedoutUsers, obj.userInfo) !== -1) {
-            kickoutUser(obj.roomId, obj.userInfo)
+            kickoutUser(obj.roomId, obj.userInfo, '您已被踢出')
             return
         }
         io.in(obj.roomId).emit('userCountChange', ROOMDATA[obj.roomId].users.length)
@@ -82,6 +82,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         let socketInfo = SOCKETINFO[socket.id]
+        console.log(socketInfo)
         let userIndex = findUser(ROOMDATA[socketInfo.roomId].users, socketInfo.userInfo)
         if (userIndex !== -1) {
             let socketIndex = ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.indexOf(socket.id)
@@ -91,6 +92,9 @@ io.on('connection', function (socket) {
                 if (ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.length === 0) {
                     // remove user if there is no socket for him
                     ROOMDATA[socketInfo.roomId].users.splice(userIndex, 1)
+                    if (socketInfo.userInfo.isRoomCreator) {
+                        socket.to(socketInfo.roomId).emit('kickout', '教师已停止直播')
+                    }
                 }
             }
         }
@@ -166,7 +170,7 @@ io.on('connection', function (socket) {
     socket.on('kickout', function (obj) {
         let i = findUser(ROOMDATA[obj.roomId].users, obj.userInfo)
         if (i !== -1) {
-            kickoutUser(obj.roomId, obj.userInfo)
+            kickoutUser(obj.roomId, obj.userInfo, '您已被踢出')
             ROOMDATA[obj.roomId].kickedoutUsers.push(obj.userInfo)
             let kickoutMessage = sysMessageTemplate
             kickoutMessage.content = '用户' + obj.userInfo.nickname + '已被房主踢出'

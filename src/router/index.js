@@ -14,6 +14,15 @@ const router = new VueRouter({
             path: '/roomList',
             name: 'RoomList',
             component: RoomList,
+            beforeEnter: function(to, from, next) {
+                store.dispatch('getUserFromDjango').then(() => {
+                    store.dispatch('getRooms').then(() => {
+                        store.dispatch('getHistory').then(() => {
+                            next()
+                        })
+                    })
+                })
+            }
         },
         {
             path: '/room/:id',

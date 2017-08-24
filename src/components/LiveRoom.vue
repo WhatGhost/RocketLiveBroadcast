@@ -111,9 +111,16 @@ export default {
         window.navigator.getUserMedia = window.navigator.getUserMedia || window.navigator.mozGetUserMedia || window.navigator.webkitGetUserMedia
     },
     beforeDestroy() {
-        this.httpServer.disconnect()
+        if (this.isRecordingStarted) {
+            this.stopLive()
+        } else {
+            this.httpServer.disconnect()
+        }
     },
     methods: {
+        leave: function() {
+            this.httpServer.disconnect()
+        },
         controlEduArea: function() {
             if (this.eduArea === false) {
                 this.eduArea = true
@@ -150,27 +157,6 @@ export default {
                 message: mes,
                 type: 'error'
             })
-        },
-        createCanvas: function() {
-            this.appendCanvas()
-            this.recorder = new window.RecordRTC(this.canvas2d, {
-                type: 'canvas',
-                videoBitsPerSecond: 8000000000,
-                audioBitsPerSecond: 8000000000
-            })
-        },
-        appendCanvas: function() {
-            this.elementToShare = document.querySelector('body')
-            this.canvas2d = document.createElement('canvas')
-            this.context = this.canvas2d.getContext('2d')
-            this.canvas2d.width = this.elementToShare.clientWidth
-            this.canvas2d.height = this.elementToShare.clientHeight
-            this.canvas2d.style.top = 0
-            this.canvas2d.style.left = 0
-            this.canvas2d.style.zIndex = -1
-            this.canvas2d.style.display = 'none'
-            let el = (document.body || document.documentElement)
-            el.appendChild(this.canvas2d)
         },
         switchMessageMenu: function() {
             this.showMessageMenu = !this.showMessageMenu
@@ -210,8 +196,8 @@ export default {
             this.httpServer.emit('getCurrentData', {
                 roomId: this.roomInfo.roomId
             })
-            this.httpServer.on('kickout', () => {
-                this.showErrorMes('您已被踢出')
+            this.httpServer.on('kickout', (message) => {
+                this.showErrorMes(message)
                 this.$router.push('/')
             })
         },
@@ -223,25 +209,6 @@ export default {
             })
         },
         startRecord: function() {
-            // window.navigator.mediaDevices.getUserMedia({ audio: true }).then((audioStream) => {
-            //     this.audioStream = audioStream
-            //     this.canvasStream = this.canvas2d.captureStream()
-
-            //     var finalStream = new window.MediaStream()
-            //     audioStream.getAudioTracks().forEach(function(track) {
-            //         finalStream.addTrack(track)
-            //     })
-            //     this.canvasStream.getVideoTracks().forEach(function(track) {
-            //         finalStream.addTrack(track)
-            //     })
-
-            //     this.recorder = window.RecordRTC(finalStream, {
-            //         type: 'video'
-            //     })
-            //     this.isStoppedRecording = false
-            //     this.isRecordingStarted = true
-            //     this.recorder.startRecording()
-            // })
             this.captureAudio((audio) => {
                 this.captureScreen((screen) => {
                     this.audioStream = audio
@@ -257,66 +224,22 @@ export default {
                     this.isRecordingStarted = true
                     this.recorder.startRecording()
                 })
-                // window.setTimeout(function () {
-                //     let stopButton = document.getElementById('stop')
-                //     stopButton.disabled = false
-                // }, 10)
-                this.looper()
             })
         },
         stopRecord: function() {
             this.isStoppedRecording = true
             this.recorder.stopRecording(() => {
-                // window.invokeSaveAsDialog(this.recorder.getBlob(), 'filename.webm')
+                this.leave()
                 let blob = this.recorder.getBlob()
                 let f = new window.File([blob], 'filename.webm')
                 let formdata = new window.FormData()
                 formdata.append('roomId', this.roomInfo.roomId)
                 formdata.append('file', f)
-                // let streams = [this.screenStream, this.audioStream]
-                // streams.forEach(function(stream) {
-                //     stream.getVideoTracks().forEach(function(track) {
-                //         track.stop()
-                //     })
-                //     stream.getAudioTracks().forEach(function(track) {
-                //         track.stop()
-                //     })
-                // })
                 this.screenStream.stop()
                 this.audioStream.stop()
-                // this.audioStream.stop()
-                // this.canvasStream.stop()
                 this.$store.dispatch('stopLive', formdata)
                 this.$refs.recordVideo.leave()
             })
-            // document.getElementById('start').disabled = false
-        },
-        looper: function() {
-            // console.log('looping')
-            // if (!this.isRecordingStarted) {
-            //     return window.setTimeout(this.looper, 500)
-            // }
-            // let that = this
-            // window.html2canvas(that.elementToShare, {
-            //     grabMouse: true,
-            //     onrendered: function(canvas) {
-            //         that.context.clearRect(0, 0, that.canvas2d.width, that.canvas2d.height)
-            //         that.context.drawImage(canvas, 0, 0, that.canvas2d.width, that.canvas2d.height)
-            //         if (that.isStoppedRecording) {
-            //             return
-            //         }
-            //         window.setTimeout(that.looper, 1)
-            //     }
-            // })
-            console.log('looping')
-            if (!this.isRecordingStarted) {
-                return window.setTimeout(this.looper, 500)
-            }
-            let that = this
-            if (that.isStoppedRecording) {
-                return
-            }
-            window.setTimeout(that.looper, 1)
         },
         startLive: function() {
             // this.createCanvas()
@@ -324,20 +247,9 @@ export default {
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
-            // let startBtn = document.getElementById('startBtn')
-            // startBtn.disabled = true
-            // let stopBtn = document.getElementById('stopBtn')
-            // stopBtn.disabled = false
-            // this.$refs.recordVideo.join()
         },
         stopLive: function() {
             this.stopRecord()
-            let stopBtn = document.getElementById('stopBtn')
-            stopBtn.disabled = false
-            // this.$store.dispatch('stopLive', {
-            //     roomId: this.roomInfo.roomId
-            // })
-            // this.$refs.recordVideo.leave()
         },
         openCamera: function() {
             this.isCameraOn = true
