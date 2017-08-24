@@ -23,7 +23,9 @@
                       omplete="off"></el-input>
             <el-button @click='sendMessage'>send
             </el-button>
-            <el-dropdown @command="handleCommand" class="option-btn">
+            <el-dropdown @command="handleCommand"
+                         class="option-btn"
+                         v-if="userInfo.isRoomCreator">
               <span class="el-dropdown-link">
                    <el-button type="primary" icon="setting">
                   </el-button>
