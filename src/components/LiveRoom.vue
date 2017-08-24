@@ -143,7 +143,7 @@ export default {
             })
         },
         appendCanvas: function () {
-            this.elementToShare = document.getElementById('elementToShare')
+            this.elementToShare = document.querySelector('body')
             this.canvas2d = document.createElement('canvas')
             this.context = this.canvas2d.getContext('2d')
             this.canvas2d.width = this.elementToShare.clientWidth
@@ -263,7 +263,7 @@ export default {
                     if (that.isStoppedRecording) {
                         return
                     }
-                    window.setTimeout(that.looper, 20)
+                    window.setTimeout(that.looper, 1)
                 }
             })
         },
