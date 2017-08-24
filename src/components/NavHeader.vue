@@ -81,6 +81,7 @@ export default {
         },
         showRoomList: function () {
             this.$store.dispatch('getRooms')
+            this.$store.dispatch('getHistory')
             this.$router.push('/roomList')
         },
         openRegisterDialog: function () {
