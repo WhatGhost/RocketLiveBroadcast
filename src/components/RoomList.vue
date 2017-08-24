@@ -121,7 +121,7 @@ h1 {
 
 ul {
     margin: 0 auto;
-    width: 1625px;
+    width: 1300px;
     padding-left: 0;
 }
 
