@@ -11,19 +11,6 @@
                            :key="key">
                 </chat-item>
             </transition-group>
-            <div v-if="isShowOptions" class="option-buttons">
-                <el-button type="primary"
-                           @click="banAll"
-                           v-show="!bannedStatus">ban All
-                </el-button>
-                <el-button type="primary"
-                           @click="unbanAll"
-                           v-show="bannedStatus">unban All
-                </el-button>
-                <el-button type="primary"
-                           @click="showBannedUsers">banned list
-                </el-button>
-            </div>
         </div>
         <div class="emoji-div" v-if="showEmoji">
         </div>
@@ -36,12 +23,18 @@
                       omplete="off"></el-input>
             <el-button @click='sendMessage'>send
             </el-button>
-            <el-button type="primary"
-                       :icon="optionIcon"
-                       v-bind:class="{ orange:isShowOptions }"
-                       @click="switchShowOptions"
-                       v-show="userInfo.isRoomCreator">
-            </el-button>
+            <el-dropdown @command="handleCommand" class="option-btn">
+              <span class="el-dropdown-link">
+                   <el-button type="primary" icon="setting">
+                  </el-button>
+              </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="banAll" v-if="!bannedStatus">Ban All</el-dropdown-item>
+                    <el-dropdown-item command="unbanAll" v-if="bannedStatus">Unban All</el-dropdown-item>
+                    <el-dropdown-item command="showBannedUsers">Ban List</el-dropdown-item>
+                    <el-dropdown-item command="switchShowOptions">{{ optionButtonText }}</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
         <banned-list :bannedUsers="bannedUsers"
                      v-if="showBannedList"
@@ -93,15 +86,31 @@ export default {
         objDiv.scrollTop = objDiv.scrollHeight
     },
     computed: {
-        optionIcon: function () {
+        optionButtonText: function () {
             if (!this.isShowOptions) {
-                return 'setting'
+                return 'Show Options'
             } else {
-                return 'close'
+                return 'Close Options'
             }
         }
     },
     methods: {
+        handleCommand(command) {
+            switch (command) {
+            case 'banAll':
+                this.banAll()
+                break
+            case 'unbanAll':
+                this.unbanAll()
+                break
+            case 'showBannedUsers':
+                this.showBannedUsers()
+                break
+            case 'switchShowOptions':
+                this.switchShowOptions()
+                break
+            }
+        },
         sendMessage: function () {
             let messageToSend = {
                 content: this.message,
@@ -136,6 +145,10 @@ export default {
             this.showBannedList = true
         },
         banAll: function () {
+            this.$message({
+                message: '您已经开启房间禁言！',
+                type: 'warning'
+            })
             if (this.userInfo.isRoomCreator) {
                 this.httpServer.emit('banAll', {
                     roomId: this.roomInfo.roomId
@@ -187,6 +200,10 @@ export default {
     height: 100%;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.option-btn {
+    margin-left: 5px;
 }
 
 .orange {
