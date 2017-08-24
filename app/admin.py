@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, LiveRoom, History, AllSilent, OneSilent, ChatHistory, VisitHistory
+from .models import LiveRoom, History, AllSilent, OneSilent, ChatHistory, VisitHistory
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
@@ -87,7 +87,6 @@ admin.site.register(MyUser, MyUserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
-admin.site.register(Room)
 admin.site.register(LiveRoom)
 admin.site.register(History)
 admin.site.register(AllSilent)

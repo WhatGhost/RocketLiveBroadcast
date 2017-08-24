@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test import Client
 from django.db import models
 from .views import LiveRoomViewSet, UserViewSet
-from .models import Room, MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
+from .models import  MyUser, MyUserManager, LiveRoom, VertifyRegister, VertifyForgetpasswd
 from .views import index
 from .send_verification import sendMail
 import time

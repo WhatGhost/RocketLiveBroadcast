@@ -94,13 +94,6 @@ const store = new Vuex.Store({
         'GET_ROOMS': function (state, response) {
             state.rooms = response.body
         },
-        'ADD_ROOM': function (state, response) {
-            state.rooms.push(response.body)
-        },
-        'CLEAR_ROOMS': function (state) {
-            const rooms = state.rooms
-            rooms.splice(0, rooms.length)
-        },
         // Note that we added one more for logging out errors.
         /**
          * 获取房间的ID
@@ -210,6 +203,7 @@ const store = new Vuex.Store({
                 type: 'success',
             })
             state.showInfo = false
+            state.background_blur = false
             state.account = null
             state.nickname = null
             state.isTeacher = false
@@ -391,16 +385,6 @@ const store = new Vuex.Store({
             return api.get(apiRoot + '/history/')
                 .then((response) => store.commit('getHistory', response))
                 .catch((error) => store.commit('getHistoryFail', error))
-        },
-        addRoom (store, room) {
-            return api.post(apiRoot + '/rooms/', room)
-                .then((response) => store.commit('ADD_ROOM', response))
-                .catch((error) => store.commit('API_FAIL', error))
-        },
-        clearRooms (store) {
-            return api.delete(apiRoot + '/rooms/clear_rooms/')
-                .then((response) => store.commit('CLEAR_ROOMS'))
-                .catch((error) => store.commit('API_FAIL', error))
         },
         /**
          * 用户登录的检测是否成功

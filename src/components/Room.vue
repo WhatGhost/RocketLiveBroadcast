@@ -5,7 +5,7 @@
             <label>{{ room.room_name }}</label>
             <label class="intro">　id：{{ room.id }}</label>
             <div class="bottom">
-                <p class="intro">教师：{{ room.room_creater.nickname }}</p>
+                <p class="intro">教师：{{ room.room_creator.nickname }}</p>
                 <p class="intro">简介：{{ room.room_introduction }}</p>
             </div>
         </div>

@@ -167,9 +167,9 @@ export default {
             for (let i = 0; i < this.$store.state.rooms.length; i++) {
                 if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                     this.roomInfo.roomIntroduction = this.$store.state.rooms[i].room_introduction
-                    this.roomInfo.roomTeacher = this.$store.state.rooms[i].room_creater.nickname
+                    this.roomInfo.roomTeacher = this.$store.state.rooms[i].room_creator.nickname
                     this.roomInfo.roomName = this.$store.state.rooms[i].room_name
-                    this.roomInfo.__roomTeacherAccount = this.$store.state.rooms[i].room_creater.account
+                    this.roomInfo.__roomTeacherAccount = this.$store.state.rooms[i].room_creator.account
                 }
             }
             this.roomInfo.roomId = this.$route.params['id']
