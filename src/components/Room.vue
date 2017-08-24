@@ -94,7 +94,14 @@ export default {
 }
 
 .bottom {
-    margin-top: 13px;
+    margin-top: -10px;
     line-height: 12px;
+    height: 70px;
+    width: 270px;
+    overflow-y: hidden;
+}
+
+.bottom:hover {
+    overflow-y: auto;
 }
 </style>
