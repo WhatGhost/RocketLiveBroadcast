@@ -93,7 +93,7 @@ class History(models.Model):
     room_name = models.CharField(max_length=100)
     room_introduction = models.TextField(null=True)
     room_img = models.ImageField(upload_to='img/covers', null=False)
-    room_creator = models.CharField(max_length=100)
+    room_creator = models.ForeignKey(MyUser)
     history_source = models.FileField(upload_to='video', null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     time_length = models.IntegerField(null=True)
