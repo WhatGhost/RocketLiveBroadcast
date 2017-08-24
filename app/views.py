@@ -85,7 +85,7 @@ class LiveRoomViewSet(viewsets.ModelViewSet):
             room_name=room.room_name,
             room_introduction=room.room_introduction,
             room_img=room.room_img,
-            room_creator=room.room_creator,
+            room_creator=MyUser.objects.get(id=room.room_creator.id),
             history_source=video
         )
         return Response({'detail': "结束直播成功"}, status=200)
