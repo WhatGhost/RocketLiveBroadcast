@@ -126,6 +126,10 @@ export default {
             this.nowView = 0
             this.choosedImg = null
             this.openFail = false
+            this.step = 0
+            // this.roomId = -2
+            this.roomName = ''
+            this.roomIntroduction = ''
         },
         checkFormInput: function () {
             if (this.roomName === '') {
