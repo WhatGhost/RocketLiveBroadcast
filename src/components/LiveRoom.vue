@@ -12,11 +12,12 @@
                     </el-button>
                     <el-button id="stop" @click="stopRecord" disabled
                                contenteditable="false" class='hiding'>Stop</el-button>
-                    <el-button @click="startLive" v-if="userInfo.isRoomCreator" id="startBtn">开始直播</el-button>
-                    <el-button @click="stopLive" v-if="userInfo.isRoomCreator" disabled="disabled" id="stopBtn">停止直播</el-button>
+                    <el-button @click="startLive" v-if="userInfo.isRoomCreator" v-show="!isRecordingStarted && !isStoppedRecording" id="startBtn">开始直播</el-button>
+                    <el-button @click="stopLive" v-if="userInfo.isRoomCreator" v-show="!isStoppedRecording && isRecordingStarted" id="stopBtn">停止直播</el-button>
                     <el-button @click="controlEduArea" v-if="userInfo.isRoomCreator">教学区域</el-button>
                     <el-button @click="controlVideoArea" v-if="userInfo.isRoomCreator">视频区域</el-button>
-                    <el-button @click="openCamera" v-if="userInfo.isRoomCreator">打开摄像头</el-button>
+                    <el-button @click="openCamera" v-if="userInfo.isRoomCreator && !isCameraOn">打开摄像头</el-button>
+                    <el-button @click="closeCamera" v-if="userInfo.isRoomCreator && isCameraOn">关闭摄像头</el-button>
                 </div>
                 <div class='left shadow-fixed' v-show="eduArea">
                     <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
@@ -87,7 +88,8 @@ export default {
             context: null,
             elementToShare: null,
             audioStream: null,
-            canvasStream: null
+            canvasStream: null,
+            isCameraOn: false
         }
     },
     computed: {
@@ -142,7 +144,9 @@ export default {
         createCanvas: function () {
             this.appendCanvas()
             this.recorder = new window.RecordRTC(this.canvas2d, {
-                type: 'canvas'
+                type: 'canvas',
+                videoBitsPerSecond: 8000000000,
+                audioBitsPerSecond: 8000000000
             })
         },
         appendCanvas: function () {
@@ -224,16 +228,14 @@ export default {
                 this.recorder = window.RecordRTC(finalStream, {
                     type: 'video'
                 })
-                document.getElementById('stop').disabled = false
-                document.getElementById('start').disabled = true
                 this.isStoppedRecording = false
                 this.isRecordingStarted = true
                 this.recorder.startRecording()
             })
-            window.setTimeout(function () {
-                let stopButton = document.getElementById('stop')
-                stopButton.disabled = false
-            }, 10)
+            // window.setTimeout(function () {
+            //     let stopButton = document.getElementById('stop')
+            //     stopButton.disabled = false
+            // }, 10)
             this.looper()
         },
         stopRecord: function () {
@@ -250,7 +252,7 @@ export default {
                 this.$store.dispatch('stopLive', formdata)
                 this.$refs.recordVideo.leave()
             })
-            document.getElementById('start').disabled = false
+            // document.getElementById('start').disabled = false
         },
         looper: function () {
             console.log('looping')
@@ -272,14 +274,14 @@ export default {
         },
         startLive: function () {
             this.createCanvas()
-            this.startRecord(0)
+            this.startRecord()
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
-            let startBtn = document.getElementById('startBtn')
-            startBtn.disabled = true
-            let stopBtn = document.getElementById('stopBtn')
-            stopBtn.disabled = false
+            // let startBtn = document.getElementById('startBtn')
+            // startBtn.disabled = true
+            // let stopBtn = document.getElementById('stopBtn')
+            // stopBtn.disabled = false
             // this.$refs.recordVideo.join()
         },
         stopLive: function () {
@@ -292,7 +294,12 @@ export default {
             // this.$refs.recordVideo.leave()
         },
         openCamera: function () {
+            this.isCameraOn = true
             this.$refs.recordVideo.join()
+        },
+        closeCamera: function () {
+            this.isCameraOn = false
+            this.$refs.recordVideo.leave()
         }
     }
 }
