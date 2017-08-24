@@ -82,7 +82,9 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         let socketInfo = SOCKETINFO[socket.id]
-        console.log(socketInfo)
+        if (!socketInfo) {
+            return
+        }
         let userIndex = findUser(ROOMDATA[socketInfo.roomId].users, socketInfo.userInfo)
         if (userIndex !== -1) {
             let socketIndex = ROOMDATA[socketInfo.roomId].users[userIndex].socketIds.indexOf(socket.id)
@@ -221,12 +223,12 @@ io.on('connection', function (socket) {
         io.in(socket.id).emit('getBannedStatus', ROOMDATA[obj.roomId].allBanned)
     })
 
-    socket.on('changeDrawing', function(obj) {
+    socket.on('changeDrawing', function (obj) {
         this.to(obj.roomId).emit('changeDrawing', obj)
         ROOMDATA[obj.roomId].drawing = obj.drawing
     })
 
-    socket.on('getCurrentData', function(obj) {
+    socket.on('getCurrentData', function (obj) {
         io.in(socket.id).emit('changeCode', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('changePage', ROOMDATA[obj.roomId])
         io.in(socket.id).emit('switchPane', ROOMDATA[obj.roomId])
