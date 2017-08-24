@@ -4,6 +4,7 @@
         <!--显示条件：是创建者 且 (未完成转换 或 未上传)-->
         <div class="slide-upload" ref="loadingArea" v-if="showUploadButton">
             <el-upload
+                class="upload-button"
                 action="http://localhost:8000/slide/"
                 drag
                 name="slide"
@@ -73,6 +74,14 @@ export default {
         this.httpServer.on('changePage', (obj) => {
             this.page = obj.page
         })
+    },
+    updated: function () {
+        // 将PPT上传按钮居中
+        try {
+            document.querySelector('.upload-button').children[0].style.display = 'flex'
+            document.querySelector('.upload-button').children[0].style.flexDirection = 'column'
+            document.querySelector('.el-upload-dragger').style.margin = 'auto'
+        } catch (exception) {}
     },
     methods: {
         setAllPage: function (event) {
@@ -154,5 +163,22 @@ export default {
 <style scoped>
 .hiding {
     display: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+.el-upload-tip {
+    text-align: center;
+}
+
+.slide-upload {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.upload-button {
+    background-color: #f5eee6;
 }
 </style>
