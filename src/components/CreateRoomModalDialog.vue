@@ -184,6 +184,7 @@ export default {
             } else {
                 this.$store.dispatch('getRooms').then(() => {
                     this.closeDialog()
+                    this.step = 0
                     this.$router.push('/room/' + this.roomId)
                 })
             }

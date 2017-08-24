@@ -3,7 +3,7 @@
         <img :src="room.room_img" class="video-image">
         <div class="text">
             <label>{{ room.room_name }}</label>
-            <label class="intro">　id：{{ room.id }}</label>
+            <label class="intro">　id：{{ id }}</label>
             <div class="bottom">
                 <p class="intro">教师：{{ room.room_creator.nickname }}</p>
                 <p class="intro">简介：{{ room.room_introduction }}</p>
