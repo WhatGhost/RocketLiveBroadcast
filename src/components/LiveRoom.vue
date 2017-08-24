@@ -17,7 +17,9 @@
                     <el-button @click="controlEduArea" v-if="userInfo.isRoomCreator">教学区域</el-button>
                     <el-button @click="controlVideoArea" v-if="userInfo.isRoomCreator">视频区域</el-button>
                     <el-button @click="openCamera" v-if="userInfo.isRoomCreator && !isCameraOn">打开摄像头</el-button>
-                    <el-button @click="closeCamera" v-if="userInfo.isRoomCreator && isCameraOn">关闭摄像头</el-button>
+                    <!-- <el-button @click="closeCamera" v-if="userInfo.isRoomCreator && isCameraOn">关闭摄像头</el-button> -->
+                    <el-button @click="openVideo" v-if="! userInfo.isRoomCreator" id='join'>打开视频</el-button>
+                    <el-button @click="closeVideo" v-if="! userInfo.isRoomCreator" id='leave'>关闭视频</el-button>
                 </div>
                 <div class='left shadow-fixed' v-show="eduArea">
                     <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
@@ -288,6 +290,7 @@ export default {
             this.stopRecord()
             let stopBtn = document.getElementById('stopBtn')
             stopBtn.disabled = false
+            this.$refs.recordVideo.stopLocalCamera()
             // this.$store.dispatch('stopLive', {
             //     roomId: this.roomInfo.roomId
             // })
@@ -299,6 +302,16 @@ export default {
         },
         closeCamera: function () {
             this.isCameraOn = false
+            this.$refs.recordVideo.leave()
+        },
+        openVideo: function () {
+            document.getElementById('leave').disabled = false
+            document.getElementById('join').disabled = true
+            this.$refs.recordVideo.join()
+        },
+        closeVideo: function () {
+            document.getElementById('leave').disabled = true
+            document.getElementById('join').disabled = false
             this.$refs.recordVideo.leave()
         }
     }

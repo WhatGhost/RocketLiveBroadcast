@@ -2,8 +2,8 @@
     <div class="main-div">
         <div id="div_join" class="panel panel-default">
             <div class="panel-body">
-                <button id="join" :class="studentDisplay" @click="join">打开视频</button>
-                <button id="leave" :class="studentDisplay" @click="leave">关闭视频</button>
+                <!-- <button id="join" :class="studentDisplay" @click="join">打开视频</button>
+                <button id="leave" :class="studentDisplay" @click="leave">关闭视频</button> -->
                 <!-- <button id="publish" :class="teacherDisplay" @click="publish">继续直播</button>
                 <button id="unpublish" :class="teacherDisplay" @click="unpublish">暂停直播</button> -->
             </div>
@@ -62,6 +62,12 @@ export default {
             var mediaConstraints = { video: true };
             navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
         },
+        stopLocalCamera: function () {
+            this.videoElement = document.querySelector('#camera')
+            this.videoElement.stream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        },
         join: function () {
             if (this.userInfo.isRoomCreator) {
                 console.log(123123)
@@ -73,8 +79,8 @@ export default {
         },
         teacherJoin: function () {
             console.log("Init AgoraRTC client with vendor key: " + this.key);
-            document.getElementById("leave").disabled = false;
-            document.getElementById("join").disabled = true;
+            // document.getElementById("leave").disabled = false
+            // document.getElementById("join").disabled = true
             this.client = AgoraRTC.createClient({
                 mode: 'interop'
             });
@@ -119,8 +125,8 @@ export default {
         },
         studentJoin: function () {
             console.log("Init AgoraRTC client with vendor key: " + this.key);
-            document.getElementById("leave").disabled = false
-            document.getElementById("join").disabled = true
+            // document.getElementById("leave").disabled = false
+            // document.getElementById("join").disabled = true
             this.client = AgoraRTC.createClient({
                 mode: 'interop'
             });
@@ -170,7 +176,7 @@ export default {
             console.log("Got error msg:", err.reason)
             if (err.reason === 'DYNAMIC_KEY_TIMEOUT') {
                 this.client.renewChannelKey(that.channelKey, function () {
-                    console.log("Renew channel key successfully");
+                    console.log("Renew channel key successfully")
                 }, function (err) {
                     console.log("Renew channel key failed: ", err)
                 })
@@ -181,13 +187,13 @@ export default {
                 this.localStream.disableVideo()
                 this.localStream.close()
             } else {
-                document.getElementById("leave").disabled = true;
-                document.getElementById("join").disabled = false;
+                // document.getElementById('leave').disabled = true
+                // document.getElementById('join').disabled = false
             }
             this.client.leave(function () {
-                console.log("Leavel channel successfully");
+                console.log("Leavel channel successfully")
             }, function (err) {
-                console.log("Leave channel failed");
+                console.log("Leave channel failed")
             });
         },
 
@@ -195,22 +201,24 @@ export default {
             if (this.userInfo.isRoomCreator) {
                 this.localStream.enableVideo()
             }
-            document.getElementById("publish").disabled = true;
-            document.getElementById("unpublish").disabled = false;
+            // document.getElementById("publish").disabled = true;
+            // document.getElementById("unpublish").disabled = false;
             this.client.publish(this.localStream, function (err) {
                 console.log("Publish local stream error: " + err);
             });
+            this.initLocal()
         },
 
         unpublish: function () {
             if (this.userInfo.isRoomCreator) {
                 this.localStream.disableVideo()
             }
-            document.getElementById("publish").disabled = false;
-            document.getElementById("unpublish").disabled = true;
+            // document.getElementById("publish").disabled = false;
+            // document.getElementById("unpublish").disabled = true;
             this.client.unpublish(this.localStream, function (err) {
                 console.log("Unpublish local stream failed" + err);
             });
+            this.stopLocalCamera()
         },
     }
 }
