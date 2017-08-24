@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         currentTime: function () {
-            return '10:20'
+            return new Date().toLocaleString()
         }
     },
     methods: {
@@ -56,6 +56,7 @@ export default {
     font-size: 6px;
     color: #d9d9d9;
     text-align: right;
+    float: right;
 }
 
 .mes-body {
