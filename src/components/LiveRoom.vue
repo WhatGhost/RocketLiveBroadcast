@@ -12,10 +12,11 @@
                     </el-button>
                     <el-button id="stop" @click="stopRecord" disabled
                                contenteditable="false" class='hiding'>Stop</el-button>
-                    <el-button @click="startLive">开始直播</el-button>
-                    <el-button @click="stopLive">停止直播</el-button>
+                    <el-button @click="startLive" v-if="userInfo.isRoomCreator" id="startBtn">开始直播</el-button>
+                    <el-button @click="stopLive" v-if="userInfo.isRoomCreator" disabled="disabled" id="stopBtn">停止直播</el-button>
                     <el-button @click="controlEduArea" v-if="userInfo.isRoomCreator">教学区域</el-button>
                     <el-button @click="controlVideoArea" v-if="userInfo.isRoomCreator">视频区域</el-button>
+                    <el-button @click="openCamera" v-if="userInfo.isRoomCreator">打开摄像头</el-button>
                 </div>
                 <div class='left shadow-fixed' v-show="eduArea">
                     <div class="top-btn-div" :class="userInfo.isRoomCreator?'':'hiding'">
@@ -275,15 +276,24 @@ export default {
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
             })
-            this.$refs.recordVideo.join()
+            let startBtn = document.getElementById('startBtn')
+            startBtn.disabled = true
+            let stopBtn = document.getElementById('stopBtn')
+            stopBtn.disabled = false
+            // this.$refs.recordVideo.join()
         },
         stopLive: function () {
             this.stopRecord()
+            let stopBtn = document.getElementById('stopBtn')
+            stopBtn.disabled = false
             // this.$store.dispatch('stopLive', {
             //     roomId: this.roomInfo.roomId
             // })
             // this.$refs.recordVideo.leave()
         },
+        openCamera: function () {
+            this.$refs.recordVideo.join()
+        }
     }
 }
 </script>
