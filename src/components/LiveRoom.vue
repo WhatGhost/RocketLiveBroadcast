@@ -7,13 +7,13 @@
             <div class="outer-left">
                 <div class="buttons">
                     <el-button @click="createCanvas" class="hiding">Create Canvas</el-button>
-                    <el-button id="start" @click="startRecord"
-                               contenteditable="false" class='hiding'>Start Recording
+                    <el-button id="start" @click="startRecord" contenteditable="false" class='hiding'>Start Recording
                     </el-button>
-                    <el-button id="stop" @click="stopRecord" disabled
-                               contenteditable="false" class='hiding'>Stop</el-button>
+                    <el-button id="stop" @click="stopRecord" disabled contenteditable="false" class='hiding'>Stop</el-button>
                     <el-button @click="startLive" v-if="userInfo.isRoomCreator" v-show="!isRecordingStarted && !isStoppedRecording" id="startBtn">开始直播</el-button>
                     <el-button @click="stopLive" v-if="userInfo.isRoomCreator" v-show="!isStoppedRecording && isRecordingStarted" id="stopBtn">停止直播</el-button>
+                    <!-- <el-button @click="startLive" v-if="userInfo.isRoomCreator" id="startBtn">开始直播</el-button>
+                    <el-button @click="stopLive" v-if="userInfo.isRoomCreator" id="stopBtn">停止直播</el-button> -->
                     <el-button @click="controlEduArea" v-if="userInfo.isRoomCreator">教学区域</el-button>
                     <el-button @click="controlVideoArea" v-if="userInfo.isRoomCreator">视频区域</el-button>
                     <el-button @click="openCamera" v-if="userInfo.isRoomCreator && !isCameraOn">打开摄像头</el-button>
@@ -27,19 +27,14 @@
                         <el-button class="top-btn" @click="switchPane('codeEditor')">Code Editor</el-button>
                         <el-button class="top-btn" @click="switchPane('whiteBoard')">WhiteBoard</el-button>
                     </div>
-                    <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer"
-                                :userInfo="userInfo"></pdf-viewer>
-                    <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer"
-                                      :userInfo="userInfo"></code-editor-page>
-                    <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer"
-                                      :userInfo="userInfo"></white-board-page>
+                    <pdf-viewer :hide="hidePdfViewer" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></pdf-viewer>
+                    <code-editor-page :hide="hideCodeEditor" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></code-editor-page>
+                    <white-board-page :hide="hideWhiteBoard" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></white-board-page>
                 </div>
             </div>
             <div class='right'>
-                <record-video ref="recordVideo" class="video-area" :userInfo="userInfo" :roomInfo="roomInfo"
-                              v-show="videoArea"></record-video>
-                <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer"
-                           :userInfo="userInfo"></chat-area>
+                <record-video ref="recordVideo" class="video-area" :userInfo="userInfo" :roomInfo="roomInfo" v-show="videoArea"></record-video>
+                <chat-area class="chat-area" :roomInfo="roomInfo" :httpServer="httpServer" :userInfo="userInfo"></chat-area>
             </div>
         </div>
     </div>
@@ -61,7 +56,7 @@ export default {
         ChatArea,
         PdfViewer,
     },
-    data: function () {
+    data: function() {
         return {
             eduArea: true,
             videoArea: true,
@@ -91,33 +86,35 @@ export default {
             elementToShare: null,
             audioStream: null,
             canvasStream: null,
-            isCameraOn: false
+            isCameraOn: false,
+            screenStream: null
         }
     },
     computed: {
-        hidePdfViewer: function () {
+        hidePdfViewer: function() {
             return this.showingComponent !== 'pdfViewer'
         },
-        hideCodeEditor: function () {
+        hideCodeEditor: function() {
             return this.showingComponent !== 'codeEditor'
         },
-        hideWhiteBoard: function () {
+        hideWhiteBoard: function() {
             return this.showingComponent !== 'whiteBoard'
         },
-        roomMessage: function () {
+        roomMessage: function() {
             return '房间人数' + this.usersCount
         }
     },
-    created () {
+    created() {
         this.getRoomInfo()
         this.getUserInfo()
         this.connect()
+        window.navigator.getUserMedia = window.navigator.getUserMedia || window.navigator.mozGetUserMedia || window.navigator.webkitGetUserMedia
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.httpServer.disconnect()
     },
     methods: {
-        controlEduArea: function () {
+        controlEduArea: function() {
             if (this.eduArea === false) {
                 this.eduArea = true
             } else {
@@ -126,7 +123,7 @@ export default {
                 }
             }
         },
-        controlVideoArea: function () {
+        controlVideoArea: function() {
             if (this.videoArea === false) {
                 this.$refs.recordVideo.publish()
                 this.videoArea = true
@@ -137,13 +134,24 @@ export default {
                 }
             }
         },
-        showErrorMes: function (mes) {
+        captureScreen: function(cb) {
+            window.getScreenId(function(error, sourceId, screenConstraints) {
+                window.navigator.getUserMedia(screenConstraints, cb, function(error) {
+                    console.error('getScreenId error', error)
+                    window.alert('Failed to capture your screen. Please check Chrome console logs for further information.')
+                })
+            })
+        },
+        captureAudio: function(cb) {
+            window.navigator.getUserMedia({ audio: true }, cb, function(error) { })
+        },
+        showErrorMes: function(mes) {
             this.$message({
                 message: mes,
                 type: 'error'
             })
         },
-        createCanvas: function () {
+        createCanvas: function() {
             this.appendCanvas()
             this.recorder = new window.RecordRTC(this.canvas2d, {
                 type: 'canvas',
@@ -151,7 +159,7 @@ export default {
                 audioBitsPerSecond: 8000000000
             })
         },
-        appendCanvas: function () {
+        appendCanvas: function() {
             this.elementToShare = document.querySelector('body')
             this.canvas2d = document.createElement('canvas')
             this.context = this.canvas2d.getContext('2d')
@@ -164,13 +172,13 @@ export default {
             let el = (document.body || document.documentElement)
             el.appendChild(this.canvas2d)
         },
-        switchMessageMenu: function () {
+        switchMessageMenu: function() {
             this.showMessageMenu = !this.showMessageMenu
         },
-        goHomepage: function () {
+        goHomepage: function() {
             // add vue rooter
         },
-        getRoomInfo: function () {
+        getRoomInfo: function() {
             for (let i = 0; i < this.$store.state.rooms.length; i++) {
                 if (this.$store.state.rooms[i].id === parseInt(this.$route.params['id'])) {
                     this.roomInfo.roomIntroduction = this.$store.state.rooms[i].room_introduction
@@ -181,13 +189,13 @@ export default {
             }
             this.roomInfo.roomId = this.$route.params['id']
         },
-        getUserInfo: function () {
+        getUserInfo: function() {
             this.userInfo.nickname = this.$store.state.nickname
             this.userInfo.isTeacher = this.$store.state.isTeacher
             this.userInfo.isRoomCreator = (this.roomInfo.__roomTeacherAccount === this.$store.state.account)
             this.userInfo.account = this.$store.state.account
         },
-        connect: function () {
+        connect: function() {
             this.httpServer = io.connect('http://127.0.0.1:3000')
             this.httpServer.on('userCountChange', (count) => {
                 this.userCount = count
@@ -207,40 +215,56 @@ export default {
                 this.$router.push('/')
             })
         },
-        switchPane: function (pane) {
+        switchPane: function(pane) {
             this.showingComponent = pane
             this.httpServer.emit('switchPane', {
                 roomId: this.roomInfo.roomId,
                 showingComponent: this.showingComponent
             })
         },
-        startRecord: function () {
-            window.navigator.mediaDevices.getUserMedia({audio: true}).then((audioStream) => {
-                this.audioStream = audioStream
-                this.canvasStream = this.canvas2d.captureStream()
+        startRecord: function() {
+            // window.navigator.mediaDevices.getUserMedia({ audio: true }).then((audioStream) => {
+            //     this.audioStream = audioStream
+            //     this.canvasStream = this.canvas2d.captureStream()
 
-                var finalStream = new window.MediaStream()
-                audioStream.getAudioTracks().forEach(function (track) {
-                    finalStream.addTrack(track)
-                })
-                this.canvasStream.getVideoTracks().forEach(function (track) {
-                    finalStream.addTrack(track)
-                })
+            //     var finalStream = new window.MediaStream()
+            //     audioStream.getAudioTracks().forEach(function(track) {
+            //         finalStream.addTrack(track)
+            //     })
+            //     this.canvasStream.getVideoTracks().forEach(function(track) {
+            //         finalStream.addTrack(track)
+            //     })
 
-                this.recorder = window.RecordRTC(finalStream, {
-                    type: 'video'
+            //     this.recorder = window.RecordRTC(finalStream, {
+            //         type: 'video'
+            //     })
+            //     this.isStoppedRecording = false
+            //     this.isRecordingStarted = true
+            //     this.recorder.startRecording()
+            // })
+            this.captureAudio((audio) => {
+                this.captureScreen((screen) => {
+                    this.audioStream = audio
+                    this.screenStream = screen
+                    screen.width = window.screen.width
+                    screen.height = window.screen.height
+                    screen.fullcanvas = true
+                    this.recorder = window.RecordRTC([screen, audio], {
+                        type: 'video',
+                        mimeType: 'video/webm',
+                    })
+                    this.isStoppedRecording = false
+                    this.isRecordingStarted = true
+                    this.recorder.startRecording()
                 })
-                this.isStoppedRecording = false
-                this.isRecordingStarted = true
-                this.recorder.startRecording()
+                // window.setTimeout(function () {
+                //     let stopButton = document.getElementById('stop')
+                //     stopButton.disabled = false
+                // }, 10)
+                this.looper()
             })
-            // window.setTimeout(function () {
-            //     let stopButton = document.getElementById('stop')
-            //     stopButton.disabled = false
-            // }, 10)
-            this.looper()
         },
-        stopRecord: function () {
+        stopRecord: function() {
             this.isStoppedRecording = true
             this.recorder.stopRecording(() => {
                 // window.invokeSaveAsDialog(this.recorder.getBlob(), 'filename.webm')
@@ -249,33 +273,53 @@ export default {
                 let formdata = new window.FormData()
                 formdata.append('roomId', this.roomInfo.roomId)
                 formdata.append('file', f)
+                // let streams = [this.screenStream, this.audioStream]
+                // streams.forEach(function(stream) {
+                //     stream.getVideoTracks().forEach(function(track) {
+                //         track.stop()
+                //     })
+                //     stream.getAudioTracks().forEach(function(track) {
+                //         track.stop()
+                //     })
+                // })
+                this.screenStream.stop()
                 this.audioStream.stop()
-                this.canvasStream.stop()
+                // this.audioStream.stop()
+                // this.canvasStream.stop()
                 this.$store.dispatch('stopLive', formdata)
                 this.$refs.recordVideo.leave()
             })
             // document.getElementById('start').disabled = false
         },
-        looper: function () {
+        looper: function() {
+            // console.log('looping')
+            // if (!this.isRecordingStarted) {
+            //     return window.setTimeout(this.looper, 500)
+            // }
+            // let that = this
+            // window.html2canvas(that.elementToShare, {
+            //     grabMouse: true,
+            //     onrendered: function(canvas) {
+            //         that.context.clearRect(0, 0, that.canvas2d.width, that.canvas2d.height)
+            //         that.context.drawImage(canvas, 0, 0, that.canvas2d.width, that.canvas2d.height)
+            //         if (that.isStoppedRecording) {
+            //             return
+            //         }
+            //         window.setTimeout(that.looper, 1)
+            //     }
+            // })
             console.log('looping')
             if (!this.isRecordingStarted) {
                 return window.setTimeout(this.looper, 500)
             }
             let that = this
-            window.html2canvas(that.elementToShare, {
-                grabMouse: true,
-                onrendered: function (canvas) {
-                    that.context.clearRect(0, 0, that.canvas2d.width, that.canvas2d.height)
-                    that.context.drawImage(canvas, 0, 0, that.canvas2d.width, that.canvas2d.height)
-                    if (that.isStoppedRecording) {
-                        return
-                    }
-                    window.setTimeout(that.looper, 1)
-                }
-            })
+            if (that.isStoppedRecording) {
+                return
+            }
+            window.setTimeout(that.looper, 1)
         },
-        startLive: function () {
-            this.createCanvas()
+        startLive: function() {
+            // this.createCanvas()
             this.startRecord()
             this.$store.dispatch('startLive', {
                 roomId: this.roomInfo.roomId
@@ -286,7 +330,7 @@ export default {
             // stopBtn.disabled = false
             // this.$refs.recordVideo.join()
         },
-        stopLive: function () {
+        stopLive: function() {
             this.stopRecord()
             let stopBtn = document.getElementById('stopBtn')
             stopBtn.disabled = false
@@ -296,20 +340,20 @@ export default {
             // })
             // this.$refs.recordVideo.leave()
         },
-        openCamera: function () {
+        openCamera: function() {
             this.isCameraOn = true
             this.$refs.recordVideo.join()
         },
-        closeCamera: function () {
+        closeCamera: function() {
             this.isCameraOn = false
             this.$refs.recordVideo.leave()
         },
-        openVideo: function () {
+        openVideo: function() {
             document.getElementById('leave').disabled = false
             document.getElementById('join').disabled = true
             this.$refs.recordVideo.join()
         },
-        closeVideo: function () {
+        closeVideo: function() {
             document.getElementById('leave').disabled = true
             document.getElementById('join').disabled = false
             this.$refs.recordVideo.leave()
