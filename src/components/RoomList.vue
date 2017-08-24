@@ -2,21 +2,37 @@
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
         <ul>
-            <room v-for="(room, key) in rooms"
+            <room v-for="(room, key) in currentRooms"
                   class="room"
                   v-show="room.active_mode === 'START'"
                   v-bind:room="room"
                   :isLive="true"
                   v-bind:key="key"></room>
         </ul>
+        <div class="pagination ">
+            <el-pagination
+                :current-page.sync="roomPage"
+                layout="prev, pager, next"
+                :page-size="roomNumPerPage"
+                :total="activeRoomNum">
+            </el-pagination>
+        </div>
         <h1 class="history-title">History</h1>
         <ul>
-            <room v-for="(room, key) in history"
+            <room v-for="(room, key) in currentHistory"
                   class="room"
                   v-bind:room="room"
                   :isLive="false"
                   v-bind:key="key"></room>
         </ul>
+        <div class="pagination ">
+            <el-pagination
+                :current-page.sync="historyPage"
+                layout="prev, pager, next"
+                :page-size="roomNumPerPage"
+                :total="historyNum">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -29,24 +45,53 @@ export default {
     },
     data: function () {
         return {
-            num: 0
+            roomPage: 1,
+            historyPage: 1,
+            roomNumPerPage: 8,
         }
     },
     computed: {
-        rooms: function () {
+        allRooms: function () {
             return this.$store.state.rooms
+        },
+        activeRooms: function () {
+            let allRooms = this.allRooms
+            let activeRooms = []
+            for (let r of allRooms) {
+                if (r.active_mode === 'START') {
+                    activeRooms.push(r)
+                }
+            }
+            return activeRooms
+        },
+        activeRoomNum: function () {
+            return this.activeRooms.length
+        },
+        currentRooms: function () {
+            let activeRooms = this.activeRooms
+            let totalNum = activeRooms.length
+            let startNum = (this.roomPage - 1) * this.roomNumPerPage
+            let endNum = startNum + this.roomNumPerPage
+            if (endNum > totalNum) {
+                endNum = totalNum
+            }
+            return activeRooms.slice(startNum, endNum)
+        },
+        currentHistory: function () {
+            let allHistory = this.history
+            let totalNum = allHistory.length
+            let startNum = (this.historyPage - 1) * this.roomNumPerPage
+            let endNum = startNum + this.roomNumPerPage
+            if (endNum > totalNum) {
+                endNum = totalNum
+            }
+            return allHistory.slice(startNum, endNum)
         },
         history: function () {
             return this.$store.state.history
         },
-        count: function () {
-            this.num += 1
-            return this.num
-        }
-    },
-    methods: {
-        goHistory: function () {
-            this.$router.push('/history')
+        historyNum: function () {
+            return this.history.length
         }
     }
 }
@@ -80,10 +125,45 @@ ul {
     padding-left: 0;
 }
 
-@media screen and (max-width: 400px) { ul { width: 320px; } }
-@media screen and (min-width: 401px) and (max-width: 700px) { ul { width: 325px; } }
-@media screen and (min-width: 701px) and (max-width: 1000px) { ul { width: 650px;  } }
-@media screen and (min-width: 1001px) and (max-width: 1320px) { ul { width: 975px; } }
-@media screen and (min-width: 1321px) and (max-width: 1650px) { ul { width: 1300px; } }
-@media screen and (min-width: 1651px) and (max-width: 1950px) { ul { width: 1625px; } }
+.pagination {
+    display: block;
+    margin: 50px auto;
+    text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+    ul {
+        width: 320px;
+    }
+}
+
+@media screen and (min-width: 401px) and (max-width: 700px) {
+    ul {
+        width: 325px;
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width: 1000px) {
+    ul {
+        width: 650px;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1320px) {
+    ul {
+        width: 975px;
+    }
+}
+
+@media screen and (min-width: 1321px) and (max-width: 1650px) {
+    ul {
+        width: 1300px;
+    }
+}
+
+@media screen and (min-width: 1651px) and (max-width: 1950px) {
+    ul {
+        width: 1625px;
+    }
+}
 </style>

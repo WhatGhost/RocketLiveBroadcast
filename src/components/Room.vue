@@ -40,10 +40,11 @@ export default {
         },
         enterRoom: function () {
             if (this.$store.state.account !== null) {
-                if (this.room.history_source !== null) {
+                if (!this.isLive) {
                     this.$router.push('/history/' + this.room.room_id)
+                } else {
+                    this.$router.push('/room/' + this.room.id)
                 }
-                this.$router.push('/room/' + this.room.id)
             } else {
                 this.showErrorMes('请您先登录')
             }
@@ -94,7 +95,14 @@ export default {
 }
 
 .bottom {
-    margin-top: 13px;
+    margin-top: -10px;
     line-height: 12px;
+    height: 70px;
+    width: 270px;
+    overflow-y: hidden;
+}
+
+.bottom:hover {
+    overflow-y: auto;
 }
 </style>
