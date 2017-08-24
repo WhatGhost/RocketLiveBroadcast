@@ -132,7 +132,7 @@ button {
 #open-room-btn {
     background-color: #a5d9dd;
     color: white;
-    margin-left: 3%;
+    margin-left: 20px;
     min-width: 80px;
 }
 </style>

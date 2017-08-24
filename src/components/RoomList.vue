@@ -1,22 +1,22 @@
 <template>
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
-        <el-row>
+        <ul>
             <room v-for="(room, key) in rooms"
                   class="room"
                   v-show="room.active_mode === 'START'"
                   v-bind:room="room"
                   :isLive="true"
                   v-bind:key="key"></room>
-        </el-row>
+        </ul>
         <h1 class="history-title">History</h1>
-        <el-row>
+        <ul>
             <room v-for="(room, key) in history"
                   class="room"
                   v-bind:room="room"
                   :isLive="false"
                   v-bind:key="key"></room>
-        </el-row>
+        </ul>
     </div>
 </template>
 
@@ -54,9 +54,6 @@ export default {
 
 <style scoped>
 .main-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 h1 {
@@ -77,19 +74,16 @@ h1 {
     background-color: rgba(125, 188, 169, 0.4);
 }
 
-.live-rooms {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    /*align-content: flex-start;*/
-    /*align-content: space-around;*/
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+ul {
+    margin: 0 auto;
+    width: 1625px;
+    padding-left: 0;
 }
 
-.room {
-    width: 290px;
-    overflow: hidden;
-}
+@media screen and (max-width: 400px) { ul { width: 320px; } }
+@media screen and (min-width: 401px) and (max-width: 700px) { ul { width: 325px; } }
+@media screen and (min-width: 701px) and (max-width: 1000px) { ul { width: 650px;  } }
+@media screen and (min-width: 1001px) and (max-width: 1320px) { ul { width: 975px; } }
+@media screen and (min-width: 1321px) and (max-width: 1650px) { ul { width: 1300px; } }
+@media screen and (min-width: 1651px) and (max-width: 1950px) { ul { width: 1625px; } }
 </style>
