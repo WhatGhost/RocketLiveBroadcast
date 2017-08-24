@@ -334,7 +334,6 @@ export default {
             this.stopRecord()
             let stopBtn = document.getElementById('stopBtn')
             stopBtn.disabled = false
-            this.$refs.recordVideo.stopLocalCamera()
             // this.$store.dispatch('stopLive', {
             //     roomId: this.roomInfo.roomId
             // })

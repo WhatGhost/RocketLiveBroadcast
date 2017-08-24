@@ -1,2 +1,3 @@
 test/unit/
 src/components/RecordVideo.vue
+src/components/LiveRoom.vue
