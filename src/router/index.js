@@ -28,8 +28,15 @@ const router = new VueRouter({
                         let roomId = parseInt(to.params['id'])
                         for (let room of store.state.rooms) {
                             if (room.id === roomId) {
-                                next()
-                                return
+                                if (room.active_mode === 'START') {
+                                    next()
+                                    return
+                                } else if (room.active_mode === 'READY') {
+                                    if (room.room_creator.account === store.state.account) {
+                                        next()
+                                        return
+                                    }
+                                }
                             }
                         }
                         next(false)
@@ -45,7 +52,13 @@ const router = new VueRouter({
                     next(false)
                     return
                 }
-                next()
+                let roomId = parseInt(to.params['id'])
+                for (let room of store.state.history) {
+                    if (room.room_id === roomId) {
+                        next()
+                    }
+                }
+                next(false)
             }
         }
     ]
