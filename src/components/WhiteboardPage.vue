@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ hiding: hide }">
+    <div class="main-div" :class="{ hiding: hide }">
         <div class="fs-container">
             <div id="lc" class="inner" ref="lcanvas"></div>
         </div>
@@ -16,7 +16,7 @@ export default {
             drawing: null
         }
     },
-    created() {
+    created () {
         this.httpServer.on('changeDrawing', (obj) => {
             if (this.lc === null) {
                 this.drawing = obj.drawing
@@ -26,12 +26,17 @@ export default {
             }
         })
     },
-    updated() {
+    updated () {
         if (!this.lc) {
             this.mountlc()
             if (this.drawing !== null) {
                 this.lc.loadSnapshot(JSON.parse(this.drawing))
             }
+        }
+        // 调节画板高度
+        let board = document.querySelector('div.literally.toolbar-at-bottom')
+        if (board) {
+            board.style.height = '100%'
         }
     },
     methods: {
@@ -61,6 +66,10 @@ export default {
 </script>
 
 <style scoped>
+.main-div {
+    height: 90%;
+}
+
 .hiding {
     display: none;
 }

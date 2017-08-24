@@ -2,7 +2,7 @@
     <div class="main-div" :class="{ hiding: hide }">
         <label>
             <el-select ref="sel" class="codeLanguage" size="small"
-                    v-model="editorOptions.mode">
+                       v-model="editorOptions.mode">
                 <el-option value="text/x-csrc" label="C">c</el-option>
                 <el-option value="text/x-c++src" label="C++">c++</el-option>
                 <el-option value="text/x-php" label="php">php</el-option>
@@ -10,13 +10,18 @@
                 <el-option value="text/html" label="HTML">html</el-option>
                 <el-option value="text/x-java" label="Java">java</el-option>
                 <el-option value="text/x-csharp" label="c#">c#</el-option>
-                <el-option value="text/javascript" selected=true label="JavaScript">javascript</el-option>
+                <el-option value="text/javascript" selected=true  label="JavaScript">javascript</el-option>
                 <el-option value="application/xml" label="XML">xml</el-option>
                 <el-option value="text/css" label="CSS">css</el-option>
                 <el-option value="text/x-go" label="go">go</el-option>
             </el-select>
         </label>
-        <codemirror ref="codemirror" v-model="code" :options="editorOptions" @change="emitCodeChange" v-if="langChanged" ></codemirror>
+        <codemirror ref="codemirror"
+                    v-model="code"
+                    :options="editorOptions"
+                    @change="emitCodeChange"
+                    v-if="langChanged">
+        </codemirror>
     </div>
 </template>
 
@@ -37,14 +42,14 @@ export default {
         CodeMirror,
         codemirror
     },
-    created() {
+    created () {
         this.httpServer.on('changeCode', (obj) => {
             this.syncCode = obj.code
             this.code = obj.code
         })
         this.editorOptions['readOnly'] = !this.userInfo.isRoomCreator
     },
-    data() {
+    data () {
         return {
             langChanged: true,
             code: '',
@@ -61,11 +66,17 @@ export default {
             }
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.selectLan = this.$refs.sel
+        // 调节代码编辑器高度
+        let mirror = document.querySelector('.CodeMirror.cm-s-base16-light')
+        if (!mirror) {
+        } else {
+            mirror.style.height = '95%'
+        }
     },
     methods: {
-        emitCodeChange(event) {
+        emitCodeChange (event) {
             if (event === this.syncCode) {
                 return
             }
@@ -74,7 +85,7 @@ export default {
                 code: event
             })
         },
-        update(val) {
+        update (val) {
             this.editorOptions['mode'] = val
         }
     }
@@ -83,10 +94,10 @@ export default {
 <style scoped>
 .main-div {
     background-color: #f5f5f5;
+    height: 90%;
 }
 
 .hiding {
     display: none;
 }
-
 </style>
