@@ -2,7 +2,7 @@
     <div class="main-div" v-bind:class="{ blur: $store.state.background_blur }">
         <h1 class="live-title">Live Room</h1>
         <ul>
-            <room v-for="(room, key) in rooms"
+            <room v-for="(room, key) in currentRooms"
                   class="room"
                   v-show="room.active_mode === 'START'"
                   v-bind:room="room"
@@ -11,14 +11,15 @@
         </ul>
         <div class="pagination ">
             <el-pagination
+                :current-page.sync="roomPage"
                 layout="prev, pager, next"
-                :page-size="8"
-                :total="roomNum">
+                :page-size="roomNumPerPage"
+                :total="activeRoomNum">
             </el-pagination>
         </div>
         <h1 class="history-title">History</h1>
         <ul>
-            <room v-for="(room, key) in history"
+            <room v-for="(room, key) in currentHistory"
                   class="room"
                   v-bind:room="room"
                   :isLive="false"
@@ -26,8 +27,9 @@
         </ul>
         <div class="pagination ">
             <el-pagination
+                :current-page.sync="historyPage"
                 layout="prev, pager, next"
-                :page-size="8"
+                :page-size="roomNumPerPage"
                 :total="historyNum">
             </el-pagination>
         </div>
@@ -43,12 +45,17 @@ export default {
     },
     data: function () {
         return {
-            num: 0
+            roomPage: 1,
+            historyPage: 1,
+            roomNumPerPage: 8,
         }
     },
     computed: {
-        rooms: function () {
-            let allRooms = this.$store.state.rooms
+        allRooms: function () {
+            return this.$store.state.rooms
+        },
+        activeRooms: function () {
+            let allRooms = this.allRooms
             let activeRooms = []
             for (let r of allRooms) {
                 if (r.active_mode === 'START') {
@@ -57,23 +64,34 @@ export default {
             }
             return activeRooms
         },
+        activeRoomNum: function () {
+            return this.activeRooms.length
+        },
+        currentRooms: function () {
+            let activeRooms = this.activeRooms
+            let totalNum = activeRooms.length
+            let startNum = (this.roomPage - 1) * this.roomNumPerPage
+            let endNum = startNum + this.roomNumPerPage
+            if (endNum > totalNum) {
+                endNum = totalNum
+            }
+            return activeRooms.slice(startNum, endNum)
+        },
+        currentHistory: function () {
+            let allHistory = this.history
+            let totalNum = allHistory.length
+            let startNum = (this.historyPage - 1) * this.roomNumPerPage
+            let endNum = startNum + this.roomNumPerPage
+            if (endNum > totalNum) {
+                endNum = totalNum
+            }
+            return allHistory.slice(startNum, endNum)
+        },
         history: function () {
             return this.$store.state.history
         },
-        count: function () {
-            this.num += 1
-            return this.num
-        },
-        roomNum: function () {
-            return this.rooms.length
-        },
         historyNum: function () {
             return this.history.length
-        }
-    },
-    methods: {
-        goHistory: function () {
-            this.$router.push('/history')
         }
     }
 }
