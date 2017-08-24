@@ -63,7 +63,7 @@ export default {
     border-radius: 7px;
     transition: background 0.5s ease-in-out;
     background-color: white;
-    margin: 15px 20px;
+    margin: 15px 17.5px;
 }
 
 .card:hover {

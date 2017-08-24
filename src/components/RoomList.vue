@@ -54,9 +54,6 @@ export default {
 
 <style scoped>
 .main-div {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
 }
 
 h1 {
@@ -79,13 +76,14 @@ h1 {
 
 ul {
     margin: 0 auto;
-    width: 1200px;
+    width: 1625px;
     padding-left: 0;
 }
 
-@media screen and (max-width: 430px) { ul { width: 200px; } }
-@media screen and (min-width: 431px) and (max-width: 630px) { ul { width: 400px; } }
-@media screen and (min-width: 631px) and (max-width: 830px) { ul { width:600px;  } }
-@media screen and (min-width: 831px) and (max-width: 1030px) { ul { width: 800px; } }
-@media screen and (min-width: 1031px) and (max-width: 1230px) { ul { width: 1200px; } }
+@media screen and (max-width: 400px) { ul { width: 320px; } }
+@media screen and (min-width: 401px) and (max-width: 700px) { ul { width: 325px; } }
+@media screen and (min-width: 701px) and (max-width: 1000px) { ul { width: 650px;  } }
+@media screen and (min-width: 1001px) and (max-width: 1320px) { ul { width: 975px; } }
+@media screen and (min-width: 1321px) and (max-width: 1650px) { ul { width: 1300px; } }
+@media screen and (min-width: 1651px) and (max-width: 1950px) { ul { width: 1625px; } }
 </style>
