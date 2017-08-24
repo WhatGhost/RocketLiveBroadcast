@@ -55,13 +55,15 @@ export default {
 <style scoped>
 .card {
     height: 220px;
+    width: 290px;
+    line-height: 50px;
+    box-sizing: border-box;
+    overflow: hidden;
     display: inline-block;
     border-radius: 7px;
     transition: background 0.5s ease-in-out;
     background-color: white;
-    margin-bottom: 30px;
-    margin-left: 7px;
-    margin-right: 7px;
+    margin: 15px 20px;
 }
 
 .card:hover {
