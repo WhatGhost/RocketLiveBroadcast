@@ -79,8 +79,8 @@ export default {
         },
         teacherJoin: function () {
             console.log("Init AgoraRTC client with vendor key: " + this.key);
-            document.getElementById("leave").disabled = false
-            document.getElementById("join").disabled = true
+            // document.getElementById("leave").disabled = false
+            // document.getElementById("join").disabled = true
             this.client = AgoraRTC.createClient({
                 mode: 'interop'
             });
@@ -125,8 +125,8 @@ export default {
         },
         studentJoin: function () {
             console.log("Init AgoraRTC client with vendor key: " + this.key);
-            document.getElementById("leave").disabled = false
-            document.getElementById("join").disabled = true
+            // document.getElementById("leave").disabled = false
+            // document.getElementById("join").disabled = true
             this.client = AgoraRTC.createClient({
                 mode: 'interop'
             });
@@ -187,8 +187,8 @@ export default {
                 this.localStream.disableVideo()
                 this.localStream.close()
             } else {
-                document.getElementById('leave').disabled = true
-                document.getElementById('join').disabled = false
+                // document.getElementById('leave').disabled = true
+                // document.getElementById('join').disabled = false
             }
             this.client.leave(function () {
                 console.log("Leavel channel successfully")
