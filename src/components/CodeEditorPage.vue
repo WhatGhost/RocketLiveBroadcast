@@ -1,20 +1,20 @@
 <template>
     <div class="main-div" :class="{ hiding: hide }">
         <label>
-            <select ref="sel" class="codeLanguage" size="1"
+            <el-select ref="sel" class="codeLanguage" size="small"
                     v-model="editorOptions.mode">
-                <option value='text/x-csrc'>c</option>
-                <option value='text/x-c++src'>c++</option>
-                <option value='text/x-php'>php</option>
-                <option value='text/x-python'>python</option>
-                <option value='text/html'>html</option>
-                <option value='text/x-java'>java</option>
-                <option value='text/x-csharp'>c#</option>
-                <option value='text/javascript' selected=true>javascript</option>
-                <option value='application/xml'>xml</option>
-                <option value='text/css'>css</option>
-                <option value='text/x-go'>go</option>
-            </select>
+                <el-option value="text/x-csrc" label="C">c</el-option>
+                <el-option value="text/x-c++src" label="C++">c++</el-option>
+                <el-option value="text/x-php" label="php">php</el-option>
+                <el-option value="text/x-python" label="Python">python</el-option>
+                <el-option value="text/html" label="HTML">html</el-option>
+                <el-option value="text/x-java" label="Java">java</el-option>
+                <el-option value="text/x-csharp" label="c#">c#</el-option>
+                <el-option value="text/javascript" selected=true label="JavaScript">javascript</el-option>
+                <el-option value="application/xml" label="XML">xml</el-option>
+                <el-option value="text/css" label="CSS">css</el-option>
+                <el-option value="text/x-go" label="go">go</el-option>
+            </el-select>
         </label>
         <codemirror ref="codemirror" v-model="code" :options="editorOptions" @change="emitCodeChange" v-if="langChanged" ></codemirror>
     </div>
@@ -82,7 +82,7 @@ export default {
 </script>
 <style scoped>
 .main-div {
-    background-color: yellow;
+    background-color: #f5f5f5;
 }
 
 .hiding {
