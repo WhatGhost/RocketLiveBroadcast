@@ -131,14 +131,12 @@ export default {
                 return
             }
             if (this.isRightPhoneNum()) {
-                this.showErrorMes('sendVertificateCode for phone click')
                 this.$store.dispatch('sendVertificateCode', {
                     account: this.account,
                     mode: 'register',
                     type: 'phone'
                 })
             } else if (this.isRightEmail()) {
-                this.showErrorMes('sendVertificateCode for email click')
                 this.$store.dispatch('sendVertificateCode', {
                     account: this.account,
                     mode: 'register',
