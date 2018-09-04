@@ -12,9 +12,9 @@ host = "106.ihuyi.com"
 sms_send_uri = "/webservice/sms.php?method=Submit"
 
 # 用户名是登录用户中心->验证码短信->产品总览->APIID
-account = "C70086602"
+account = "#####"
 # 密码 查看密码请登录用户中心->验证码短信->产品总览->APIKEY
-password = "804cb35277c025e7582f5e92fe25b30d"
+password = "####"
 
 
 def sendText(mobile):

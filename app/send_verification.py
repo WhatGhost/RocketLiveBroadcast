@@ -30,8 +30,8 @@ def sendMail(to_addr, message="您的验证码为： ", mode='plain', encode='ut
 
     '''
     # 输入Email地址和口令:
-    from_addr = 'HJDLive@163.com'
-    password = 'huojiandui666'
+    from_addr = '####@163.com'
+    password = '#####'
     # 输入SMTP服务器地址:
     smtp_server = 'smtp.163.com'
     verification_code = generate_verification_code()
